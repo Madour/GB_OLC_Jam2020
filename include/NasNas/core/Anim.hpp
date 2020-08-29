@@ -92,6 +92,8 @@ namespace ns {
          * \param animation The Anim to play
          */
         void play(const Anim& animation);
+        void resume();
+        void stop();
 
         /**
          * \brief Get the currentlty played Anim

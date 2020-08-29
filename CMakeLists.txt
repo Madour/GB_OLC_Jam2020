@@ -21,10 +21,16 @@ set(NASNAS_BUILD_UI             TRUE)
 
 include(cmake/NasNas.cmake)
 
+file(COPY assets DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+
 add_executable(GB_OLC_Jam
         NasNas.h ${NasNas_Src} ${NasNas_Inc}
         main.cpp
-)
+        src/Game.cpp include/Game.hpp
+        src/Palette.cpp include/Palette.hpp
+        src/ShaderTransition.cpp include/ShaderTransition.hpp
+
+        src/Player.cpp include/Player.hpp)
 
 # Demo game target
 target_include_directories(GB_OLC_Jam PRIVATE include)

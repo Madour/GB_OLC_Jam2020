@@ -48,6 +48,15 @@ void AnimPlayer::play(const Anim& animation) {
     m_clock = sf::Clock();
 }
 
+void AnimPlayer::resume() {
+    m_playing = true;
+}
+
+void AnimPlayer::stop() {
+    m_index = 0;
+    m_playing = false;
+}
+
 auto AnimPlayer::getAnim() -> Anim* {
     return m_anim;
 }
@@ -64,6 +73,7 @@ auto AnimPlayer::getActiveFrame() -> const AnimFrame& {
 void AnimPlayer::setPlaySpeed(float speed) {
     if (speed > 0) {
         m_play_speed = speed;
+        m_playing = true;
     }
     else if (speed == 0) {
         m_playing = false;

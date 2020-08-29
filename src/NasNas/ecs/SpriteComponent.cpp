@@ -5,6 +5,7 @@
 
 #include "NasNas/ecs/SpriteComponent.hpp"
 #include "NasNas/ecs/BaseEntity.hpp"
+#include <cmath>
 
 using namespace ns;
 using namespace ns::ecs;
@@ -28,8 +29,13 @@ void SpriteComponent::setSpritesheet(Spritesheet* spritesheet) {
     m_drawable = sf::Sprite(*spritesheet->texture);
 }
 
+auto SpriteComponent::getAnimState() -> const std::string& {
+    return m_anim_player.getAnim()->getName();
+}
+
 void SpriteComponent::setAnimState(const std::string& anim_state) {
     if (m_spritesheet) {
+        m_anim_player.resume();
         if (!m_anim_player.getAnim() || anim_state != m_anim_player.getAnim()->getName()) {
             try {
                 m_anim_player.play(m_spritesheet->getAnim(anim_state));
@@ -44,6 +50,10 @@ void SpriteComponent::setAnimState(const std::string& anim_state) {
     }
 }
 
+auto SpriteComponent::getAnimPlayer() -> AnimPlayer& {
+    return m_anim_player;
+}
+
 auto SpriteComponent::getDrawable() -> sf::Sprite& {
     return m_drawable;
 }
@@ -56,7 +66,8 @@ void SpriteComponent::update() {
     m_anim_player.update();
     m_drawable.setTextureRect(m_anim_player.getActiveFrame().rectangle);
     m_drawable.setOrigin((float)m_anim_player.getActiveFrame().origin.x, (float)m_anim_player.getActiveFrame().origin.y);
-    m_drawable.setPosition(m_entity->getPosition() + m_pos_offset);
+    auto new_pos = sf::Vector2f(std::round(m_entity->getPosition().x), std::round(m_entity->getPosition().y)) + m_pos_offset;
+    m_drawable.setPosition(new_pos);
 }
 
 void SpriteComponent::draw(sf::RenderTarget& target, sf::RenderStates states) const {

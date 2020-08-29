@@ -16,7 +16,9 @@ namespace ns::ecs {
         SpriteComponent(BaseEntity* entity, Spritesheet* spritesheet, const std::string& anim_state);
         SpriteComponent(BaseEntity* entity, Spritesheet* spritesheet, const std::string& anim_state, const sf::Vector2f& pos_offset);
         void setSpritesheet(Spritesheet* spritesheet);
+        auto getAnimState() -> const std::string&;
         void setAnimState(const std::string& anim_state);
+        auto getAnimPlayer() -> AnimPlayer&;
         auto getDrawable() -> sf::Sprite& override;
         auto getGlobalBounds() -> ns::FloatRect override;
         void update() override;
