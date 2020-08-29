@@ -1,0 +1,6 @@
+build
+build-debug
+build-release
+
+.git
+.idea

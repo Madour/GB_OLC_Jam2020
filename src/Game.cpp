@@ -35,6 +35,7 @@ Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
     initBitmapFonts();
 
     m_map.loadFromFile("assets/warehouse.tmx");
+    m_map.getObjectLayer("collisions")->setVisible(false);
     for (const auto& rect : m_map.getObjectLayer("collisions")->getRectangles())
         MapCollisions::add(ns::FloatRect(rect.getShape().getGlobalBounds()));
 
@@ -47,7 +48,7 @@ Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
     rect->setTexture(&ns::Res::getTexture("pokemon.png"));
     rect->setTextureRect({0, 0, 16, 16});
 
-    m_textbox = std::make_shared<TextBox>("Textbox is stylish and very nice ! that's cool ! Let's test the 3 lines limit; okay that looks good so far.", m_fonts["default"]);
+    m_textbox = std::make_shared<TextBox>("Textbox is clean and very nice ! Let's test the 3 lines limit; okay that looks good so far.", m_fonts["default"]);
 
     m_player = std::make_shared<Player>();
     m_player->setPosition(50, 50);
@@ -115,8 +116,8 @@ void Game::onEvent(const sf::Event& event) {
                     auto tr = new ShaderInTransition("threshold");
                     tr->start();
                     tr->setOnEndCallback([&](){
-                        m_textbox = std::make_shared<TextBox>("Date : -2000 before JC. \nLocation : Egypt",m_fonts["italic"]);
-                        m_ui_scene->getDefaultLayer()->add(m_textbox);
+                        //m_textbox = std::make_shared<TextBox>("Date : -2000 before JC. \nLocation : Egypt",m_fonts["italic"]);
+                        //m_ui_scene->getDefaultLayer()->add(m_textbox);
                     });
                 });
             }
