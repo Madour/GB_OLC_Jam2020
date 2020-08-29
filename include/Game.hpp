@@ -6,6 +6,8 @@
 #include "Palette.hpp"
 #include "Player.hpp"
 #include "ShaderTransition.hpp"
+#include "TextBox.hpp"
+#include "MapCollisions.hpp"
 
 class Game : public ns::App {
 public:
@@ -19,16 +21,22 @@ public:
     void setPalette(int color);
 
 private:
-    void createFont(const std::string& name);
+    void initBitmapFonts();
 
+    sf::Clock m_clock;
     int m_ticks = 0;
     std::map<std::string, std::shared_ptr<ns::BitmapFont>> m_fonts;
-    std::shared_ptr<ns::BitmapFont> m_default_font;
 
+    ns::tm::TiledMap m_map;
+
+    std::shared_ptr<TextBox> m_textbox;
     std::shared_ptr<Player> m_player;
 
     ns::Scene* m_scene;
+    ns::Scene* m_ui_scene;
+
     ns::Camera* m_camera;
+    ns::Camera* m_ui_camera;
 
     int m_palette_index = 0;
     std::shared_ptr<sf::Shader> m_palette_shader;

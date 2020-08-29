@@ -175,20 +175,22 @@ auto ObjectLayer::getGlobalBounds() -> ns::FloatRect {
 }
 
 void ObjectLayer::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    for (const auto& rect : m_rectangles)
-        target.draw(rect.getShape());
+    if (isVisible()) {
+        for (const auto& rect : m_rectangles)
+            target.draw(rect.getShape());
 
-    for (const auto& point : m_points)
-        target.draw(point.getShape());
+        for (const auto& point : m_points)
+            target.draw(point.getShape());
 
-    for (const auto& ellipse : m_ellipses)
-        target.draw(ellipse.getShape());
+        for (const auto& ellipse : m_ellipses)
+            target.draw(ellipse.getShape());
 
-    for (const auto& polygon : m_polygons)
-        target.draw(polygon.getShape());
+        for (const auto& polygon : m_polygons)
+            target.draw(polygon.getShape());
 
-    for (const auto& polygon : m_polylines)
-        target.draw(polygon.getShape());
+        for (const auto& polygon : m_polylines)
+            target.draw(polygon.getShape());
+    }
 }
 
 auto ObjectLayer::stringToPoints(const char* points_str) -> std::vector<sf::Vector2f> {

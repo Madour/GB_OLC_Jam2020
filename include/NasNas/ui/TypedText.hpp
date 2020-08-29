@@ -18,13 +18,12 @@ namespace ns::ui {
 
         void setTypingDelay(int delay);
 
-        bool isWaiting();
-        bool hasEnded();
+        bool isWaiting() const;
+        bool hasEnded() const;
 
         virtual void onEvent(const sf::Event& event);
         void update();
 
-    protected:
         void nextPage();
 
     private:
@@ -32,7 +31,7 @@ namespace ns::ui {
         std::vector<std::string> m_pages;
         int m_max_lines = 0;
         int m_counter = 0;
-        int m_typing_delay = 0;
+        int m_typing_delay = -1;
         int m_current_page = 0;
         int m_current_letter_index = 0;
     };

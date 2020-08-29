@@ -35,7 +35,7 @@ Player::Player() : ns::BaseEntity("Player") {
 
     addComponent<ns::ecs::SpriteComponent>(this, m_spritesheet.get(), "idle");
 
-    auto* ph = new ns::ecs::PhysicsComponent(this, 1.f, {0.5f, 0.5f}, {1.f, 1.f}, {1.f, 1.f});
+    auto* ph = new ns::ecs::PhysicsComponent(this, 1.f, {0.75f, 0.75f}, {1.f, 1.f}, {1.f, 1.f});
     addComponent<ns::ecs::PhysicsComponent>(std::shared_ptr<ns::ecs::PhysicsComponent>(ph));
 
     addComponent<ns::ecs::InputsComponent>(this);
@@ -43,6 +43,8 @@ Player::Player() : ns::BaseEntity("Player") {
     inputs()->bind<Player>(sf::Keyboard::Down, &Player::moveDown);
     inputs()->bind<Player>(sf::Keyboard::Left, &Player::moveLeft);
     inputs()->bind<Player>(sf::Keyboard::Right, &Player::moveRight);
+
+    addComponent<ns::ecs::ColliderComponent>(this, new ns::ecs::RectangleCollision(14, 10), sf::Vector2f(1, -5));
 }
 
 void Player::moveUp() {
@@ -75,6 +77,28 @@ void Player::update() {
     inputs()->update<Player>();
     if(physics()) physics()->update();
     if(collider()) collider()->update();
+
+    auto col = collider()->getCollision().getShape().getGlobalBounds();
+    for (const auto& rect : MapCollisions::all()) {
+        sf::FloatRect intersection;
+        if (col.intersects(rect, intersection)) {
+            if (intersection.width < intersection.height) {
+                setX(getX() + intersection.width * (physics()->getDirection().x == 0 ? 1.f : -1.f*physics()->getDirection().x));
+            }
+            else {
+                // player over box
+                if (std::abs(col.top - rect.bottom()) >= std::abs(col.top+col.height - rect.top)) {
+                    setY(getY() - intersection.height);
+                }
+                else if (std::abs(col.top - rect.bottom()) < std::abs(col.top+col.height - rect.top)){
+                    setY(getY() + intersection.height);
+                }
+                else {
+                }
+
+            }
+        }
+    }
 
     if (physics()->getDirection() == sf::Vector2i(0, 0))
         graphics<ns::ecs::SpriteComponent>(0)->getAnimPlayer().stop();

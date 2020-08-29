@@ -30,7 +30,7 @@ add_executable(GB_OLC_Jam
         src/Palette.cpp include/Palette.hpp
         src/ShaderTransition.cpp include/ShaderTransition.hpp
 
-        src/Player.cpp include/Player.hpp)
+        src/Player.cpp include/Player.hpp src/TextBox.cpp include/TextBox.hpp src/MapCollisions.cpp include/MapCollisions.hpp)
 
 # Demo game target
 target_include_directories(GB_OLC_Jam PRIVATE include)

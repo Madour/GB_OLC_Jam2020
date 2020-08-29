@@ -18,6 +18,7 @@ void TypedText::setMaxWidth(int max_width) {
     BitmapText::setMaxWidth(max_width);
     m_string = getProcessedString();
     setMaxLines(m_max_lines);
+    setString("");
 }
 
 void TypedText::setMaxLines(int lines_nb) {
@@ -46,12 +47,12 @@ void TypedText::setTypingDelay(int delay) {
     else m_typing_delay = delay;
 }
 
-bool TypedText::isWaiting() {
+bool TypedText::isWaiting() const {
     return m_current_letter_index == m_pages[m_current_page].size();
 }
 
-bool TypedText::hasEnded() {
-    return m_current_page == m_pages.size()-1;
+bool TypedText::hasEnded() const {
+    return m_current_page == m_pages.size()-1 && isWaiting();
 }
 
 void TypedText::nextPage() {
@@ -72,10 +73,13 @@ void TypedText::onEvent(const sf::Event& event) {
 
 void TypedText::update() {
     if (m_current_letter_index == 0) {
+        setString("");
         if (m_current_page == 0)
             BitmapText::setMaxWidth(0);
-        if (m_typing_delay < 0)
-            setString(m_pages[m_current_page]);
+    }
+    if (m_typing_delay < 0) {
+        setString(m_pages[m_current_page]);
+        m_current_letter_index = m_pages[m_current_page].size();
     }
     if (m_counter == m_typing_delay) {
         m_counter = 0;

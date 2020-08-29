@@ -16,33 +16,39 @@ advance(spacing)
 
 
 BitmapFont::BitmapFont(const sf::Texture& texture, const sf::Vector2u& glyph_size) :
-BitmapFont(texture, glyph_size, " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~", {})
+BitmapFont(texture, glyph_size, " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~", {}, glyph_size)
 {}
 
 BitmapFont::BitmapFont(const sf::Texture& texture, const sf::Vector2u& glyph_size, const std::string& chars_map) :
-BitmapFont(texture, glyph_size, chars_map, {})
+BitmapFont(texture, glyph_size, chars_map, {}, glyph_size)
 {}
 
-BitmapFont::BitmapFont(const sf::Texture& texture, const sf::Vector2u& glyph_size, const std::unordered_map<char, int>& spacings_map) :
-BitmapFont(texture, glyph_size, " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~", spacings_map)
+BitmapFont::BitmapFont(const sf::Texture& texture, const sf::Vector2u& glyph_size, const std::unordered_map<std::string, int>& spacings_map) :
+BitmapFont(texture, glyph_size, " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~", spacings_map, glyph_size)
 {}
 
-BitmapFont::BitmapFont(const sf::Texture& texture, const sf::Vector2u& glyph_size, const std::string& chars_map, const std::unordered_map<char, int>& spacings_map) :
+BitmapFont::BitmapFont(const sf::Texture& texture, const sf::Vector2u& glyph_size, const std::string& chars_map, const std::unordered_map<std::string, int>& spacings_map, sf::Vector2u default_advance) :
 m_texture(&texture),
 m_glyph_size(glyph_size) {
     m_chars_map = chars_map;
-    m_advance_map = spacings_map;
+    for (const auto& [string, advance] : spacings_map) {
+        for (const auto& letter : string) {
+            if (m_advance_map.count(letter) == 0)
+                m_advance_map[letter] = advance;
+        }
+    }
 
     unsigned int i = 0;
     for (int y = 0; y < (int)m_texture->getSize().y; y += m_glyph_size.y) {
         for (int x = 0; x < (int)m_texture->getSize().x; x += m_glyph_size.x) {
             if (i < m_chars_map.size()) {
                 char character = m_chars_map[i];
-                int spacing = m_glyph_size.x;
-                if (m_advance_map.count(character) > 0)
-                    spacing = m_advance_map[character];
-                if (m_glyphs.count(character) == 0)
+                if (m_glyphs.count(character) == 0) {
+                    int spacing = default_advance.x;
+                    if (m_advance_map.count(character) > 0)
+                        spacing = m_advance_map[character];
                     m_glyphs[character] = new BitmapGlyph({{x, y}, {(int)m_glyph_size.x, (int)m_glyph_size.y}}, character, spacing);
+                }
             }
             i += 1;
         }

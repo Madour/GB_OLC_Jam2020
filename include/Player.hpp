@@ -3,6 +3,7 @@
 #pragma once
 
 #include "../NasNas.h"
+#include "MapCollisions.hpp"
 
 class Player : public ns::BaseEntity {
 public:
