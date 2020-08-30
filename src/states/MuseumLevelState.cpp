@@ -10,7 +10,7 @@ void MuseumLevelState::init() {
     game->ui_scene->clearAllLayers();
 
     m_map = std::make_shared<ns::tm::TiledMap>();
-    m_map->loadFromFile("assets/museum.tmx");
+    m_map->loadFromFile("assets/warehouse.tmx");
     m_map->getObjectLayer("collisions")->setVisible(false);
 
     //m_warp_zone = m_map->getObjectLayer("warpzone")->getRectangle(17).getShape().getGlobalBounds();
