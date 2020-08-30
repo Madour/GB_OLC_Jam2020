@@ -8,6 +8,8 @@
 
 class Palette {
 public:
+    static std::array<sf::Color, 4> Base;
+
     enum Color {
         Black,
         Green,

@@ -44,7 +44,7 @@ Player::Player() : ns::BaseEntity("Player") {
     inputs()->bind<Player>(sf::Keyboard::Left, &Player::moveLeft);
     inputs()->bind<Player>(sf::Keyboard::Right, &Player::moveRight);
 
-    addComponent<ns::ecs::ColliderComponent>(this, new ns::ecs::RectangleCollision(14, 10), sf::Vector2f(1, -5));
+    addComponent<ns::ecs::ColliderComponent>(this, new ns::ecs::RectangleCollision(12, 8), sf::Vector2f(0, -4));
 }
 
 void Player::moveUp() {
@@ -74,32 +74,49 @@ void Player::moveRight() {
 void Player::update() {
 
     physics()->setDirection(0, 0);
-    inputs()->update<Player>();
-    if(physics()) physics()->update();
-    if(collider()) collider()->update();
 
-    auto col = collider()->getCollision().getShape().getGlobalBounds();
+    if (ns::Transition::list.empty())
+        inputs()->update<Player>();
+
+    physics()->update();
+    collider()->update();
+
+    // resolve collisions
+    sf::FloatRect intersection;
     for (const auto& rect : MapCollisions::all()) {
-        sf::FloatRect intersection;
+        auto col = ns::FloatRect(collider()->getCollision().getShape().getGlobalBounds());
         if (col.intersects(rect, intersection)) {
-            if (intersection.width < intersection.height) {
-                setX(getX() + intersection.width * (physics()->getDirection().x == 0 ? 1.f : -1.f*physics()->getDirection().x));
+            if (rect.width == 1 && physics()->getDirection() == sf::Vector2i(0, -1)) {
+                if (std::abs(col.left - rect.left) > std::abs(col.right() - rect.right())) {
+                    setX(rect.left - col.width/2);
+                }
+                else if (std::abs(col.left - rect.left) < std::abs(col.right() - rect.right())) {
+                    setX(rect.right() + col.width/2);
+                }
             }
             else {
-                // player over box
-                if (std::abs(col.top - rect.bottom()) >= std::abs(col.top+col.height - rect.top)) {
-                    setY(getY() - intersection.height);
+                if (intersection.width < intersection.height && intersection.height >= 3) {
+                    // player on left side of box
+                    if (std::abs(col.left - rect.right()) >= std::abs(col.right() - rect.left))
+                        setX(getX() - intersection.width);
+                        // player right side of box
+                    else
+                        setX(getX() + intersection.width);
                 }
-                else if (std::abs(col.top - rect.bottom()) < std::abs(col.top+col.height - rect.top)){
-                    setY(getY() + intersection.height);
+                else if (intersection.width >= 3) {
+                    // player over box
+                    if (std::abs(col.top - rect.bottom()) >= std::abs(col.bottom() - rect.top))
+                        setY(getY() - intersection.height);
+                    // player under box
+                    else
+                        setY(getY() + intersection.height);
                 }
-                else {
-                }
-
             }
+            collider()->update();
         }
     }
 
+    // animate player
     if (physics()->getDirection() == sf::Vector2i(0, 0))
         graphics<ns::ecs::SpriteComponent>(0)->getAnimPlayer().stop();
     else {
@@ -109,13 +126,26 @@ void Player::update() {
             else
                 graphics<ns::ecs::SpriteComponent>(0)->setAnimState("walk_down");
         }
-        if (physics()->getDirection().y == 0) {
+        else if (physics()->getDirection().y == 0){
             if (physics()->getDirection().x == -1)
                 graphics<ns::ecs::SpriteComponent>(0)->setAnimState("walk_left");
             else
                 graphics<ns::ecs::SpriteComponent>(0)->setAnimState("walk_right");
         }
+
+        // dirty code, handles bug when move button pressed before textbox closed
+        if (graphics<ns::ecs::SpriteComponent>(0)->getAnimState() == "idle") {
+            if (physics()->getDirection().y == -1)
+                graphics<ns::ecs::SpriteComponent>(0)->setAnimState("walk_up");
+            else if (physics()->getDirection().y == 1)
+                graphics<ns::ecs::SpriteComponent>(0)->setAnimState("walk_down");
+            else if (physics()->getDirection().x == -1)
+                graphics<ns::ecs::SpriteComponent>(0)->setAnimState("walk_left");
+            else
+                graphics<ns::ecs::SpriteComponent>(0)->setAnimState("walk_right");
+        }
     }
+
     for (const auto& graphic_comp: graphics()) {
         graphic_comp->update();
     }

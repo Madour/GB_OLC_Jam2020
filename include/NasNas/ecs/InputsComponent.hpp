@@ -8,6 +8,7 @@
 #include <functional>
 #include <unordered_map>
 #include <SFML/System.hpp>
+#include "NasNas/data/Config.hpp"
 #include "NasNas/ecs/BaseComponent.hpp"
 
 namespace ns::ecs {
@@ -44,9 +45,11 @@ namespace ns::ecs {
     template <typename T>
     void InputsComponent::update() {
         if (m_capture_input) {
-            for (const auto& item : m_controls<T>[this]) {
-                if (sf::Keyboard::isKeyPressed(item.first))
-                    item.second(*dynamic_cast<T*>(m_entity));
+            for (auto it = Config::Inputs::pressed_keys.rbegin(); it < Config::Inputs::pressed_keys.rend(); ++it) {
+                for (const auto& [key, fn] : m_controls<T>[this]) {
+                    if (key == *it)
+                        fn(*dynamic_cast<T*>(m_entity));
+                }
             }
         }
     }

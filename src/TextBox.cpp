@@ -1,12 +1,14 @@
 // Created by Modar Nasser on 29/08/2020.
 
 #include "TextBox.hpp"
+#include "Palette.hpp"
 
 using Inputs = ns::Config::Inputs;
 
 TextBox::TextBox(const std::string& string, std::shared_ptr<ns::BitmapFont>& font) :
 m_text(string) {
     m_text.setFont(font);
+    m_text.setColor(Palette::Base[0]);
     m_text.setMaxWidth(150);
     m_text.setTypingDelay(2);
     m_text.setMaxLines(3);

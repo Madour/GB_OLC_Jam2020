@@ -26,6 +26,8 @@ bool Config::Window::cursor_grabbed = false;
 
 std::unordered_map<std::string, sf::Keyboard::Key> Config::Inputs::m_key_buttons_map;
 
+std::vector<sf::Keyboard::Key> Config::Inputs::pressed_keys;
+
 void Config::Inputs::setButtonKey(const std::string& btn_name, sf::Keyboard::Key key) {
     m_key_buttons_map[btn_name] = key;
 }

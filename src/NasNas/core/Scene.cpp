@@ -67,6 +67,12 @@ auto Scene::getDefaultLayer() -> Layer* {
     return m_default_layer.get();
 }
 
+void Scene::clearAllLayers() {
+    for (auto& [key, layer] : m_layers)
+        layer->clear();
+    m_default_layer->clear();
+}
+
 void Scene::temporaryLinkCamera(Camera* camera) {
     render_bounds = camera->getGlobalBounds();
 }

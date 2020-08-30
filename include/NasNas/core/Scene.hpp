@@ -92,6 +92,8 @@ namespace ns {
          */
          auto getDefaultLayer() -> Layer*;
 
+         void clearAllLayers();
+
     private:
         friend App; friend Camera;
 

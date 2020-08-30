@@ -120,13 +120,14 @@ void App::toggleFullscreen() {
 }
 
 void App::storeInputs(sf::Event event) {
+    auto& pressed_keys = ns::Config::Inputs::pressed_keys;
     if (event.type == sf::Event::KeyPressed)
-        if (std::find(m_inputs.begin(), m_inputs.end(), event.key.code) == m_inputs.end())
-            m_inputs.insert(m_inputs.begin(), event.key.code);
+        if (std::find(pressed_keys.begin(), pressed_keys.end(), event.key.code) == pressed_keys.end())
+            pressed_keys.insert(pressed_keys.begin(), event.key.code);
 
     if (event.type == sf::Event::KeyReleased)
-        if (std::find(m_inputs.begin(), m_inputs.end(), event.key.code) != m_inputs.end())
-            m_inputs.erase(std::find(m_inputs.begin(), m_inputs.end(), event.key.code));
+        if (std::find(pressed_keys.begin(), pressed_keys.end(), event.key.code) != pressed_keys.end())
+            pressed_keys.erase(std::find(pressed_keys.begin(), pressed_keys.end(), event.key.code));
 }
 
 void App::onEvent(const sf::Event& event) {

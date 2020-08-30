@@ -3,6 +3,13 @@
 
 #include "Palette.hpp"
 
+std::array<sf::Color, 4> Palette::Base = {
+        sf::Color::Black,
+        sf::Color(100, 100, 100),
+        sf::Color(180, 180, 180),
+        sf::Color::White
+};
+
 auto Palette::initData() -> std::map<Color, std::array<sf::Glsl::Vec3, 4>> {
     std::map<Color, std::array<sf::Glsl::Vec3, 4>> m;
     m[Color::Black][0] = {0., 0., 0.};

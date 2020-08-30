@@ -28,9 +28,14 @@ add_executable(GB_OLC_Jam
         main.cpp
         src/Game.cpp include/Game.hpp
         src/Palette.cpp include/Palette.hpp
-        src/ShaderTransition.cpp include/ShaderTransition.hpp
+        src/PaletteShiftTransition.cpp include/PaletteShiftTransition.hpp
+        src/Player.cpp include/Player.hpp
+        src/TextBox.cpp include/TextBox.hpp
+        src/MapCollisions.cpp include/MapCollisions.hpp
 
-        src/Player.cpp include/Player.hpp src/TextBox.cpp include/TextBox.hpp src/MapCollisions.cpp include/MapCollisions.hpp)
+        src/GameState.cpp include/GameState.hpp
+        src/states/LevelState.cpp include/states/LevelState.hpp
+        src/states/TitleScreenState.cpp include/states/TitleScreenState.hpp)
 
 # Demo game target
 target_include_directories(GB_OLC_Jam PRIVATE include)

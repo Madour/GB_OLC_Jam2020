@@ -4,9 +4,9 @@
 
 #include "../NasNas.h"
 
-class ShaderInTransition : public ns::Transition {
+class PaletteShiftInTransition : public ns::Transition {
 public:
-    explicit ShaderInTransition(std::string uniform_name);
+    PaletteShiftInTransition();
     void onUpdate() override;
 
 private:
@@ -16,9 +16,9 @@ private:
 };
 
 
-class ShaderOutTransition : public ns::Transition {
+class PaletteShiftOutTransition : public ns::Transition {
 public:
-    explicit ShaderOutTransition(std::string uniform_name);
+    explicit PaletteShiftOutTransition();
     void onUpdate() override;
 
 private:

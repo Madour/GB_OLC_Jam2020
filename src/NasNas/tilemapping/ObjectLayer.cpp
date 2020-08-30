@@ -19,7 +19,7 @@ ObjectLayer::Object<sf::RectangleShape>(
         m_shape.setSize({xml_node.attribute("width").as_float(), xml_node.attribute("height").as_float()});
         m_shape.setRotation(xml_node.attribute("rotation").as_float());
         m_shape.setFillColor(sf::Color(color.r, color.g, color.b, 40));
-        m_shape.setOutlineThickness(1);
+        m_shape.setOutlineThickness(-1);
         m_shape.setOutlineColor(color);
     }
     else { // point
@@ -38,7 +38,7 @@ ObjectLayer::Object<sf::EllipseShape>(
     m_shape.setRadius({xml_node.attribute("width").as_float()/2.f, xml_node.attribute("height").as_float()/2.f});
     m_shape.setRotation(xml_node.attribute("rotation").as_float());
     m_shape.setFillColor(sf::Color(color.r, color.g, color.b, 40));
-    m_shape.setOutlineThickness(1);
+    m_shape.setOutlineThickness(-1);
     m_shape.setOutlineColor(color);
 }
 
@@ -56,7 +56,7 @@ ObjectLayer::Object<sf::ConvexShape>(
         m_shape.setPoint(i, points[i]);
     m_shape.setRotation(xml_node.attribute("rotation").as_float());
     m_shape.setFillColor(sf::Color(color.r, color.g, color.b, 40));
-    m_shape.setOutlineThickness(1);
+    m_shape.setOutlineThickness(-1);
     m_shape.setOutlineColor(color);
 }
 

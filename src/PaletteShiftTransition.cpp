@@ -1,17 +1,17 @@
 // Created by Modar Nasser on 29/08/2020.
 
-#include "ShaderTransition.hpp"
+#include "PaletteShiftTransition.hpp"
 
 #include <utility>
 
 
-ShaderInTransition::ShaderInTransition(std::string uniform_name) :
-m_uniform_name(std::move(uniform_name)),
+PaletteShiftInTransition::PaletteShiftInTransition() :
+m_uniform_name("threshold"),
 m_shader(app->getShader()),
 m_treshold(1.f)
 {}
 
-void ShaderInTransition::onUpdate() {
+void PaletteShiftInTransition::onUpdate() {
     m_treshold -= 0.025f;
     if (m_treshold <= 0.0) {
         end();
@@ -22,13 +22,13 @@ void ShaderInTransition::onUpdate() {
 }
 
 
-ShaderOutTransition::ShaderOutTransition(std::string uniform_name) :
-m_uniform_name(std::move(uniform_name)),
+PaletteShiftOutTransition::PaletteShiftOutTransition() :
+m_uniform_name("threshold"),
 m_shader(app->getShader()),
 m_treshold(0.)
 {}
 
-void ShaderOutTransition::onUpdate() {
+void PaletteShiftOutTransition::onUpdate() {
     m_treshold += 0.025f;
     if (m_treshold >= 1.5)
         end();

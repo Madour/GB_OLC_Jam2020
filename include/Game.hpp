@@ -3,15 +3,18 @@
 #pragma once
 
 #include "../NasNas.h"
+
 #include "Palette.hpp"
 #include "Player.hpp"
-#include "ShaderTransition.hpp"
+#include "PaletteShiftTransition.hpp"
 #include "TextBox.hpp"
 #include "MapCollisions.hpp"
+#include "GameState.hpp"
 
 class Game : public ns::App {
 public:
     Game();
+    ~Game() override;
 
     void onEvent(const sf::Event& event) override;
 
@@ -20,25 +23,37 @@ public:
     void setPalette(Palette::Color color);
     void setPalette(int color);
 
+    template <typename OldState, typename NewState>
+    void setState();
+
+    ns::Scene* scene;
+    ns::Scene* ui_scene;
+
+    ns::Camera* camera;
+    ns::Camera* ui_camera;
+
+    std::map<std::string, std::shared_ptr<ns::BitmapFont>> fonts;
+
+    std::shared_ptr<Player> player;
+
 private:
     void initBitmapFonts();
 
-    sf::Clock m_clock;
     int m_ticks = 0;
-    std::map<std::string, std::shared_ptr<ns::BitmapFont>> m_fonts;
 
-    ns::tm::TiledMap m_map;
-
-    std::shared_ptr<TextBox> m_textbox;
-    std::shared_ptr<Player> m_player;
-
-    ns::Scene* m_scene;
-    ns::Scene* m_ui_scene;
-
-    ns::Camera* m_camera;
-    ns::Camera* m_ui_camera;
+    GameState* m_state;
 
     int m_palette_index = 0;
     std::shared_ptr<sf::Shader> m_palette_shader;
 
 };
+
+template <typename OldState, typename NewState>
+void Game::setState() {
+    m_ticks = 0;
+    delete(dynamic_cast<OldState*>(m_state));
+    m_state = new NewState();
+    m_state->init();
+}
+
+
