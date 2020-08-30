@@ -35,7 +35,7 @@ add_executable(GB_OLC_Jam
 
         src/GameState.cpp include/GameState.hpp
         src/states/LevelState.cpp include/states/LevelState.hpp
-        src/states/TitleScreenState.cpp include/states/TitleScreenState.hpp)
+        src/states/TitleScreenState.cpp include/states/TitleScreenState.hpp src/states/MuseumLevelState.cpp include/states/MuseumLevelState.hpp)
 
 # Demo game target
 target_include_directories(GB_OLC_Jam PRIVATE include)

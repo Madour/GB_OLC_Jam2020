@@ -12,10 +12,11 @@ public:
 
     enum Color {
         Black,
-        Green,
-        Blue,
-        Yellow,
-        Kirokaze,
+        Present,
+        Red,
+        Sands,
+        Stone,
+        Forest,
 
         count
     };

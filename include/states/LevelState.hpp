@@ -6,15 +6,9 @@
 
 class LevelState : public GameState {
 
-    void init() override;
-
-    void onEvent(const sf::Event& event) override;
-
-    void update() override;
-
-private:
+protected:
+    ns::FloatRect m_warp_zone;
     std::shared_ptr<ns::tm::TiledMap> m_map;
-
     std::shared_ptr<TextBox> m_textbox = nullptr;
 };
 

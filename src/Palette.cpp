@@ -12,30 +12,36 @@ std::array<sf::Color, 4> Palette::Base = {
 
 auto Palette::initData() -> std::map<Color, std::array<sf::Glsl::Vec3, 4>> {
     std::map<Color, std::array<sf::Glsl::Vec3, 4>> m;
-    m[Color::Black][0] = {0., 0., 0.};
-    m[Color::Black][1] = {0.39, 0.39, 0.39};
-    m[Color::Black][2] = {0.7, 0.7, 0.7};
-    m[Color::Black][3] = {1., 1., 1.};
+    m[Color::Black][0] = {0, 0, 0};
+    m[Color::Black][1] = {100, 100, 100};
+    m[Color::Black][2] = {180, 180, 180};
+    m[Color::Black][3] = {255, 255, 255};
 
-    m[Color::Green][0] = {0.2, 0.35, 0.1};
-    m[Color::Green][1] = {0.4, 0.7, 0.3};
-    m[Color::Green][2] = {0.6, 0.8, 0.6};
-    m[Color::Green][3] = {0.9, 0.99, 0.9};
 
-    m[Color::Blue][0] = {0./255, 43./255, 89./255};
-    m[Color::Blue][1] = {0./255, 95./255, 140./255};
-    m[Color::Blue][2] = {0./255, 185./255, 190./255};
-    m[Color::Blue][3] = {170./255, 244./255, 229./255};
+    m[Color::Present][0] = {0x20, 0x28, 0x3d};
+    m[Color::Present][1] = {0x5a, 0x96, 0x7e};
+    m[Color::Present][2] = {0xe5, 0xb0, 0x83};
+    m[Color::Present][3] = {0xfb, 0xf7, 0xf3};
 
-    m[Color::Yellow][0] = {0.35, 0.35, 0.1};
-    m[Color::Yellow][1] = {0.7, 0.7, 0.3};
-    m[Color::Yellow][2] = {0.8, 0.8, 0.6};
-    m[Color::Yellow][3] = {0.99, 0.99, 0.9};
+    m[Color::Red][0] = {0x1b, 0x03, 0x26};
+    m[Color::Red][1] = {0x7a, 0x1c, 0x4b};
+    m[Color::Red][2] = {0xba, 0x50, 0x44};
+    m[Color::Red][3] = {0xef, 0xf9, 0xd6};
 
-    m[Color::Kirokaze][0] = {51./255, 44./255, 80./255};
-    m[Color::Kirokaze][1] = {70./255, 135./255, 143./255};
-    m[Color::Kirokaze][2] = {148./255, 227./255, 68./255};
-    m[Color::Kirokaze][3] = {226./255, 243./255, 228./255};
+    m[Color::Sands][0] = {0x0a, 0x16, 0x4e};
+    m[Color::Sands][1] = {0xa2, 0x51, 0x30};
+    m[Color::Sands][2] = {0xce, 0xad, 0x6b};
+    m[Color::Sands][3] = {0xfa, 0xfd, 0xff};
+
+    m[Color::Stone][0] = {0x08, 0x26, 0x3b};
+    m[Color::Stone][1] = {0x30, 0x61, 0x7b};
+    m[Color::Stone][2] = {0x72, 0xa8, 0xb8};
+    m[Color::Stone][3] = {0xe5, 0xf1, 0xf3};
+
+    m[Color::Forest][0] = {51, 44, 80};
+    m[Color::Forest][1] = {70, 135, 143};
+    m[Color::Forest][2] = {148, 227, 68};
+    m[Color::Forest][3] = {226, 243, 228};
 
     return m;
 }

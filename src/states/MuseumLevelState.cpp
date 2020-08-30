@@ -1,19 +1,19 @@
 // Created by Modar Nasser on 30/08/2020.
 
 #include "Game.hpp"
-#include "states/LevelState.hpp"
+#include "states/MuseumLevelState.hpp"
 
-/*
-void LevelState::init() {
+
+void MuseumLevelState::init() {
 
     game->scene->clearAllLayers();
     game->ui_scene->clearAllLayers();
 
     m_map = std::make_shared<ns::tm::TiledMap>();
-    m_map->loadFromFile("assets/warehouse.tmx");
+    m_map->loadFromFile("assets/museum.tmx");
     m_map->getObjectLayer("collisions")->setVisible(false);
 
-    m_warp_zone = m_map->getObjectLayer("warpzone")->getRectangle(17).getShape().getGlobalBounds();
+    //m_warp_zone = m_map->getObjectLayer("warpzone")->getRectangle(17).getShape().getGlobalBounds();
 
     MapCollisions::clear();
     for (const auto& rect : m_map->getObjectLayer("collisions")->getRectangles())
@@ -22,11 +22,11 @@ void LevelState::init() {
     game->scene->getLayer("ground")->add(m_map->getTileLayer("ground"));
     game->scene->getLayer("ground")->add(m_map->getTileLayer("ground2"));
     game->scene->getLayer("front")->add(m_map->getTileLayer("front"));
-    game->scene->getLayer("front")->add(game->player);
+    game->scene->getLayer("entities")->add(game->player);
     game->scene->getLayer("top")->add(m_map->getTileLayer("top"));
     game->scene->getLayer("top")->add(m_map->getTileLayer("top2"));
-    game->scene->getLayer("top")->add(m_map->getObjectLayer("collisions"));
-    game->scene->getLayer("top")->add(m_map->getObjectLayer("warpzone"));
+    game->scene->getLayer("shapes")->add(m_map->getObjectLayer("collisions"));
+    game->scene->getLayer("shapes")->add(m_map->getObjectLayer("warpzone"));
 
     m_textbox = std::make_shared<TextBox>("Hello fam !", game->fonts["default"]);
     game->ui_scene->getDefaultLayer()->add(m_textbox);
@@ -36,7 +36,7 @@ void LevelState::init() {
 
 }
 
-void LevelState::onEvent(const sf::Event& event) {
+void MuseumLevelState::onEvent(const sf::Event& event) {
     m_map->getObjectLayer("collisions")->setVisible(ns::Config::debug);
     if (m_textbox)
         m_textbox->onEvent(event);
@@ -65,7 +65,7 @@ void LevelState::onEvent(const sf::Event& event) {
     }
 }
 
-void LevelState::update() {
+void MuseumLevelState::update() {
 
     game->player->inputs()->setCaptureInput(true);
     if (m_textbox != nullptr && ns::Transition::list.empty()) {
@@ -77,11 +77,5 @@ void LevelState::update() {
         game->player->inputs()->setCaptureInput(false);
     }
 
-    if (m_warp_zone.contains(game->player->collider()->getCollision().getShape().getGlobalBounds())) {
-        m_map->loadFromFile("assets/museum.tmx");
-
-    }
-
     game->player->update();
 }
-*/

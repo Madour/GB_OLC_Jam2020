@@ -39,6 +39,7 @@ public:
 private:
     void initBitmapFonts();
 
+    sf::Clock time;
     int m_ticks = 0;
 
     GameState* m_state;

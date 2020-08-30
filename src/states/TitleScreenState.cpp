@@ -2,7 +2,7 @@
 
 #include "Game.hpp"
 #include "states/TitleScreenState.hpp"
-#include "states/LevelState.hpp"
+#include "states/MuseumLevelState.hpp"
 
 
 void TitleScreenState::init() {
@@ -48,7 +48,7 @@ void TitleScreenState::onEvent(const sf::Event& event) {
                 tr->setOnEndCallback([](){
                     auto* tr = new ns::transition::CircleOpen();
                     tr->start();
-                    game->setState<TitleScreenState, LevelState>();
+                    game->setState<TitleScreenState, MuseumLevelState>();
                 });
             }
         }

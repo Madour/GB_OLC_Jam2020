@@ -38,6 +38,9 @@ namespace ns {
 
         auto center() const -> sf::Vector2f { return sf::Vector2f((float)this->width/2.f, (float)this->height/2.f); }
 
+        template <typename S>
+        auto contains(sf::Rect<S> other) -> bool;
+
         auto operator=(const ns::Rect<T>& other) -> ns::Rect<T>&;
 
         template <typename S>
@@ -53,6 +56,15 @@ namespace ns {
     template <typename S>
     Rect<T>::Rect(const sf::Rect<S>& rect) : sf::Rect<T>(rect)
     {}
+
+    template <typename T>
+    template <typename S>
+    auto Rect<T>::contains(sf::Rect<S> other) -> bool {
+        return (this->left < other.left)
+            && (this->right() > other.left + other.width)
+            && (this->top < other.top)
+            && (this->bottom() > other.top + other.height);
+    }
 
     template <typename T>
     auto Rect<T>::operator=(const ns::Rect<T> &other) -> ns::Rect<T>&{

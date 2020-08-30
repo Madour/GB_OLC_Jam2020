@@ -5,8 +5,16 @@
 
 auto main() -> int {
 
+    /*
+     * Atos - Greek boy
+     * Adil - Egyptian boy
+     * Izel - Maya girl
+     * Yuki - Japanese girl
+     */
+
     ns::Config::debug = false;
     ns::Config::Window::key_repeat = false;
+    ns::Config::Window::vertical_sync = true;
 
     ns::Config::Inputs::setButtonKey("A", sf::Keyboard::X);
     ns::Config::Inputs::setButtonKey("B", sf::Keyboard::C);

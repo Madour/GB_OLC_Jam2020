@@ -138,6 +138,7 @@ void Camera::update() {
 }
 
 void Camera::render(sf::RenderTarget& target) {
+    m_render_texture.setRepeated(true);
     m_render_texture.setView(*this);
     m_render_texture.clear(sf::Color::Transparent);
 

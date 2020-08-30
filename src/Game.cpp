@@ -3,8 +3,8 @@
 #include "Game.hpp"
 
 #include "GameState.hpp"
-#include "states/LevelState.hpp"
 #include "states/TitleScreenState.hpp"
+#include "states/MuseumLevelState.hpp"
 
 
 Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
@@ -21,14 +21,16 @@ Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
             "vec2 pos = gl_TexCoord[0].xy;"
             "vec4 col = texture2D(texture, pos);"
             "vec4 new_col = col;"
+
             "if (col.r <= threshold)"
-                "new_col = vec4(colors[0], col.a);"
+                "new_col = vec4(colors[0]/255., col.a);"
             "else if (col.r <= threshold + 0.4f)"
-                "new_col = vec4(colors[1], col.a);"
+                "new_col = vec4(colors[1]/255., col.a);"
             "else if (col.r <= threshold + 0.72f)"
-                "new_col = vec4(colors[2], col.a);"
+                "new_col = vec4(colors[2]/255., col.a);"
             "else if (col.r <= threshold + 1.f)"
-                "new_col = vec4(colors[3], col.a);"
+                "new_col = vec4(colors[3]/255., col.a);"
+
             "gl_FragColor = new_col;"
         "}",
         sf::Shader::Fragment
@@ -36,6 +38,22 @@ Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
     m_palette_shader->setUniform("threshold", 0.f);
     m_palette_shader->setUniformArray("colors", Palette::getColor(Palette::Color::Black).data(), 4);
     setShader(m_palette_shader.get());
+
+    //auto* cam_shader = new sf::Shader();
+    //cam_shader->loadFromMemory(
+    //        "uniform sampler2D texture;"
+    //        "uniform float time;"
+    //        "void main()"
+    //        "{"
+    //            "vec2 pos = gl_TexCoord[0].xy;"
+    //            "pos.x = pos.x + sin(pos.y + time*2.)/10.;"
+    //            "vec4 col = texture2D(texture, pos);"
+    //            "vec4 new_col = col;"
+    //            "gl_FragColor = new_col;"
+    //        "}",
+    //        sf::Shader::Fragment
+    //);
+    //cam_shader->setUniform("time", 0.f);
 
     // setting fonts
     initBitmapFonts();
@@ -48,12 +66,15 @@ Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
     scene = createScene("main");
     scene->addLayer("ground", 0);
     scene->addLayer("front", 1);
-    scene->addLayer("top", 2);
+    scene->addLayer("entities", 2);
+    scene->addLayer("top", 3);
+    scene->addLayer("shapes", 4);
 
     ui_scene = createScene("ui");
 
     camera = createCamera("main", 0, {0, 0, ns::Config::Window::view_width, ns::Config::Window::view_height});
     camera->lookAt(scene);
+    //camera->setShader(cam_shader);
 
     ui_camera = createCamera("ui", 2, {0, 0, ns::Config::Window::view_width, ns::Config::Window::view_height});
     ui_camera->lookAt(ui_scene);
@@ -101,7 +122,7 @@ void Game::onEvent(const sf::Event& event) {
 }
 
 void Game::update() {
-
+    //camera->getShader()->setUniform("time", time.getElapsedTime().asSeconds());
     m_state->update();
     m_ticks++;
 
