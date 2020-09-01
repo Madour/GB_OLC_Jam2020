@@ -14,9 +14,20 @@ public:
     void moveRight();
     void moveLeft();
 
+    auto getName() -> const std::string&;
+    int getHP() const;
+    auto getItems() -> std::vector<int>&;
+
+    void damage();
     void update() override;
 
 private:
+    std::string m_name = "Adil";
+    int m_hp = 10;
+    bool visible = true;
+    int m_invisibility_timer = 0;
+    int m_blink_timer = 0;
+    std::vector<int> m_items = {1, 2, 3};
     std::unique_ptr<ns::Spritesheet> m_spritesheet;
     std::vector<int> m_inventory;
 };

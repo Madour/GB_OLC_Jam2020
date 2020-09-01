@@ -71,7 +71,40 @@ void Player::moveRight() {
     }
 }
 
+auto Player::getHP() const  -> int{
+    return m_hp;
+}
+
+auto Player::getItems() -> std::vector<int>& {
+    return m_items;
+}
+
+auto Player::getName() -> const std::string& {
+    return m_name;
+}
+
+void Player::damage() {
+    if (m_hp > 0 && m_blink_timer == 0) {
+        m_hp--;
+        m_blink_timer = 80;
+    }
+}
+
 void Player::update() {
+    if (m_blink_timer > 0) {
+        if (m_blink_timer%4 == 0)
+            visible = !visible;
+        m_blink_timer--;
+    }
+    else if (m_invisibility_timer > 0) {
+            visible = !visible;
+        m_invisibility_timer--;
+    }
+
+    if (visible)
+        graphics<ns::ecs::SpriteComponent>(0)->getDrawable().setColor(sf::Color::White);
+    else
+        graphics<ns::ecs::SpriteComponent>(0)->getDrawable().setColor(sf::Color::Transparent);
 
     physics()->setDirection(0, 0);
 

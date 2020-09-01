@@ -46,6 +46,7 @@ namespace ns::tm {
     public:
         TileLayer(const pugi::xml_node& xml_node, TiledMap* tiledmap);
 
+        //auto allTiles() -> std::vector<Tile>&;
         auto getTile(int x, int y) -> const Tile&;
         auto getTile(sf::Vector2i pos) -> const Tile&;
         auto getGlobalBounds() -> ns::FloatRect override;

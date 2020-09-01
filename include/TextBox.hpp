@@ -5,7 +5,7 @@
 
 class TextBox : public ns::Drawable {
 public:
-    TextBox(const std::string& string, std::shared_ptr<ns::BitmapFont>& font);
+    TextBox(const std::string& string, std::shared_ptr<ns::BitmapFont>& font, const std::string& label = "");
 
     auto getPosition() -> sf::Vector2f override;
     void setPosition(const sf::Vector2f& position);
@@ -18,6 +18,8 @@ public:
     void onEvent(const sf::Event& event);
     void update();
 
+    static std::shared_ptr<ns::BitmapFont> label_font;
+
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -25,7 +27,9 @@ private:
     bool m_closing = false;
 
     ns::ui::TypedText m_text;
+    ns::BitmapText m_label;
     sf::Sprite m_bg;
+    sf::Sprite m_bg_label;
 
 };
 

@@ -135,7 +135,7 @@ namespace ns {
          */
         explicit BitmapText(const std::string& text);
 
-        auto getString() -> const std::string&;
+        auto getString() const -> const std::string& ;
 
         /**
          * \brief Set a the string to be displayed

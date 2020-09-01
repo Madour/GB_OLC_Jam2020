@@ -8,11 +8,13 @@
 void WarehouseLevelState::init() {
 
     game->scene->clearAllLayers();
-    game->ui_scene->clearAllLayers();
+    game->ui_scene->getDefaultLayer()->clear();
 
     m_map = std::make_shared<ns::tm::TiledMap>();
     m_map->loadFromFile("assets/maps/warehouse.tmx");
-    m_map->getObjectLayer("collisions")->setVisible(false);
+
+    game->player->graphics<ns::ecs::SpriteComponent>(0)->setAnimState("idle");
+    game->player->setPosition(m_map->getProperty<float>("start_x"), m_map->getProperty<float>("start_y"));
 
     m_machine_active_spritesheet = std::unique_ptr<ns::Spritesheet>(new ns::Spritesheet(
         "machine_active",
@@ -48,14 +50,8 @@ void WarehouseLevelState::init() {
     m_machine_active_sprite->setTexture(&ns::Res::getTexture("machine_activate.png"));
     m_machine_active_sprite->setTextureRect(m_machine_active_anim_player.getActiveFrame().rectangle);
 
-    MapCollisions::clear();
-    for (const auto& rect : m_map->getObjectLayer("collisions")->getRectangles())
-        MapCollisions::add(ns::FloatRect(rect.getShape().getGlobalBounds()));
-
-    m_warp_zone = m_map->getObjectLayer("warpzone")->getRectangles()[0].getShape().getGlobalBounds();
-
-    game->scene->getLayer("ground")->add(m_map->getTileLayer("ground"));
-    game->scene->getLayer("ground")->add(m_map->getTileLayer("ground2"));
+    game->scene->getLayer("back")->add(m_map->getTileLayer("back"));
+    game->scene->getLayer("back")->add(m_map->getTileLayer("back2"));
     game->scene->getLayer("front")->add(m_map->getTileLayer("front"));
     game->scene->getLayer("entities")->add(game->player);
     game->scene->getLayer("top")->add(m_map->getTileLayer("top"));
@@ -63,12 +59,13 @@ void WarehouseLevelState::init() {
     game->scene->getLayer("top")->add(m_machine_active_sprite);
     game->scene->getLayer("shapes")->add(m_map->getObjectLayer("collisions"));
 
-    m_textbox = std::make_shared<TextBox>("Hello fam !", game->fonts["default"]);
+    m_textbox = std::make_shared<TextBox>("Secret warehouse", game->fonts["default"]);
     game->ui_scene->getDefaultLayer()->add(m_textbox);
 
     game->camera->follow(game->player.get());
-    game->camera->setLimitsRectangle(ns::IntRect(m_map->getTileLayer("ground")->getGlobalBounds()));
+    game->camera->setLimitsRectangle(ns::IntRect(m_map->getTileLayer("back")->getGlobalBounds()));
 
+    LevelState::init();
 }
 
 void WarehouseLevelState::onEvent(const sf::Event& event) {
@@ -105,7 +102,7 @@ void WarehouseLevelState::update() {
     updateTextbox();
 
     // checking for warp zone
-    if (m_warp_zone.contains(game->player->collider()->getCollision().getShape().getGlobalBounds())) {
+    if (ns::FloatRect(262, 70, 18, 17).contains(game->player->collider()->getCollision().getShape().getGlobalBounds())) {
         game->player->inputs()->setCaptureInput(false);
         game->player->graphics<ns::ecs::SpriteComponent>(0)->setAnimState("idle");
         if (game->camera->getTop() > 0)

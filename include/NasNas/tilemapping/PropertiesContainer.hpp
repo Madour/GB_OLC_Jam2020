@@ -25,6 +25,8 @@ namespace ns::tm {
         PropertiesContainer();
         explicit PropertiesContainer(const pugi::xml_node& xmlnode_props);
 
+        auto hasProperty(const std::string& name) -> bool;
+
         template <typename T>
         auto getProperty(const std::string& name) const -> T;
 

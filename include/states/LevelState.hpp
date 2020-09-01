@@ -4,10 +4,11 @@
 
 #include "GameState.hpp"
 #include "TextBox.hpp"
+#include "Spike.hpp"
 
 class LevelState : public GameState {
 public:
-    explicit LevelState(const std::string& map_name);
+    explicit LevelState(const std::string& map_name, bool start_pos = true);
     LevelState();
 
     void init() override;
@@ -15,14 +16,18 @@ public:
     void update() override;
 
 protected:
+    void configurePalette();
     void updateTextbox();
     void updateMap();
-    ns::FloatRect m_warp_zone;
     std::shared_ptr<ns::tm::TiledMap> m_map;
     std::shared_ptr<TextBox> m_textbox = nullptr;
+    std::vector<Spike> m_spikes;
 
 private:
     std::string m_map_name;
+    sf::VertexArray m_spikes_vertices;
+    sf::RenderTexture m_spikes_texture;
+    std::shared_ptr<sf::RectangleShape> m_spikes_sprite;
 };
 
 

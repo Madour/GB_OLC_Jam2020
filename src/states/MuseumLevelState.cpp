@@ -8,20 +8,15 @@
 void MuseumLevelState::init() {
 
     game->scene->clearAllLayers();
-    game->ui_scene->clearAllLayers();
+    game->ui_scene->getDefaultLayer()->clear();
 
     m_map = std::make_shared<ns::tm::TiledMap>();
     m_map->loadFromFile("assets/maps/museum.tmx");
-    m_map->getObjectLayer("collisions")->setVisible(false);
 
-    //m_warp_zone = m_map->getObjectLayer("warpzone")->getRectangle(17).getShape().getGlobalBounds();
 
-    MapCollisions::clear();
-    for (const auto& rect : m_map->getObjectLayer("collisions")->getRectangles())
-        MapCollisions::add(ns::FloatRect(rect.getShape().getGlobalBounds()));
 
-    game->scene->getLayer("ground")->add(m_map->getTileLayer("ground"));
-    game->scene->getLayer("ground")->add(m_map->getTileLayer("ground2"));
+    game->scene->getLayer("back")->add(m_map->getTileLayer("back"));
+    game->scene->getLayer("back")->add(m_map->getTileLayer("back2"));
     game->scene->getLayer("front")->add(m_map->getTileLayer("front"));
     game->scene->getLayer("entities")->add(game->player);
     game->scene->getLayer("top")->add(m_map->getTileLayer("top"));
@@ -29,11 +24,16 @@ void MuseumLevelState::init() {
     game->scene->getLayer("shapes")->add(m_map->getObjectLayer("collisions"));
     game->scene->getLayer("shapes")->add(m_map->getObjectLayer("warpzone"));
 
-    m_textbox = std::make_shared<TextBox>("Space time travel successful !", game->fonts["default"]);
+    m_textbox = std::make_shared<TextBox>("... \n\n\nMy museum is empty today. \nOpened for two monthes, and only 3 visitors... "
+                                          "I really have to do something. \nI need to find a way to get more "
+                                          "valuable artifacts to show; otherwise my museum will not survive the next month. \n\n\n"
+                                          "I am ready to do anything! \nReally, anything !!", game->fonts["default"]);
     game->ui_scene->getDefaultLayer()->add(m_textbox);
 
     game->camera->follow(game->player.get());
-    game->camera->setLimitsRectangle(ns::IntRect(m_map->getTileLayer("ground")->getGlobalBounds()));
+    game->camera->setLimitsRectangle(ns::IntRect(m_map->getTileLayer("back")->getGlobalBounds()));
+
+    LevelState::init();
 
 }
 
@@ -66,6 +66,19 @@ void MuseumLevelState::onEvent(const sf::Event& event) {
 void MuseumLevelState::update() {
     updateMap();
     updateTextbox();
+
+    if (ns::FloatRect(16, 64, 16, 16).contains(game->player->collider()->getCollision().getShape().getGlobalBounds())) {
+        game->player->inputs()->setCaptureInput(false);
+        if (ns::Transition::list.empty()) {
+            auto* tr = new PaletteShiftOutTransition();
+            tr->start();
+            tr->setOnEndCallback([](){
+                game->setState<WarehouseLevelState>();
+                auto* tr = new PaletteShiftInTransition();
+                tr->start();
+            });
+        }
+    }
 
     game->player->update();
 }

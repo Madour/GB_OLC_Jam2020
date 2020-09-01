@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="20" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="48">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="20" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="49">
+ <properties>
+  <property name="palette" type="int" value="0"/>
+  <property name="start_x" type="float" value="104"/>
+  <property name="start_y" type="float" value="43"/>
+ </properties>
  <tileset firstgid="1" name="interior_tileset" tilewidth="16" tileheight="16" tilecount="176" columns="11">
   <image source="tilesets/interior_tileset.png" width="176" height="256"/>
  </tileset>
@@ -192,7 +197,7 @@
    </animation>
   </tile>
  </tileset>
- <layer id="1" name="ground" width="20" height="14">
+ <layer id="1" name="back" width="20" height="14">
   <data encoding="csv">
 16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,
 16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,
@@ -210,7 +215,7 @@
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 </data>
  </layer>
- <layer id="6" name="ground2" width="20" height="14">
+ <layer id="6" name="back2" width="20" height="14">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -230,9 +235,9 @@
  </layer>
  <layer id="2" name="front" width="20" height="14">
   <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,43,44,0,0,0,42,0,0,53,0,0,42,0,0,0,0,0,
-113,119,119,119,119,119,119,119,119,119,119,64,119,119,119,119,119,119,119,119,
+164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,
+164,164,42,164,164,164,53,164,164,164,164,164,43,44,164,164,164,164,164,164,
+113,119,119,119,119,119,64,119,119,119,119,119,119,119,119,119,119,119,119,119,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,476,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,578,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,675,676,677,678,679,680,
@@ -283,6 +288,10 @@
 </data>
  </layer>
  <objectgroup color="#ff0000" id="4" name="collisions" tintcolor="#ff0000">
+  <properties>
+   <property name="start_x" type="float" value="104"/>
+   <property name="start_y" type="float" value="41"/>
+  </properties>
   <object id="2" x="0" y="128" width="16" height="48"/>
   <object id="6" x="32" y="176" width="16" height="16"/>
   <object id="7" x="32" y="96" width="16" height="48"/>
@@ -315,13 +324,6 @@
   <object id="38" x="286" y="67" width="1" height="27"/>
   <object id="43" x="303" y="75" width="16" height="20"/>
  </objectgroup>
- <objectgroup color="#00d1ff" id="5" name="warpzone" visible="0">
-  <object id="17" x="260" y="67" width="22" height="20">
-   <properties>
-    <property name="map" value="musem"/>
-    <property name="posx" type="float" value="168"/>
-    <property name="posy" type="float" value="72"/>
-   </properties>
-  </object>
- </objectgroup>
+ <objectgroup color="#00d1ff" id="5" name="warpzone"/>
+ <objectgroup id="8" name="textboxes"/>
 </map>

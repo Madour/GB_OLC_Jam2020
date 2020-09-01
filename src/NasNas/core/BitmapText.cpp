@@ -99,7 +99,7 @@ BitmapText::BitmapText(const std::string& text) {
     setString(text);
 }
 
-auto BitmapText::getString() -> const std::string& {
+auto BitmapText::getString() const -> const std::string& {
     return m_string;
 }
 
@@ -180,6 +180,7 @@ void BitmapText::processString() {
         // inserting new line character when the width exceeds the max width
         int current_width = 0;
         for (auto& w : words) {
+            if (w[0] == '\n' || w[w.size()-1] == '\n') current_width = 0;
             if (current_width + getFont()->computeStringSize(w).x > m_max_width) {
                 current_width = 0;
                 if (w[0] != '\n')
@@ -208,10 +209,10 @@ void BitmapText::updateVertices() {
         for(const auto& character : m_processed_string) {
             if (character == '\n') {
                 x = 0;
-                y += (float)m_font->getGlyphSize().y;
+                y += (float)m_font->getGlyphSize().y+1.f;
                 max_w = std::max(max_w, w);
                 w = 0;
-                h += m_font->getGlyphSize().y;
+                h += m_font->getGlyphSize().y+1u;
                 continue;
             }
             auto glyph = m_font->getGlyph(character);

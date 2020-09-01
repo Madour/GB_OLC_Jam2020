@@ -59,6 +59,10 @@ Layer(xml_node, tiledmap) {
     m_sprite.setColor(m_tintcolor);
 }
 
+/*auto TileLayer::allTiles() -> const std::vector<Tile>& {
+    return m_tiles;
+}*/
+
 auto TileLayer::getTile(int x, int y) -> const Tile&{
     return m_tiles[x + y*m_width];
 }

@@ -1,6 +1,6 @@
 // Created by Modar Nasser on 29/08/2020.
 
-#include "PaletteShiftTransition.hpp"
+#include "transitions/PaletteShiftTransition.hpp"
 
 #include <utility>
 

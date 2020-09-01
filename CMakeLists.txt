@@ -28,16 +28,20 @@ add_executable(GB_OLC_Jam
         main.cpp
         src/Game.cpp include/Game.hpp
         src/Palette.cpp include/Palette.hpp
-        src/PaletteShiftTransition.cpp include/PaletteShiftTransition.hpp
         src/Player.cpp include/Player.hpp
         src/TextBox.cpp include/TextBox.hpp
         src/MapCollisions.cpp include/MapCollisions.hpp
 
+        src/transitions/PaletteShiftTransition.cpp include/transitions/PaletteShiftTransition.hpp
+        src/transitions/WaveTransition.cpp include/transitions/WaveTransition.hpp
+
         src/GameState.cpp include/GameState.hpp
-        include/states/LevelState.hpp
+        include/states/LevelState.hpp src/states/LevelState.cpp
         src/states/TitleScreenState.cpp include/states/TitleScreenState.hpp
         src/states/MuseumLevelState.cpp include/states/MuseumLevelState.hpp
-        src/states/WarehouseLevelState.cpp include/states/WarehouseLevelState.hpp src/WaveTransition.cpp include/WaveTransition.hpp src/states/LevelState.cpp)
+        src/states/WarehouseLevelState.cpp include/states/WarehouseLevelState.hpp
+
+        src/HUD.cpp include/HUD.hpp src/Spike.cpp include/Spike.hpp src/Artifact.cpp include/Artifact.hpp src/Item.cpp include/Item.hpp)
 
 # Demo game target
 target_include_directories(GB_OLC_Jam PRIVATE include)

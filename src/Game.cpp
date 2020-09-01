@@ -8,6 +8,7 @@
 
 
 Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
+    std::srand((int) std::time(nullptr));
     GameState::game = this;
 
     // setting up shader
@@ -61,16 +62,20 @@ Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
     player = std::make_shared<Player>();
     player->setPosition(184, 45);
 
+    hud = std::make_shared<HUD>(this);
+
     //---------------------------------------------------//
 
     scene = createScene("main");
-    scene->addLayer("ground", 0);
+    scene->addLayer("back", 0);
     scene->addLayer("front", 1);
     scene->addLayer("entities", 2);
     scene->addLayer("top", 3);
     scene->addLayer("shapes", 4);
 
     ui_scene = createScene("ui");
+    ui_scene->addLayer("hud", 1);
+    ui_scene->getLayer("hud")->add(hud);
 
     camera = createCamera("main", 0, {0, 0, ns::Config::Window::view_width, ns::Config::Window::view_height});
     camera->lookAt(scene);
@@ -110,11 +115,24 @@ void Game::onEvent(const sf::Event& event) {
                 m_palette_index = (m_palette_index + 1 ) % (int)Palette::Color::count;
                 setPalette(m_palette_index);
             }
+            if (event.key.code == sf::Keyboard::F4) {
+                hud->open(); setState<LevelState>("egypt_out.tmx");
+            }
+            if (event.key.code == sf::Keyboard::F5) {
+                hud->close();
+            }
+            if (event.key.code == sf::Keyboard::F6) {
+                player->damage();
+            }
 
             if (event.key.code == sf::Keyboard::Escape)
                 getWindow().close();
             if (event.key.code == sf::Keyboard::F)
                 toggleFullscreen();
+
+            if (event.key.code == ns::Config::Inputs::getButtonKey("select")) {
+                hud->nextItem();
+            }
 
             break;
 
@@ -125,6 +143,7 @@ void Game::onEvent(const sf::Event& event) {
 
 void Game::update() {
     m_state->update();
+    hud->update();
     m_ticks++;
 }
 
@@ -176,16 +195,18 @@ void Game::initBitmapFonts() {
             {
                 {"@", 8},
                 {"ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8},
-                {"#$123456789", 8},
+                {"#$23456789", 8},
                 {"j", 5},
                 {"il", 5},
-                {".,!:;", 3},
+                {".,", 5},
+                {":!;1", 6}
             },
             {6, 8}
     );
     fonts["default"] = std::shared_ptr<ns::BitmapFont>(default_font);
     fonts["italic"] = std::shared_ptr<ns::BitmapFont>(italic_font);
     fonts["bold"] = std::shared_ptr<ns::BitmapFont>(bold_font);
+    TextBox::label_font = fonts["italic"];
 }
 
 Game::~Game() {

@@ -8,7 +8,7 @@
 void TitleScreenState::init() {
 
     game->scene->clearAllLayers();
-    game->ui_scene->clearAllLayers();
+    game->ui_scene->getDefaultLayer()->clear();
 
     auto bg = std::make_shared<sf::RectangleShape>();
     bg->setSize(sf::Vector2f(ns::Config::Window::view_width, ns::Config::Window::view_height));

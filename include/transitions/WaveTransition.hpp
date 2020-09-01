@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "../NasNas.h"
+#include "../../NasNas.h"
 
 class WaveInTransition : public ns::Transition {
 public:

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="40" height="11" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="10">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="40" height="11" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="12">
  <properties>
-  <property name="start_x" type="float" value="430"/>
-  <property name="start_y" type="float" value="150"/>
+  <property name="palette" type="int" value="3"/>
+  <property name="start_x" type="float" value="600"/>
+  <property name="start_y" type="float" value="145"/>
  </properties>
  <tileset firstgid="1" source="tilesets/tileset.tsx"/>
  <tileset firstgid="91" name="sands" tilewidth="16" tileheight="16" tilecount="20" columns="4">
   <image source="tilesets/sands.png" width="64" height="80"/>
  </tileset>
- <layer id="2" name="ground" width="40" height="11">
+ <layer id="2" name="back" width="40" height="11">
   <data encoding="csv">
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
@@ -23,7 +24,7 @@
 24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24
 </data>
  </layer>
- <layer id="5" name="ground2" width="40" height="11">
+ <layer id="5" name="back2" width="40" height="11">
   <data encoding="csv">
 0,0,0,83,84,0,0,0,0,0,0,0,0,0,0,0,0,83,84,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,83,84,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -46,8 +47,8 @@
 72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,0,0,0,0,0,
 71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,0,0,0,0,
 72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,0,0,0,
-71,72,71,72,71,72,39,39,81,71,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,0,0,
-72,71,72,71,72,81,39,39,71,72,81,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,0,
+71,72,71,72,71,72,39,39,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,0,0,
+72,71,72,71,72,81,39,39,81,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,71,72,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
@@ -83,7 +84,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup color="#ff0000" id="4" name="collisions">
+ <objectgroup color="#ff0000" id="4" name="collisions" visible="0">
   <object id="1" x="-4" y="95" width="99" height="28"/>
   <object id="3" x="129" y="95" width="511" height="27"/>
   <object id="4" x="81" y="61" width="14" height="34"/>
@@ -92,5 +93,20 @@
   <object id="7" x="1" y="174" width="640" height="16"/>
   <object id="8" x="-11" y="122" width="11" height="54"/>
   <object id="9" x="641" y="121" width="17" height="55"/>
+ </objectgroup>
+ <objectgroup color="#00ffff" id="8" name="warpzone">
+  <object id="10" x="95" y="65" width="34" height="28">
+   <properties>
+    <property name="destination" value="egypt_in1.tmx"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#fff017" id="9" name="textboxes">
+  <object id="11" x="584" y="136" width="31" height="24">
+   <properties>
+    <property name="text">Date   :  -2000 
+Place : Egypt</property>
+   </properties>
+  </object>
  </objectgroup>
 </map>

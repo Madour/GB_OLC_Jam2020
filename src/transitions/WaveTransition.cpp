@@ -1,7 +1,7 @@
 // Created by Modar Nasser on 31/08/2020.
 
-#include "WaveTransition.hpp"
-#include "PaletteShiftTransition.hpp"
+#include "transitions/WaveTransition.hpp"
+#include "transitions/PaletteShiftTransition.hpp"
 
 WaveInTransition::WaveInTransition() :
 m_shader(app->allCameras()[0]->getShader())

@@ -6,11 +6,12 @@
 
 #include "Palette.hpp"
 #include "Player.hpp"
-#include "PaletteShiftTransition.hpp"
-#include "WaveTransition.hpp"
+#include "transitions/PaletteShiftTransition.hpp"
+#include "transitions/WaveTransition.hpp"
 #include "TextBox.hpp"
 #include "MapCollisions.hpp"
 #include "GameState.hpp"
+#include "HUD.hpp"
 
 class Game : public ns::App {
 public:
@@ -25,13 +26,15 @@ public:
     void setPalette(int color);
 
     template <typename NewState>
-    void setState(const std::string& map_name = "");
+    void setState(const std::string& map_name = "", bool start_pos = true);
 
     ns::Scene* scene;
     ns::Scene* ui_scene;
 
     ns::Camera* camera;
     ns::Camera* ui_camera;
+
+    std::shared_ptr<HUD> hud;
 
     std::map<std::string, std::shared_ptr<ns::BitmapFont>> fonts;
 
@@ -53,13 +56,13 @@ private:
 };
 
 template <typename NewState>
-void Game::setState(const std::string& map_name) {
+void Game::setState(const std::string& map_name, bool start_pos) {
     m_ticks = 0;
     delete(m_state);
-    if (map_name == "")
+    if (map_name.empty())
         m_state = new NewState();
     else
-        m_state = new NewState(map_name);
+        m_state = new NewState(map_name, start_pos);
     m_state->init();
 }
 
