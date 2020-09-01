@@ -116,33 +116,43 @@ void Player::update() {
         }
     }
 
+    auto sprite = graphics<ns::ecs::SpriteComponent>(0);
     // animate player
     if (physics()->getDirection() == sf::Vector2i(0, 0))
-        graphics<ns::ecs::SpriteComponent>(0)->getAnimPlayer().stop();
+        sprite->getAnimPlayer().stop();
     else {
         if (physics()->getDirection().x == 0) {
             if (physics()->getDirection().y == -1)
-                graphics<ns::ecs::SpriteComponent>(0)->setAnimState("walk_up");
+                sprite->setAnimState("walk_up");
             else
-                graphics<ns::ecs::SpriteComponent>(0)->setAnimState("walk_down");
+                sprite->setAnimState("walk_down");
         }
         else if (physics()->getDirection().y == 0){
             if (physics()->getDirection().x == -1)
-                graphics<ns::ecs::SpriteComponent>(0)->setAnimState("walk_left");
+                sprite->setAnimState("walk_left");
             else
-                graphics<ns::ecs::SpriteComponent>(0)->setAnimState("walk_right");
+                sprite->setAnimState("walk_right");
         }
+        if (sprite->getAnimState() == "walk_right" && physics()->getDirection().x == -1)
+            sprite->setAnimState("walk_left");
+        if (sprite->getAnimState() == "walk_left" && physics()->getDirection().x == 1)
+            sprite->setAnimState("walk_right");
+        if (sprite->getAnimState() == "walk_down" && physics()->getDirection().y == -1)
+            sprite->setAnimState("walk_up");
+        if (sprite->getAnimState() == "walk_up" && physics()->getDirection().y == 1)
+            sprite->setAnimState("walk_down");
+
 
         // dirty code, handles bug when move button pressed before textbox closed
-        if (graphics<ns::ecs::SpriteComponent>(0)->getAnimState() == "idle") {
+        if (!sprite->getAnimPlayer().isPlaying()) {
             if (physics()->getDirection().y == -1)
-                graphics<ns::ecs::SpriteComponent>(0)->setAnimState("walk_up");
+                sprite->setAnimState("walk_up");
             else if (physics()->getDirection().y == 1)
-                graphics<ns::ecs::SpriteComponent>(0)->setAnimState("walk_down");
+                sprite->setAnimState("walk_down");
             else if (physics()->getDirection().x == -1)
-                graphics<ns::ecs::SpriteComponent>(0)->setAnimState("walk_left");
+                sprite->setAnimState("walk_left");
             else
-                graphics<ns::ecs::SpriteComponent>(0)->setAnimState("walk_right");
+                sprite->setAnimState("walk_right");
         }
     }
 

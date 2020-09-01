@@ -39,21 +39,21 @@ Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
     m_palette_shader->setUniformArray("colors", Palette::getColor(Palette::Color::Black).data(), 4);
     setShader(m_palette_shader.get());
 
-    //auto* cam_shader = new sf::Shader();
-    //cam_shader->loadFromMemory(
-    //        "uniform sampler2D texture;"
-    //        "uniform float time;"
-    //        "void main()"
-    //        "{"
-    //            "vec2 pos = gl_TexCoord[0].xy;"
-    //            "pos.x = pos.x + sin(pos.y + time*2.)/10.;"
-    //            "vec4 col = texture2D(texture, pos);"
-    //            "vec4 new_col = col;"
-    //            "gl_FragColor = new_col;"
-    //        "}",
-    //        sf::Shader::Fragment
-    //);
-    //cam_shader->setUniform("time", 0.f);
+    m_wave_shader = std::make_shared<sf::Shader>();
+    m_wave_shader->loadFromMemory(
+            "uniform sampler2D texture;"
+            "uniform float time;"
+            "void main()"
+            "{"
+                "vec2 pos = gl_TexCoord[0].xy;"
+                "pos.x = pos.x + sin(pos.y*time*10. + time*5.)/20.;"
+                "vec4 col = texture2D(texture, pos);"
+                "vec4 new_col = col;"
+                "gl_FragColor = new_col;"
+            "}",
+            sf::Shader::Fragment
+    );
+    m_wave_shader->setUniform("time", 0.f);
 
     // setting fonts
     initBitmapFonts();
@@ -74,7 +74,8 @@ Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
 
     camera = createCamera("main", 0, {0, 0, ns::Config::Window::view_width, ns::Config::Window::view_height});
     camera->lookAt(scene);
-    //camera->setShader(cam_shader);
+    camera->setShader(m_wave_shader.get());
+    camera->toggleShader();
 
     ui_camera = createCamera("ui", 2, {0, 0, ns::Config::Window::view_width, ns::Config::Window::view_height});
     ui_camera->lookAt(ui_scene);
@@ -90,6 +91,7 @@ Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
     addDebugText<int>(&m_ticks, "ticks:", {0, 0});
 
     addDebugText<sf::Vector2f>([&](){return player->getPosition();}, "pos:", {0, 15});
+    addDebugText<unsigned int>([&](){return ns::Transition::list.size();}, "transitions:", {0, 30});
 
 }
 
@@ -122,10 +124,8 @@ void Game::onEvent(const sf::Event& event) {
 }
 
 void Game::update() {
-    //camera->getShader()->setUniform("time", time.getElapsedTime().asSeconds());
     m_state->update();
     m_ticks++;
-
 }
 
 void Game::setPalette(Palette::Color color) {
@@ -160,12 +160,12 @@ void Game::initBitmapFonts() {
             {8, 8},
             char_map,
             {
-                    {"@", 8},
-                    {"ABCDEFGHIJKLMNOPQRSTUVWXYZ", 7},
-                    {"#$123456789", 7},
-                    {"j", 5},
-                    {"il", 4},
-                    {".,!:;", 3},
+                {"@", 8},
+                {"ABCDEFGHIJKLMNOPQRSTUVWXYZ", 7},
+                {"#$123456789", 7},
+                {"j", 5},
+                {"il", 4},
+                {".,!:;", 3},
             },
             {6, 8}
     );
@@ -174,12 +174,12 @@ void Game::initBitmapFonts() {
             {8, 8},
             char_map,
             {
-                    {"@", 8},
-                    {"ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8},
-                    {"#$123456789", 8},
-                    {"j", 5},
-                    {"il", 5},
-                    {".,!:;", 3},
+                {"@", 8},
+                {"ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8},
+                {"#$123456789", 8},
+                {"j", 5},
+                {"il", 5},
+                {".,!:;", 3},
             },
             {6, 8}
     );

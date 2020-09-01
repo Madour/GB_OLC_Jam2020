@@ -2,6 +2,7 @@
 
 #include "Game.hpp"
 #include "states/MuseumLevelState.hpp"
+#include "states/WarehouseLevelState.hpp"
 
 
 void MuseumLevelState::init() {
@@ -10,7 +11,7 @@ void MuseumLevelState::init() {
     game->ui_scene->clearAllLayers();
 
     m_map = std::make_shared<ns::tm::TiledMap>();
-    m_map->loadFromFile("assets/warehouse.tmx");
+    m_map->loadFromFile("assets/maps/museum.tmx");
     m_map->getObjectLayer("collisions")->setVisible(false);
 
     //m_warp_zone = m_map->getObjectLayer("warpzone")->getRectangle(17).getShape().getGlobalBounds();
@@ -28,10 +29,10 @@ void MuseumLevelState::init() {
     game->scene->getLayer("shapes")->add(m_map->getObjectLayer("collisions"));
     game->scene->getLayer("shapes")->add(m_map->getObjectLayer("warpzone"));
 
-    m_textbox = std::make_shared<TextBox>("Hello fam !", game->fonts["default"]);
+    m_textbox = std::make_shared<TextBox>("Space time travel successful !", game->fonts["default"]);
     game->ui_scene->getDefaultLayer()->add(m_textbox);
 
-    game->camera->follow(*game->player);
+    game->camera->follow(game->player.get());
     game->camera->setLimitsRectangle(ns::IntRect(m_map->getTileLayer("ground")->getGlobalBounds()));
 
 }
@@ -42,23 +43,20 @@ void MuseumLevelState::onEvent(const sf::Event& event) {
         m_textbox->onEvent(event);
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::T) {
-            auto tr = new PaletteShiftOutTransition();
+            auto* tr = new PaletteShiftOutTransition();
             tr->start();
             tr->setOnEndCallback([&](){
-                auto tr = new PaletteShiftInTransition();
+                auto* tr = new PaletteShiftInTransition();
                 tr->start();
-                tr->setOnEndCallback([&](){
-                    game->ui_scene->getDefaultLayer()->remove(m_textbox);
-                    m_textbox = std::make_shared<TextBox>("Date : -2000 before JC. \nLocation : Egypt", game->fonts["italic"]);
-                    game->ui_scene->getDefaultLayer()->add(m_textbox);
-                });
+                game->setState<WarehouseLevelState>();
+
             });
         }
         if (event.key.code == sf::Keyboard::Y) {
-            auto tr = new ns::transition::CircleClose();
+            auto* tr = new ns::transition::CircleClose();
             tr->start();
             tr->setOnEndCallback([](){
-                auto tr = new ns::transition::CircleOpen();
+                auto* tr = new ns::transition::CircleOpen();
                 tr->start();
             });
         }
@@ -66,16 +64,8 @@ void MuseumLevelState::onEvent(const sf::Event& event) {
 }
 
 void MuseumLevelState::update() {
-
-    game->player->inputs()->setCaptureInput(true);
-    if (m_textbox != nullptr && ns::Transition::list.empty()) {
-        m_textbox->update();
-        if (m_textbox->closed()) {
-            game->ui_scene->getDefaultLayer()->remove(m_textbox);
-            m_textbox = nullptr;
-        }
-        game->player->inputs()->setCaptureInput(false);
-    }
+    updateMap();
+    updateTextbox();
 
     game->player->update();
 }

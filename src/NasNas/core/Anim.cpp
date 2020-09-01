@@ -48,6 +48,10 @@ void AnimPlayer::play(const Anim& animation) {
     m_clock = sf::Clock();
 }
 
+void AnimPlayer::pause() {
+    m_playing = false;
+}
+
 void AnimPlayer::resume() {
     m_playing = true;
 }
@@ -55,6 +59,10 @@ void AnimPlayer::resume() {
 void AnimPlayer::stop() {
     m_index = 0;
     m_playing = false;
+}
+
+bool AnimPlayer::isPlaying() {
+    return m_playing;
 }
 
 auto AnimPlayer::getAnim() -> Anim* {

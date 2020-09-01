@@ -1,73 +1,55 @@
-// Created by Modar Nasser on 30/08/2020.
+// Created by Modar Nasser on 01/09/2020.
 
 #include "Game.hpp"
 #include "states/LevelState.hpp"
+#include "MapCollisions.hpp"
 
-/*
-void LevelState::init() {
+LevelState::LevelState() = default;
 
+LevelState::LevelState(const std::string& map_name) {
+    m_map_name = map_name;
     game->scene->clearAllLayers();
     game->ui_scene->clearAllLayers();
 
     m_map = std::make_shared<ns::tm::TiledMap>();
-    m_map->loadFromFile("assets/warehouse.tmx");
-    m_map->getObjectLayer("collisions")->setVisible(false);
+    m_map->loadFromFile("assets/maps/"+map_name);
 
-    m_warp_zone = m_map->getObjectLayer("warpzone")->getRectangle(17).getShape().getGlobalBounds();
+    game->player->setPosition(m_map->getProperty<float>("start_x"), m_map->getProperty<float>("start_y"));
+    game->player->inputs()->setCaptureInput(true);
 
     MapCollisions::clear();
-    for (const auto& rect : m_map->getObjectLayer("collisions")->getRectangles())
+    for (auto& rect : m_map->getObjectLayer("collisions")->getRectangles()) {
         MapCollisions::add(ns::FloatRect(rect.getShape().getGlobalBounds()));
+    }
 
     game->scene->getLayer("ground")->add(m_map->getTileLayer("ground"));
     game->scene->getLayer("ground")->add(m_map->getTileLayer("ground2"));
     game->scene->getLayer("front")->add(m_map->getTileLayer("front"));
-    game->scene->getLayer("front")->add(game->player);
+    game->scene->getLayer("entities")->add(game->player);
     game->scene->getLayer("top")->add(m_map->getTileLayer("top"));
     game->scene->getLayer("top")->add(m_map->getTileLayer("top2"));
-    game->scene->getLayer("top")->add(m_map->getObjectLayer("collisions"));
-    game->scene->getLayer("top")->add(m_map->getObjectLayer("warpzone"));
+    game->scene->getLayer("shapes")->add(m_map->getObjectLayer("collisions"));
 
-    m_textbox = std::make_shared<TextBox>("Hello fam !", game->fonts["default"]);
-    game->ui_scene->getDefaultLayer()->add(m_textbox);
-
-    game->camera->follow(*game->player);
+    game->camera->follow(game->player.get());
     game->camera->setLimitsRectangle(ns::IntRect(m_map->getTileLayer("ground")->getGlobalBounds()));
-
 }
+
+void LevelState::init() {}
 
 void LevelState::onEvent(const sf::Event& event) {
     m_map->getObjectLayer("collisions")->setVisible(ns::Config::debug);
     if (m_textbox)
         m_textbox->onEvent(event);
-    if (event.type == sf::Event::KeyPressed) {
-        if (event.key.code == sf::Keyboard::T) {
-            auto tr = new PaletteShiftOutTransition();
-            tr->start();
-            tr->setOnEndCallback([&](){
-                auto tr = new PaletteShiftInTransition();
-                tr->start();
-                tr->setOnEndCallback([&](){
-                    game->ui_scene->getDefaultLayer()->remove(m_textbox);
-                    m_textbox = std::make_shared<TextBox>("Date : -2000 before JC. \nLocation : Egypt", game->fonts["italic"]);
-                    game->ui_scene->getDefaultLayer()->add(m_textbox);
-                });
-            });
-        }
-        if (event.key.code == sf::Keyboard::Y) {
-            auto tr = new ns::transition::CircleClose();
-            tr->start();
-            tr->setOnEndCallback([](){
-                auto tr = new ns::transition::CircleOpen();
-                tr->start();
-            });
-        }
-    }
 }
 
 void LevelState::update() {
+    updateMap();
+    updateTextbox();
 
-    game->player->inputs()->setCaptureInput(true);
+    game->player->update();
+}
+
+void LevelState::updateTextbox() {
     if (m_textbox != nullptr && ns::Transition::list.empty()) {
         m_textbox->update();
         if (m_textbox->closed()) {
@@ -76,12 +58,13 @@ void LevelState::update() {
         }
         game->player->inputs()->setCaptureInput(false);
     }
-
-    if (m_warp_zone.contains(game->player->collider()->getCollision().getShape().getGlobalBounds())) {
-        m_map->loadFromFile("assets/museum.tmx");
-
-    }
-
-    game->player->update();
+    else
+        game->player->inputs()->setCaptureInput(true);
 }
-*/
+
+void LevelState::updateMap() {
+    m_map->getTileLayer("front")->update();
+    m_map->getTileLayer("top")->update();
+    if (m_map_name == "egypt_out.tmx")
+        m_map->getTileLayer("ground2")->move(0.05, 0);
+}

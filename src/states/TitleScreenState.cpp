@@ -48,15 +48,15 @@ void TitleScreenState::onEvent(const sf::Event& event) {
                 tr->setOnEndCallback([](){
                     auto* tr = new ns::transition::CircleOpen();
                     tr->start();
-                    game->setState<TitleScreenState, MuseumLevelState>();
+                    game->setState<MuseumLevelState>();
                 });
             }
         }
         else if (event.key.code == sf::Keyboard::Up) {
-            m_index = std::max(0u, m_index-1u);
+            m_index = std::max(0, m_index-1);
         }
         else if (event.key.code == sf::Keyboard::Down) {
-            m_index = std::min((unsigned int)m_buttons.size(), m_index+1u);
+            m_index = std::min((int)m_buttons.size()-1, m_index+1);
         }
     }
 }

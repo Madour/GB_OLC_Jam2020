@@ -16,7 +16,7 @@ public:
 private:
     std::vector<std::shared_ptr<ns::BitmapText>> m_buttons;
 
-    unsigned int m_index = 0;
+    int m_index = 0;
     std::shared_ptr<sf::CircleShape> m_cursor_left;
     std::shared_ptr<sf::CircleShape> m_cursor_right;
 

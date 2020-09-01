@@ -121,7 +121,7 @@ namespace ns {
          *
          * \param entity BaseEntity to be followed
          */
-        void follow(Drawable& entity);
+        void follow(Drawable* entity);
 
         /**
          * \brief Get render order of the Camera
