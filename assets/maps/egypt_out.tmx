@@ -84,7 +84,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup color="#ff0000" id="4" name="collisions" visible="0">
+ <objectgroup color="#ff0000" id="4" name="collisions">
   <object id="1" x="-4" y="95" width="99" height="28"/>
   <object id="3" x="129" y="95" width="511" height="27"/>
   <object id="4" x="81" y="61" width="14" height="34"/>
@@ -95,7 +95,7 @@
   <object id="9" x="641" y="121" width="17" height="55"/>
  </objectgroup>
  <objectgroup color="#00ffff" id="8" name="warpzone">
-  <object id="10" x="95" y="65" width="34" height="28">
+  <object id="10" x="90" y="65" width="42" height="28">
    <properties>
     <property name="destination" value="egypt_in1.tmx"/>
    </properties>

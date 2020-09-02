@@ -37,11 +37,20 @@ m_timer_shadow("00:00") {
 
 void HUD::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(m_panel_left, states);
-    target.draw(m_panel_right, states);
     target.draw(m_hp_bar, states);
+
+    target.draw(m_panel_right, states);
     target.draw(m_cursor, states);
+    if (isOpened())
+        for (const auto& item : game->player->getItems())
+            target.draw(item);
+
     target.draw(m_timer, states);
     target.draw(m_timer_shadow, states);
+}
+
+bool HUD::isOpened() const {
+    return m_opened;
 }
 
 void HUD::open() {
@@ -59,10 +68,17 @@ void HUD::setTimerMaxTime(int seconds) {
 
 
 void HUD::nextItem() {
-    m_item_index = (m_item_index + 1)%game->player->getItems().size();
+    m_item_index = (m_item_index + 1)%3;
+}
+
+int HUD::getItemIndex() const {
+    return m_item_index;
 }
 
 void HUD::update() {
+
+    for (int i = 0; i < 3; ++i)
+        game->player->getItems()[i].setPosition(160.f - 14.f - i*16.f, 4);
 
     if (m_opened) {
         int current_time = m_max_time - (int)m_clk.getElapsedTime().asSeconds();

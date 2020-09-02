@@ -70,29 +70,6 @@ void WarehouseLevelState::init() {
 
 void WarehouseLevelState::onEvent(const sf::Event& event) {
     LevelState::onEvent(event);
-    if (event.type == sf::Event::KeyPressed) {
-        if (event.key.code == sf::Keyboard::T) {
-            auto* tr = new PaletteShiftOutTransition();
-            tr->start();
-            tr->setOnEndCallback([&](){
-                auto* tr = new PaletteShiftInTransition();
-                tr->start();
-                tr->setOnEndCallback([&](){
-                    game->ui_scene->getDefaultLayer()->remove(m_textbox);
-                    m_textbox = std::make_shared<TextBox>("Date : -2000 before JC. \nLocation : Egypt", game->fonts["italic"]);
-                    game->ui_scene->getDefaultLayer()->add(m_textbox);
-                });
-            });
-        }
-        if (event.key.code == sf::Keyboard::Y) {
-            auto* tr = new ns::transition::CircleClose();
-            tr->start();
-            tr->setOnEndCallback([](){
-                auto* tr = new ns::transition::CircleOpen();
-                tr->start();
-            });
-        }
-    }
 }
 
 void WarehouseLevelState::update() {

@@ -8,6 +8,40 @@
 #include "states/MuseumLevelState.hpp"
 
 
+void resolveCollision(ns::BaseEntity* ent, const ns::FloatRect& rect) {
+    ns::FloatRect intersection;
+    auto col = ns::FloatRect(ent->collider()->getCollision().getShape().getGlobalBounds());
+    if (col.intersects(rect, intersection)) {
+        if (rect.width == 1 && ent->physics()->getDirection() == sf::Vector2i(0, -1)) {
+            if (std::abs(col.left - rect.left) > std::abs(col.right() - rect.right())) {
+                ent->setX(rect.left - col.width/2);
+            }
+            else if (std::abs(col.left - rect.left) < std::abs(col.right() - rect.right())) {
+                ent->setX(rect.right() + col.width/2);
+            }
+        }
+        else {
+            if (intersection.width < intersection.height && intersection.height >= 3) {
+                // entity on left side of box
+                if (std::abs(col.left - rect.right()) >= std::abs(col.right() - rect.left))
+                    ent->setX(ent->getX() - intersection.width);
+                // entity right side of box
+                else
+                    ent->setX(ent->getX() + intersection.width);
+            }
+            else if (intersection.width >= 3) {
+                // entity over box
+                if (std::abs(col.top - rect.bottom()) >= std::abs(col.bottom() - rect.top))
+                    ent->setY(ent->getY() - intersection.height);
+                // entity under box
+                else
+                    ent->setY(ent->getY() + intersection.height);
+            }
+        }
+        ent->collider()->update();
+    }
+}
+
 Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
     std::srand((int) std::time(nullptr));
     GameState::game = this;
@@ -133,7 +167,8 @@ void Game::onEvent(const sf::Event& event) {
                 toggleFullscreen();
 
             if (event.key.code == ns::Config::Inputs::getButtonKey("select")) {
-                hud->nextItem();
+                if (hud->isOpened())
+                    hud->nextItem();
             }
 
             break;
@@ -146,6 +181,11 @@ void Game::onEvent(const sf::Event& event) {
 void Game::update() {
     m_state->update();
     hud->update();
+
+    for (auto& ent : Enemy::list) {
+        ent->update();
+    }
+    scene->getLayer("entities")->ySort();
     m_ticks++;
 }
 

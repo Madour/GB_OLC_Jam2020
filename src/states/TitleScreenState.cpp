@@ -40,25 +40,26 @@ void TitleScreenState::init() {
 }
 
 void TitleScreenState::onEvent(const sf::Event& event) {
-    if (event.type == sf::Event::KeyPressed) {
-        if (event.key.code == Inputs::getButtonKey("A") || event.key.code == Inputs::getButtonKey("start")) {
-            if (m_index == 0) {
-                auto* tr = new ns::transition::CircleClose();
-                tr->start();
-                tr->setOnEndCallback([](){
-                    auto* tr = new ns::transition::CircleOpen();
+    if (ns::Transition::list.empty())
+        if (event.type == sf::Event::KeyPressed) {
+            if (event.key.code == Inputs::getButtonKey("A") || event.key.code == Inputs::getButtonKey("start")) {
+                if (m_index == 0) {
+                    auto* tr = new ns::transition::CircleClose();
                     tr->start();
-                    game->setState<MuseumLevelState>();
-                });
+                    tr->setOnEndCallback([](){
+                        auto* tr = new ns::transition::CircleOpen();
+                        tr->start();
+                        game->setState<MuseumLevelState>();
+                    });
+                }
+            }
+            else if (event.key.code == sf::Keyboard::Up) {
+                m_index = std::max(0, m_index-1);
+            }
+            else if (event.key.code == sf::Keyboard::Down) {
+                m_index = std::min((int)m_buttons.size()-1, m_index+1);
             }
         }
-        else if (event.key.code == sf::Keyboard::Up) {
-            m_index = std::max(0, m_index-1);
-        }
-        else if (event.key.code == sf::Keyboard::Down) {
-            m_index = std::min((int)m_buttons.size()-1, m_index+1);
-        }
-    }
 }
 
 void TitleScreenState::update() {

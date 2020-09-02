@@ -6,12 +6,15 @@
 
 #include "Palette.hpp"
 #include "Player.hpp"
+#include "Enemy.hpp"
 #include "transitions/PaletteShiftTransition.hpp"
 #include "transitions/WaveTransition.hpp"
 #include "TextBox.hpp"
 #include "MapCollisions.hpp"
 #include "GameState.hpp"
 #include "HUD.hpp"
+
+void resolveCollision(ns::BaseEntity* ent, const ns::FloatRect& rect);
 
 class Game : public ns::App {
 public:

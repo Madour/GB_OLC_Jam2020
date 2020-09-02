@@ -2,28 +2,33 @@
 
 #pragma once
 
+#include "GameAccess.hpp"
+#include "../NasNas.h"
+
 class Game;
 
 enum ItemNames {
     None,
-    InvisibilityPill,
     Vulnerary,
+    InvisibilityPill,
     PresentButton
 };
 
-class Item {
+class Item : public ns::Drawable, GameAccess{
 public:
-    Item();
     explicit Item(ItemNames item);
 
     void use();
 
+    void setPosition(float x, float y);
+    auto getPosition() -> sf::Vector2f override;
+    auto getGlobalBounds() -> ns::FloatRect override;
+
 private:
-    ItemNames m_name = None;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    sf::Sprite m_sprite;
+    ItemNames m_name;
     int m_counter = 0;
 
-
 };
-
-
-

@@ -13,6 +13,7 @@ public:
 
     explicit HUD();
 
+    bool isOpened() const;
     void open();
     void close();
 
@@ -21,6 +22,7 @@ public:
     void update();
 
     void nextItem();
+    int getItemIndex() const;
 
     auto getPosition() -> sf::Vector2f override;
     auto getGlobalBounds() -> ns::FloatRect override;

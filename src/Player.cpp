@@ -36,7 +36,7 @@ Player::Player() : ns::BaseEntity("Player") {
 
     addComponent<ns::ecs::SpriteComponent>(this, m_spritesheet.get(), "idle");
 
-    auto* ph = new ns::ecs::PhysicsComponent(this, 1.f, {0.75f, 0.75f}, {1.f, 1.f}, {1.f, 1.f});
+    auto* ph = new ns::ecs::PhysicsComponent(this, 1.f, {0.9f, 0.9f}, {1.f, 1.f}, {1.f, 1.f});
     addComponent<ns::ecs::PhysicsComponent>(std::shared_ptr<ns::ecs::PhysicsComponent>(ph));
 
     addComponent<ns::ecs::InputsComponent>(this);
@@ -44,8 +44,16 @@ Player::Player() : ns::BaseEntity("Player") {
     inputs()->bind<Player>(sf::Keyboard::Down, &Player::moveDown);
     inputs()->bind<Player>(sf::Keyboard::Left, &Player::moveLeft);
     inputs()->bind<Player>(sf::Keyboard::Right, &Player::moveRight);
+    inputs()->bind<Player>(ns::Config::Inputs::getButtonKey("B"), &Player::useItem);
 
     addComponent<ns::ecs::ColliderComponent>(this, new ns::ecs::RectangleCollision(12, 8), sf::Vector2f(0, -4));
+}
+
+void Player::useItem() {
+    if (game->hud->isOpened()) {
+        m_items[game->hud->getItemIndex()].use();
+        m_items[game->hud->getItemIndex()] = Item(None);
+    }
 }
 
 void Player::moveUp() {
@@ -76,12 +84,20 @@ auto Player::getHP() const  -> int{
     return m_hp;
 }
 
-auto Player::getItems() -> std::vector<int>& {
+auto Player::getItems() -> std::array<Item, 3>& {
     return m_items;
 }
 
 auto Player::getName() -> const std::string& {
     return m_name;
+}
+
+void Player::invisibility() {
+    m_invisibility_timer = 200;
+}
+
+void Player::restore(int amount) {
+    m_hp_to_restore += amount;
 }
 
 void Player::damage() {
@@ -92,6 +108,10 @@ void Player::damage() {
 }
 
 void Player::update() {
+    if (m_hp_to_restore > 0 && game->time.getElapsedTime().asMilliseconds()%500 <= 10) {
+        m_hp_to_restore--;
+        m_hp = std::min(10, ++m_hp);
+    }
     if (m_blink_timer > 0) {
         if (m_blink_timer%4 == 0)
             visible = !visible;
@@ -116,38 +136,12 @@ void Player::update() {
     collider()->update();
 
     // resolve collisions
-    sf::FloatRect intersection;
     for (const auto& rect : MapCollisions::all()) {
-        auto col = ns::FloatRect(collider()->getCollision().getShape().getGlobalBounds());
-        if (col.intersects(rect, intersection)) {
-            if (rect.width == 1 && physics()->getDirection() == sf::Vector2i(0, -1)) {
-                if (std::abs(col.left - rect.left) > std::abs(col.right() - rect.right())) {
-                    setX(rect.left - col.width/2);
-                }
-                else if (std::abs(col.left - rect.left) < std::abs(col.right() - rect.right())) {
-                    setX(rect.right() + col.width/2);
-                }
-            }
-            else {
-                if (intersection.width < intersection.height && intersection.height >= 3) {
-                    // player on left side of box
-                    if (std::abs(col.left - rect.right()) >= std::abs(col.right() - rect.left))
-                        setX(getX() - intersection.width);
-                        // player right side of box
-                    else
-                        setX(getX() + intersection.width);
-                }
-                else if (intersection.width >= 3) {
-                    // player over box
-                    if (std::abs(col.top - rect.bottom()) >= std::abs(col.bottom() - rect.top))
-                        setY(getY() - intersection.height);
-                    // player under box
-                    else
-                        setY(getY() + intersection.height);
-                }
-            }
-            collider()->update();
-        }
+        resolveCollision(this, rect);
+    }
+
+    for (const auto& ent : Enemy::list) {
+        resolveCollision(ent, ns::FloatRect(this->collider()->getCollision().getShape().getGlobalBounds()));
     }
 
     auto sprite = graphics<ns::ecs::SpriteComponent>(0);
