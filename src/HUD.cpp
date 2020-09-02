@@ -4,8 +4,7 @@
 #include "Palette.hpp"
 #include "Game.hpp"
 
-HUD::HUD(Game* game) :
-m_game(game),
+HUD::HUD() :
 m_timer("00:00"),
 m_timer_shadow("00:00") {
 
@@ -60,7 +59,7 @@ void HUD::setTimerMaxTime(int seconds) {
 
 
 void HUD::nextItem() {
-    m_item_index = (m_item_index + 1)%m_game->player->getItems().size();
+    m_item_index = (m_item_index + 1)%game->player->getItems().size();
 }
 
 void HUD::update() {
@@ -77,7 +76,7 @@ void HUD::update() {
         m_timer.setString(minutes_str+":"+seconds_str);
         m_timer_shadow.setString(minutes_str+":"+seconds_str);
 
-        m_hp_bar.setTextureRect({0, 20, 3*m_game->player->getHP(), 7});
+        m_hp_bar.setTextureRect({0, 20, 3*game->player->getHP(), 7});
 
         auto cursor_dx = (float)(160-19 - m_item_index*16) - m_cursor.getPosition().x;
         m_cursor.move(cursor_dx/5.f, 0);

@@ -4,13 +4,14 @@
 
 #include "../NasNas.h"
 #include "Player.hpp"
+#include "GameAccess.hpp"
 
 class Game;
 
-class HUD : public ns::Drawable{
+class HUD : public ns::Drawable, GameAccess {
 public:
 
-    explicit HUD(Game* game);
+    explicit HUD();
 
     void open();
     void close();
@@ -27,7 +28,6 @@ public:
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    Game* m_game;
     bool m_opened = false;
     int m_item_index = 0;
 

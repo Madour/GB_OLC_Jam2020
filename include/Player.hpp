@@ -4,8 +4,9 @@
 
 #include "../NasNas.h"
 #include "MapCollisions.hpp"
+#include "GameAccess.hpp"
 
-class Player : public ns::BaseEntity {
+class Player : public ns::BaseEntity, GameAccess {
 public:
     Player();
 

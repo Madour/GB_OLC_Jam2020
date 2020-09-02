@@ -2,10 +2,10 @@
 
 #include "TextBox.hpp"
 #include "Palette.hpp"
+#include "Game.hpp"
 
 using Inputs = ns::Config::Inputs;
 
-std::shared_ptr<ns::BitmapFont> TextBox::label_font = nullptr;
 
 TextBox::TextBox(const std::string& string, std::shared_ptr<ns::BitmapFont>& font, const std::string& label) :
 m_text(string),
@@ -16,7 +16,7 @@ m_label(label) {
     m_text.setTypingDelay(2);
     m_text.setMaxLines(3);
 
-    m_label.setFont(label_font);
+    m_label.setFont(game->fonts.at("italic"));
     m_label.setColor(Palette::Base[0]);
 
     m_bg.setTexture(ns::Res::get().in("fonts").getTexture("frame.png"));

@@ -2,6 +2,7 @@
 
 
 #include "Player.hpp"
+#include "Game.hpp"
 
 Player::Player() : ns::BaseEntity("Player") {
     auto* spr = new ns::Spritesheet("player", ns::Res::getTexture("pokemon.png"), {

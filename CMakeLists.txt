@@ -41,7 +41,7 @@ add_executable(GB_OLC_Jam
         src/states/MuseumLevelState.cpp include/states/MuseumLevelState.hpp
         src/states/WarehouseLevelState.cpp include/states/WarehouseLevelState.hpp
 
-        src/HUD.cpp include/HUD.hpp src/Spike.cpp include/Spike.hpp src/Artifact.cpp include/Artifact.hpp src/Item.cpp include/Item.hpp)
+        src/HUD.cpp include/HUD.hpp src/Spike.cpp include/Spike.hpp src/Artifact.cpp include/Artifact.hpp src/Item.cpp include/Item.hpp src/GameAccess.cpp include/GameAccess.hpp)
 
 # Demo game target
 target_include_directories(GB_OLC_Jam PRIVATE include)

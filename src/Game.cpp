@@ -1,6 +1,7 @@
 // Created by Modar Nasser on 29/08/2020.
 
 #include "Game.hpp"
+#include "GameAccess.hpp"
 
 #include "GameState.hpp"
 #include "states/TitleScreenState.hpp"
@@ -10,6 +11,7 @@
 Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
     std::srand((int) std::time(nullptr));
     GameState::game = this;
+    GameAccess::game = this;
 
     // setting up shader
     m_palette_shader = std::make_shared<sf::Shader>();
@@ -62,7 +64,7 @@ Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
     player = std::make_shared<Player>();
     player->setPosition(184, 45);
 
-    hud = std::make_shared<HUD>(this);
+    hud = std::make_shared<HUD>();
 
     //---------------------------------------------------//
 
@@ -206,7 +208,6 @@ void Game::initBitmapFonts() {
     fonts["default"] = std::shared_ptr<ns::BitmapFont>(default_font);
     fonts["italic"] = std::shared_ptr<ns::BitmapFont>(italic_font);
     fonts["bold"] = std::shared_ptr<ns::BitmapFont>(bold_font);
-    TextBox::label_font = fonts["italic"];
 }
 
 Game::~Game() {

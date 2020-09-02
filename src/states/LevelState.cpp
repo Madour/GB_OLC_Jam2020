@@ -57,7 +57,6 @@ LevelState::LevelState(const std::string& map_name, bool start_pos) {
     game->camera->follow(game->player.get());
     game->camera->setLimitsRectangle(ns::IntRect(m_map->getTileLayer("back")->getGlobalBounds()));
 
-
 }
 
 void LevelState::init() {
@@ -66,7 +65,7 @@ void LevelState::init() {
     m_map->getObjectLayer("collisions")->setVisible(false);
     m_map->getObjectLayer("warpzone")->setVisible(false);
 
-    if(m_map->hasProperty("show_hud"))
+    if(m_map->hasProperty("show_hud") && m_map->getProperty<bool>("show_hud"))
         game->hud->open();
     else
         game->hud->close();

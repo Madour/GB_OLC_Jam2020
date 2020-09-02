@@ -2,8 +2,9 @@
 
 #pragma once
 #include "../NasNas.h"
+#include "GameAccess.hpp"
 
-class TextBox : public ns::Drawable {
+class TextBox : public ns::Drawable, GameAccess {
 public:
     TextBox(const std::string& string, std::shared_ptr<ns::BitmapFont>& font, const std::string& label = "");
 
@@ -17,8 +18,6 @@ public:
 
     void onEvent(const sf::Event& event);
     void update();
-
-    static std::shared_ptr<ns::BitmapFont> label_font;
 
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
