@@ -61,7 +61,7 @@ void AnimPlayer::stop() {
     m_playing = false;
 }
 
-bool AnimPlayer::isPlaying() {
+bool AnimPlayer::isPlaying() const {
     return m_playing;
 }
 

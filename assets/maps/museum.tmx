@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="21" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="42">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="21" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="42">
  <properties>
   <property name="palette" type="int" value="1"/>
  </properties>
@@ -161,5 +161,7 @@
   <object id="39" x="2" y="48" width="12" height="10"/>
  </objectgroup>
  <objectgroup color="#00fbff" id="6" name="warpzone"/>
+ <objectgroup id="9" name="spawns"/>
+ <objectgroup id="10" name="interractions"/>
  <objectgroup id="8" name="textboxes"/>
 </map>

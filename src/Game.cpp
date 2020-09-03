@@ -197,6 +197,10 @@ void Game::setPalette(int color) {
     m_palette_shader->setUniformArray("colors", Palette::getColor((Palette::Color)color).data(), 4);
 }
 
+bool Game::isTextboxOpened() {
+    return m_state->m_textbox != nullptr;
+}
+
 void Game::initBitmapFonts() {
 
     auto char_map = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNO"

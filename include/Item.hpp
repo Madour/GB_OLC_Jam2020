@@ -7,7 +7,7 @@
 
 class Game;
 
-enum ItemNames {
+enum ItemType {
     None,
     Vulnerary,
     InvisibilityPill,
@@ -16,9 +16,10 @@ enum ItemNames {
 
 class Item : public ns::Drawable, GameAccess{
 public:
-    explicit Item(ItemNames item);
+    explicit Item(ItemType item);
 
     void use();
+    auto getType() const -> ItemType;
 
     void setPosition(float x, float y);
     auto getPosition() -> sf::Vector2f override;
@@ -28,7 +29,7 @@ private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     sf::Sprite m_sprite;
-    ItemNames m_name;
+    ItemType m_type;
     int m_counter = 0;
 
 };

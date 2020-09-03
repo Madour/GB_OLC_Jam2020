@@ -10,6 +10,7 @@ class LevelState : public GameState {
 public:
     explicit LevelState(const std::string& map_name, bool start_pos = true);
     LevelState();
+    ~LevelState() override;
 
     void init() override;
     void onEvent(const sf::Event& event) override;
@@ -20,7 +21,6 @@ protected:
     void updateTextbox();
     void updateMap();
     std::shared_ptr<ns::tm::TiledMap> m_map;
-    std::shared_ptr<TextBox> m_textbox = nullptr;
     std::vector<Spike> m_spikes;
 
 private:

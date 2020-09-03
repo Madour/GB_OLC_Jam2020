@@ -11,21 +11,15 @@ void MuseumLevelState::init() {
     game->ui_scene->getDefaultLayer()->clear();
 
     game->player->setPosition(170, 170);
-    auto* enemy = new Enemy();
-    enemy->setPosition(250, 170);
-    auto* enemy2 = new Enemy();
-    enemy2->setPosition(80, 100);
 
     m_map = std::make_shared<ns::tm::TiledMap>();
     m_map->loadFromFile("assets/maps/museum.tmx");
-
 
     game->scene->getLayer("back")->add(m_map->getTileLayer("back"));
     game->scene->getLayer("back")->add(m_map->getTileLayer("back2"));
     game->scene->getLayer("front")->add(m_map->getTileLayer("front"));
     game->scene->getLayer("entities")->add(game->player);
-    game->scene->getLayer("entities")->add(std::shared_ptr<Enemy>(enemy));
-    game->scene->getLayer("entities")->add(std::shared_ptr<Enemy>(enemy2));
+
     game->scene->getLayer("top")->add(m_map->getTileLayer("top"));
     game->scene->getLayer("top")->add(m_map->getTileLayer("top2"));
     game->scene->getLayer("shapes")->add(m_map->getObjectLayer("collisions"));

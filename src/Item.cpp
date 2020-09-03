@@ -7,10 +7,10 @@
 #include "states/WarehouseLevelState.hpp"
 
 
-Item::Item(ItemNames item) :
-m_name(item) {
+Item::Item(ItemType item) :
+        m_type(item) {
     m_sprite.setTexture(ns::Res::getTexture("gui.png"));
-    switch (m_name) {
+    switch (m_type) {
         case None:
             m_sprite.setTextureRect({80, 24, 8, 8});
             break;
@@ -28,14 +28,14 @@ m_name(item) {
 }
 
 void Item::use() {
-    switch (m_name) {
+    switch (m_type) {
         case None:
             break;
         case Vulnerary:
-            game->player->restore(5);
+            game->player->restoreHp(5);
             break;
         case InvisibilityPill :
-            game->player->invisibility();
+            game->player->setInvisible();
             break;
         case PresentButton:
             if (game->camera->getShader() == nullptr)
@@ -45,6 +45,7 @@ void Item::use() {
             tr->setOnEndCallback([&](){
                 game->hud->close();
                 game->setState<WarehouseLevelState>();
+                game->player->setPosition(271, 95);
                 auto* tr = new WaveInTransition();
                 tr->start();
                 tr->setOnEndCallback([](){
@@ -54,6 +55,10 @@ void Item::use() {
             });
             break;
     }
+}
+
+auto Item::getType() const -> ItemType {
+    return m_type;
 }
 
 void Item::setPosition(float x, float y) {

@@ -5,8 +5,8 @@
 #include "../NasNas.h"
 
 #include "Palette.hpp"
-#include "Player.hpp"
-#include "Enemy.hpp"
+#include "entities/Player.hpp"
+#include "entities/Enemy.hpp"
 #include "transitions/PaletteShiftTransition.hpp"
 #include "transitions/WaveTransition.hpp"
 #include "TextBox.hpp"
@@ -30,6 +30,9 @@ public:
 
     template <typename NewState>
     void setState(const std::string& map_name = "", bool start_pos = true);
+
+
+    bool isTextboxOpened();
 
     ns::Scene* scene;
     ns::Scene* ui_scene;

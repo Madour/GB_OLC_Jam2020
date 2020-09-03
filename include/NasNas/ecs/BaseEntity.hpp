@@ -19,6 +19,8 @@ namespace ns {
         explicit BaseEntity(const std::string& name);
         ~BaseEntity() override;
 
+        auto getName() const -> const std::string&;
+
         template<class T, typename... TArgs>
         void addComponent(TArgs... component_args);
 

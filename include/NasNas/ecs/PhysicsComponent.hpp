@@ -18,6 +18,7 @@ namespace ns::ecs {
         auto getVelocity() -> sf::Vector2f;
         void setVelocity(const sf::Vector2f& velocity);
         void setVelocity(float velocity_x, float velocity_y);
+        void setMaxVelocity(float velocity_x, float velocity_y);
 
         auto getDirection() -> sf::Vector2i;
         void setDirection(const sf::Vector2i& direction);

@@ -13,6 +13,10 @@ BaseEntity::BaseEntity(const std::string& name) {
     m_name = name;
 }
 
+auto BaseEntity::getName() const -> const std::string& {
+    return m_name;
+}
+
 BaseEntity::~BaseEntity() = default;
 
 auto BaseEntity::getPosition() -> sf::Vector2f {

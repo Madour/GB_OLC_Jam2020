@@ -3,7 +3,7 @@
 #pragma once
 
 #include "../NasNas.h"
-#include "Player.hpp"
+#include "entities/Player.hpp"
 #include "GameAccess.hpp"
 
 class Game;

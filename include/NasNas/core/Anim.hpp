@@ -95,7 +95,7 @@ namespace ns {
         void pause();
         void resume();
         void stop();
-        bool isPlaying();
+        bool isPlaying() const;
 
         /**
          * \brief Get the currentlty played Anim

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="20" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="49">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="20" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="49">
  <properties>
   <property name="palette" type="int" value="0"/>
   <property name="start_x" type="float" value="104"/>
@@ -11,6 +11,25 @@
  <tileset firstgid="177" source="tilesets/tileset.tsx"/>
  <tileset firstgid="267" name="machine" tilewidth="16" tileheight="16" tilecount="612" columns="102">
   <image source="tilesets/machine.png" width="1632" height="96"/>
+  <tile id="103">
+   <animation>
+    <frame tileid="103" duration="600"/>
+    <frame tileid="139" duration="100"/>
+    <frame tileid="145" duration="100"/>
+    <frame tileid="151" duration="100"/>
+    <frame tileid="157" duration="100"/>
+    <frame tileid="163" duration="100"/>
+    <frame tileid="169" duration="100"/>
+    <frame tileid="175" duration="500"/>
+   </animation>
+  </tile>
+  <tile id="106">
+   <animation>
+    <frame tileid="106" duration="800"/>
+    <frame tileid="154" duration="100"/>
+    <frame tileid="160" duration="800"/>
+   </animation>
+  </tile>
   <tile id="205">
    <animation>
     <frame tileid="205" duration="100"/>
@@ -76,9 +95,23 @@
   </tile>
   <tile id="208">
    <animation>
-    <frame tileid="208" duration="800"/>
+    <frame tileid="208" duration="100"/>
+    <frame tileid="214" duration="100"/>
+    <frame tileid="220" duration="100"/>
+    <frame tileid="226" duration="100"/>
+    <frame tileid="232" duration="100"/>
+    <frame tileid="238" duration="100"/>
+    <frame tileid="244" duration="100"/>
+    <frame tileid="250" duration="100"/>
     <frame tileid="256" duration="100"/>
-    <frame tileid="262" duration="800"/>
+    <frame tileid="262" duration="100"/>
+    <frame tileid="268" duration="100"/>
+    <frame tileid="274" duration="100"/>
+    <frame tileid="280" duration="100"/>
+    <frame tileid="286" duration="100"/>
+    <frame tileid="292" duration="100"/>
+    <frame tileid="298" duration="100"/>
+    <frame tileid="304" duration="100"/>
    </animation>
   </tile>
   <tile id="307">
@@ -238,10 +271,10 @@
 164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,164,
 164,164,42,164,164,164,53,164,164,164,164,164,43,44,164,164,164,164,164,164,
 113,119,119,119,119,119,64,119,119,119,119,119,119,119,119,119,119,119,119,119,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,476,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,578,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,675,676,677,678,679,680,
-0,0,110,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,471,472,0,0,475,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,573,574,575,576,577,578,
+0,0,110,0,0,0,0,0,0,0,0,0,0,0,675,676,677,678,679,680,
 0,0,110,115,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 110,128,143,110,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 110,110,0,110,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -254,10 +287,10 @@
  <layer id="3" name="top" width="20" height="14">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,267,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,267,268,269,270,271,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,369,370,371,372,373,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,471,472,473,474,475,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,573,574,575,576,577,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,473,474,0,476,
 0,0,99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 99,0,132,99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -287,6 +320,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="10" name="interractions"/>
  <objectgroup color="#ff0000" id="4" name="collisions" tintcolor="#ff0000">
   <properties>
    <property name="start_x" type="float" value="104"/>
@@ -303,27 +337,28 @@
   <object id="13" x="0" y="18" width="320" height="16"/>
   <object id="14" x="0" y="32" width="16" height="13"/>
   <object id="16" x="16" y="128" width="16" height="48"/>
-  <object id="18" x="227" y="61" width="28" height="32"/>
-  <object id="19" x="255" y="61" width="32" height="9"/>
-  <object id="20" x="287" y="61" width="16" height="32"/>
-  <object id="21" x="255" y="67" width="1" height="27"/>
-  <object id="24" x="256" y="67" width="1" height="26"/>
-  <object id="25" x="257" y="67" width="1" height="25"/>
-  <object id="26" x="258" y="67" width="1" height="24"/>
-  <object id="27" x="259" y="67" width="1" height="23"/>
-  <object id="28" x="260" y="67" width="1" height="22"/>
-  <object id="29" x="261" y="67" width="1" height="21"/>
-  <object id="30" x="262" y="67" width="1" height="20"/>
-  <object id="31" x="286" y="93" width="1" height="26" rotation="180"/>
-  <object id="32" x="285" y="92" width="1" height="25" rotation="180"/>
-  <object id="33" x="284" y="91" width="1" height="24" rotation="180"/>
-  <object id="34" x="283" y="90" width="1" height="23" rotation="180"/>
-  <object id="35" x="282" y="89" width="1" height="22" rotation="180"/>
-  <object id="36" x="281" y="88" width="1" height="21" rotation="180"/>
-  <object id="37" x="280" y="87" width="1" height="20" rotation="180"/>
-  <object id="38" x="286" y="67" width="1" height="27"/>
-  <object id="43" x="303" y="75" width="16" height="20"/>
+  <object id="18" x="227" y="65" width="28" height="32"/>
+  <object id="19" x="255" y="65" width="32" height="9"/>
+  <object id="20" x="287" y="65" width="16" height="32"/>
+  <object id="21" x="255" y="71" width="1" height="27"/>
+  <object id="24" x="256" y="71" width="1" height="26"/>
+  <object id="25" x="257" y="71" width="1" height="25"/>
+  <object id="26" x="258" y="71" width="1" height="24"/>
+  <object id="27" x="259" y="71" width="1" height="23"/>
+  <object id="28" x="260" y="71" width="1" height="22"/>
+  <object id="29" x="261" y="71" width="1" height="21"/>
+  <object id="30" x="262" y="71" width="1" height="20"/>
+  <object id="31" x="286" y="97" width="1" height="26" rotation="180"/>
+  <object id="32" x="285" y="96" width="1" height="25" rotation="180"/>
+  <object id="33" x="284" y="95" width="1" height="24" rotation="180"/>
+  <object id="34" x="283" y="94" width="1" height="23" rotation="180"/>
+  <object id="35" x="282" y="93" width="1" height="22" rotation="180"/>
+  <object id="36" x="281" y="92" width="1" height="21" rotation="180"/>
+  <object id="37" x="280" y="91" width="1" height="20" rotation="180"/>
+  <object id="38" x="286" y="71" width="1" height="27"/>
+  <object id="43" x="303" y="80" width="16" height="19"/>
  </objectgroup>
  <objectgroup color="#00d1ff" id="5" name="warpzone"/>
  <objectgroup id="8" name="textboxes"/>
+ <objectgroup id="9" name="spawns"/>
 </map>

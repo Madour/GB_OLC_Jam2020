@@ -3,7 +3,7 @@
 #pragma once
 
 #include "../NasNas.h"
-
+#include "TextBox.hpp"
 
 using Inputs = ns::Config::Inputs;
 
@@ -21,7 +21,9 @@ public:
 
     virtual ~GameState();
 
-
+protected:
+    friend Game;
+    std::shared_ptr<TextBox> m_textbox = nullptr;
 
 };
 

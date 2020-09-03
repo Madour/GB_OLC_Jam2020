@@ -46,7 +46,7 @@ void WarehouseLevelState::init() {
     m_machine_active_anim_player.pause();
     m_machine_active_sprite = std::make_shared<sf::RectangleShape>();
     m_machine_active_sprite->setSize({55, 25});
-    m_machine_active_sprite->setPosition(243, 16);
+    m_machine_active_sprite->setPosition(243, 19);
     m_machine_active_sprite->setTexture(&ns::Res::getTexture("machine_activate.png"));
     m_machine_active_sprite->setTextureRect(m_machine_active_anim_player.getActiveFrame().rectangle);
 

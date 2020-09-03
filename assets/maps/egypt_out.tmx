@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="40" height="11" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="12">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="40" height="11" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="13">
  <properties>
   <property name="palette" type="int" value="3"/>
   <property name="start_x" type="float" value="600"/>
@@ -101,12 +101,21 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup color="#fff017" id="9" name="textboxes">
-  <object id="11" x="584" y="136" width="31" height="24">
+ <objectgroup color="#0004ff" id="9" name="textboxes">
+  <object id="11" x="582" y="139" width="31" height="23">
    <properties>
     <property name="text">Date   :  -2000 
 Place : Egypt</property>
    </properties>
   </object>
+  <object id="12" x="609" y="116" width="32" height="16">
+   <properties>
+    <property name="text">What a beautiful scenery... Sands, and only sands as far as the eye can see. 
+
+It's very hot though !</property>
+   </properties>
+  </object>
  </objectgroup>
+ <objectgroup id="10" name="spawns"/>
+ <objectgroup id="11" name="interractions"/>
 </map>

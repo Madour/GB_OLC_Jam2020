@@ -96,7 +96,7 @@ Layer(xml_node, tiledmap) {
         else if(object.attribute("gid")) {
             // not yet implemented
         }
-        else if (object.attribute("point")) {
+        else if (object.child("point")) {
             Object<sf::RectangleShape> r{object, m_color};
             m_points.push_back(r);
         }

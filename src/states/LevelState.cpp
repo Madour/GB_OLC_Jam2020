@@ -6,6 +6,15 @@
 
 LevelState::LevelState() = default;
 
+LevelState::~LevelState() {
+    for (auto it = Enemy::list.begin(); it != Enemy::list.end(); it++) {
+        if ((*it)->getName() == "Wasp" && (*it)->targetLocked())
+            continue;
+        else
+            Enemy::list.erase(it--);
+    }
+}
+
 LevelState::LevelState(const std::string& map_name, bool start_pos) {
     m_map_name = map_name;
     game->scene->clearAllLayers();
@@ -16,18 +25,18 @@ LevelState::LevelState(const std::string& map_name, bool start_pos) {
 
     m_map->getObjectLayer("collisions")->setVisible(false);
 
+    // loading spikes
     m_spikes_texture.create(m_map->getSize().x*m_map->getTileSize().x, m_map->getSize().y*m_map->getTileSize().y);
     m_spikes_sprite = std::make_shared<sf::RectangleShape>(sf::Vector2f(m_map->getSize().x*m_map->getTileSize().x, m_map->getSize().y*m_map->getTileSize().y));
     for (int x = 0; x < m_map->getSize().x; ++x) {
         for (int y = 0; y < m_map->getSize().y; ++y) {
-            auto& tile = m_map->getTileLayer("front")->getTile(x, y);
+            auto& tile = m_map->getTileLayer("back2")->getTile(x, y);
             auto& tileset = m_map->getTileTileset(tile.gid);
             if (tileset->name == "tileset" && tile.gid - tileset->firstgid == 44) {
                 m_spikes.emplace_back(x*tileset->tilewidth, y*tileset->tileheight);
             }
         }
     }
-
     m_spikes_vertices.resize(m_spikes.size()*4);
     m_spikes_vertices.setPrimitiveType(sf::PrimitiveType::Quads);
     m_spikes_texture.clear(sf::Color::Transparent);
@@ -39,7 +48,10 @@ LevelState::LevelState(const std::string& map_name, bool start_pos) {
     m_spikes_texture.display();
     m_spikes_sprite->setTexture(&m_spikes_texture.getTexture());
 
-
+    // spawning enemies
+    for (auto& pt_obj : m_map->getObjectLayer("spawns")->getPoints()) {
+        Enemy::createFromName(pt_obj.getProperty<std::string>("type"))->setPosition(pt_obj.getShape().getPosition());
+    }
 
     if (start_pos)
         game->player->setPosition(m_map->getProperty<float>("start_x"), m_map->getProperty<float>("start_y"));
@@ -50,6 +62,9 @@ LevelState::LevelState(const std::string& map_name, bool start_pos) {
     game->scene->getLayer("front")->add(m_map->getTileLayer("front"));
     game->scene->getLayer("front")->add(m_spikes_sprite);
     game->scene->getLayer("entities")->add(game->player);
+    for (auto& e : Enemy::list)
+        game->scene->getLayer("entities")->add(e);
+
     game->scene->getLayer("top")->add(m_map->getTileLayer("top"));
     game->scene->getLayer("top")->add(m_map->getTileLayer("top2"));
     game->scene->getLayer("shapes")->add(m_map->getObjectLayer("collisions"));
@@ -76,7 +91,14 @@ void LevelState::init() {
         MapCollisions::add(ns::FloatRect(rect.getShape().getGlobalBounds()));
     }
 
-
+    for (auto& enemy : Enemy::list) {
+        if (enemy->targetLocked())
+            enemy->setPosition(game->player->getPosition() - enemy->getDistanceToTarget());
+        if (enemy->getName() == "Wasp")
+            game->scene->getLayer("top")->add(enemy);
+        else
+            game->scene->getLayer("entities")->add(enemy);
+    }
 }
 
 
@@ -158,7 +180,7 @@ void LevelState::updateMap() {
     auto& textboxes = m_map->getObjectLayer("textboxes")->getRectangles();
     for (auto it = textboxes.begin(); it != textboxes.end(); ++it) {
         auto& rect = *it;
-        if (rect.getShape().getGlobalBounds().intersects(player_box)) {
+        if (rect.getShape().getGlobalBounds().contains(game->player->getPosition())) {
             std::string font = "default";
             if (rect.hasProperty("font")) {
                 font = rect.getProperty<std::string>("font");
@@ -167,6 +189,30 @@ void LevelState::updateMap() {
             game->ui_scene->getDefaultLayer()->add(m_textbox);
 
             textboxes.erase(it--);
+        }
+    }
+
+    auto& interractions = m_map->getObjectLayer("interractions")->getRectangles();
+    for (auto it = interractions.begin(); it != interractions.end(); ++it) {
+        auto& rect = *it;
+        if (rect.getShape().getGlobalBounds().intersects(player_box)) {
+            if (rect.hasProperty("dir_y"))
+                if (game->player->getFaceDirection().y != rect.getProperty<int>("dir_y"))
+                    continue;
+
+            if (rect.hasProperty("dir_x"))
+                if (game->player->getFaceDirection().x != rect.getProperty<int>("dir_x"))
+                    continue;
+
+            if ( (rect.hasProperty("auto") && rect.getProperty<bool>("auto"))
+                || sf::Keyboard::isKeyPressed(ns::Config::Inputs::getButtonKey("A"))) {
+                m_textbox = std::make_shared<TextBox>(rect.getProperty<std::string>("text"), game->fonts["italic"]);
+                game->ui_scene->getDefaultLayer()->add(m_textbox);
+
+                if (rect.hasProperty("item"))
+                    game->player->addItem((ItemType)rect.getProperty<int>("item"));
+                interractions.erase(it--);
+            }
         }
     }
 

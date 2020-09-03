@@ -39,6 +39,11 @@ void PhysicsComponent::setVelocity(float velocity_x, float velocity_y) {
     m_velocity.y = velocity_y;
 }
 
+void PhysicsComponent::setMaxVelocity(float velocity_x, float velocity_y) {
+    m_max_velocity.x = velocity_x;
+    m_max_velocity.y = velocity_y;
+}
+
 auto PhysicsComponent::getDirection() -> sf::Vector2i {
     return m_direction;
 }
