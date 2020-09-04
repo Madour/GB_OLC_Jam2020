@@ -8,7 +8,7 @@
 
 
 Item::Item(ItemType item) :
-        m_type(item) {
+m_type(item) {
     m_sprite.setTexture(ns::Res::getTexture("gui.png"));
     switch (m_type) {
         case None:

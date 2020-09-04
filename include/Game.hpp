@@ -3,6 +3,7 @@
 #pragma once
 
 #include "../NasNas.h"
+#include <SFML/Audio.hpp>
 
 #include "Palette.hpp"
 #include "entities/Player.hpp"
@@ -31,8 +32,15 @@ public:
     template <typename NewState>
     void setState(const std::string& map_name = "", bool start_pos = true);
 
+    void musicFadeOut();
+
+    void playMusic(const std::string& name);
+
+    void playSound(const std::string& name);
 
     bool isTextboxOpened();
+
+    int getTick() const;
 
     ns::Scene* scene;
     ns::Scene* ui_scene;
@@ -54,6 +62,13 @@ private:
     int m_ticks = 0;
 
     GameState* m_state;
+
+    bool m_music_fading_out = false;
+    std::unordered_map<std::string, sf::Music> m_musics;
+    std::string m_currently_playing;
+
+    sf::Sound m_sound;
+    std::unordered_map<std::string, sf::SoundBuffer> m_sound_buffers;
 
     int m_palette_index = 0;
     std::shared_ptr<sf::Shader> m_palette_shader;

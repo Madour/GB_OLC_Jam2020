@@ -36,7 +36,7 @@ private:
     ns::BitmapText m_timer;
     ns::BitmapText m_timer_shadow;
     sf::Clock m_clk;
-    int m_max_time = 120;
+    int m_max_time = 300;
 
     sf::Sprite m_panel_left;
     sf::Sprite m_panel_right;

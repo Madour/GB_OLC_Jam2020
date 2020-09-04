@@ -5,11 +5,14 @@
 #include "../../NasNas.h"
 #include "entities/Enemy.hpp"
 
-class Mummy : public Enemy {
+class BigMummy : public Enemy {
 public:
-    Mummy();
+    BigMummy();
 
     void update() override;
+
+private:
+    int m_cooldown = 0;
 
 };
 

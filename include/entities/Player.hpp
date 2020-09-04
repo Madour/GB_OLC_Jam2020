@@ -33,7 +33,7 @@ public:
 private:
     auto getSprite() -> ns::ecs::SpriteComponent*;
     std::string m_name = "Adil";
-    int m_hp = 5;
+    int m_hp = 10;
     int m_hp_to_restore = 0;
     bool visible = true;
     int m_invisibility_timer = 0;

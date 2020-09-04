@@ -97,6 +97,20 @@ auto TiledMap::allTilesets() -> const std::vector<std::unique_ptr<Tileset>>& {
     return m_tilesets;
 }
 
+auto TiledMap::hasLayer(const std::string& name) -> bool{
+    for (const auto& [key, layer_ptr] : m_layers) {
+        if (key.second == name) {
+            return true;
+        }
+    }
+    for (const auto& [key, layer_ptr] : m_objectlayers) {
+        if (key.second == name) {
+            return true;
+        }
+    }
+    return false;
+}
+
 auto TiledMap::getTileLayer(const std::string& name) -> const std::shared_ptr<TileLayer>& {
     for (const auto& [key, layer_ptr] : m_layers) {
         if (key.second == name) {

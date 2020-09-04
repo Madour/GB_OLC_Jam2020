@@ -64,6 +64,8 @@ void TextBox::update() {
         m_opened = m_bg.getPosition().y <= m_text.getPosition().y-5;
     }
     else {
+        if (!m_text.isWaiting() && !m_text.hasEnded() && game->getTick()%6 == 0)
+            game->playSound("bip");
         m_text.update();
         if (m_closing && !closed()) {
             m_bg.move(0, 2);

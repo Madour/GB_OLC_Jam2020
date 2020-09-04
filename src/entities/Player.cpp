@@ -117,7 +117,7 @@ bool Player::isInvisible() const {
 }
 
 void Player::setInvisible() {
-    m_invisibility_timer = 200;
+    m_invisibility_timer = 300;
 }
 
 void Player::restoreHp(int amount) {

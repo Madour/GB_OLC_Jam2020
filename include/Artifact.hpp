@@ -2,9 +2,35 @@
 
 #pragma once
 
+#include "../NasNas.h"
+#include "GameAccess.hpp"
 
-class Artifact {
+enum class ArtifactType {
+    None,
+    Scarab,
+    Ball,
+    Skull,
+    Vase
+};
 
+class Artifact : public ns::Drawable, GameAccess {
+public:
+    explicit Artifact(ArtifactType type);
+
+    void setPosition(float x, float y);
+    auto getPosition() -> sf::Vector2f override;
+    auto getGlobalBounds() -> ns::FloatRect override;
+
+    void update();
+
+private:
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    sf::Sprite m_sprite;
+    ArtifactType m_type;
+    std::array<ns::IntRect, 2> m_frames;
+    int m_frame_index = 0;
+    sf::Clock m_clk;
 };
 
 

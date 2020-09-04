@@ -27,7 +27,7 @@ void MuseumLevelState::init() {
 
     m_textbox = std::make_shared<TextBox>("... \n\n\nMy museum is empty today. \nOpened for two monthes, and only 3 visitors... "
                                           "I really have to do something. \nI need to find a way to get more "
-                                          "valuable artifacts to show; otherwise my museum will not survive the next month. \n\n\n"
+                                          "valuable artifacts to show; otherwise my museum will not survive the next month. \n\n"
                                           "I am ready to do anything! \nReally, anything !!", game->fonts["default"]);
     game->ui_scene->getDefaultLayer()->add(m_textbox);
 

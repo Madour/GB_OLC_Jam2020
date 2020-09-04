@@ -2,7 +2,7 @@
 
 #include "entities/Enemy.hpp"
 #include "entities/Wasp.hpp"
-#include "entities/Mummy.hpp"
+#include "entities/BigMummy.hpp"
 #include "Game.hpp"
 
 std::vector<std::shared_ptr<Enemy>> Enemy::list;
@@ -13,7 +13,8 @@ auto Enemy::createFromName(const std::string& name) -> Enemy* {
     if (Enemy::enemy_factory.empty()) {
         enemy_factory = {
             {"Wasp", [](){ return new Wasp(); }},
-            {"Mummy", [](){ return new Mummy(); }},
+            {"BigMummy", [](){ return new BigMummy(); }},
+            {"SmallMummy", [](){ return new BigMummy(); }},
         };
     }
     if (Enemy::enemy_factory.count(name) > 0)

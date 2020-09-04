@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="40" height="11" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="13">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="40" height="11" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="14">
  <properties>
+  <property name="music" value="egypt"/>
   <property name="palette" type="int" value="3"/>
   <property name="start_x" type="float" value="600"/>
   <property name="start_y" type="float" value="145"/>
@@ -98,21 +99,31 @@
   <object id="10" x="90" y="65" width="42" height="28">
    <properties>
     <property name="destination" value="egypt_in1.tmx"/>
+    <property name="fade_out" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>
  <objectgroup color="#0004ff" id="9" name="textboxes">
   <object id="11" x="582" y="139" width="31" height="23">
    <properties>
+    <property name="font" value="italic"/>
     <property name="text">Date   :  -2000 
 Place : Egypt</property>
    </properties>
   </object>
   <object id="12" x="609" y="116" width="32" height="16">
    <properties>
+    <property name="label" value="Adil"/>
     <property name="text">What a beautiful scenery... Sands, and only sands as far as the eye can see. 
 
 It's very hot though !</property>
+   </properties>
+  </object>
+  <object id="13" x="95" y="102" width="35" height="18">
+   <properties>
+    <property name="label" value="Adil"/>
+    <property name="text">Lot of treasures can be found in pyramids, maybe I can find something worthy. 
+Let's go !</property>
    </properties>
   </object>
  </objectgroup>

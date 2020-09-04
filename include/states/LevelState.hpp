@@ -5,6 +5,7 @@
 #include "GameState.hpp"
 #include "TextBox.hpp"
 #include "Spike.hpp"
+#include "Artifact.hpp"
 
 class LevelState : public GameState {
 public:
@@ -24,6 +25,7 @@ protected:
     std::vector<Spike> m_spikes;
 
 private:
+    std::shared_ptr<Artifact> m_artifact = nullptr;
     std::string m_map_name;
     sf::VertexArray m_spikes_vertices;
     sf::RenderTexture m_spikes_texture;

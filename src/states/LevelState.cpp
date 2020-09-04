@@ -85,6 +85,17 @@ void LevelState::init() {
     else
         game->hud->close();
 
+    if (m_map->hasProperty("music")) {
+        game->playMusic(m_map->getProperty<std::string>("music"));
+    }
+
+    if (m_map->hasLayer("artifact")) {
+        auto& obj = m_map->getObjectLayer("artifact")->getPoints()[0];
+        m_artifact = std::make_shared<Artifact>((ArtifactType)obj.getProperty<int>("type"));
+        m_artifact->setPosition(obj.getShape().getPosition().x, obj.getShape().getPosition().y);
+        game->scene->getLayer("entities")->add(m_artifact);
+    }
+
     // storing map collisions
     MapCollisions::clear();
     for (auto& rect : m_map->getObjectLayer("collisions")->getRectangles()) {
@@ -122,6 +133,8 @@ void LevelState::update() {
     m_spikes_texture.display();
     m_spikes_sprite->setTexture(&m_spikes_texture.getTexture());
 
+    if (m_artifact != nullptr)
+        m_artifact->update();
     game->player->update();
 
     for (auto& spike : m_spikes) {
@@ -161,6 +174,8 @@ void LevelState::updateMap() {
         if (zone.contains(player_box)) {
             game->player->inputs()->setCaptureInput(false);
             if (ns::Transition::list.empty()) {
+                if (rect.hasProperty("fade_out") && rect.getProperty<bool>("fade_out"))
+                    game->musicFadeOut();
                 auto* tr = new PaletteShiftOutTransition();
                 tr->start();
                 tr->setOnEndCallback([&]() {
@@ -182,10 +197,12 @@ void LevelState::updateMap() {
         auto& rect = *it;
         if (rect.getShape().getGlobalBounds().contains(game->player->getPosition())) {
             std::string font = "default";
-            if (rect.hasProperty("font")) {
+            std::string label;
+            if (rect.hasProperty("font"))
                 font = rect.getProperty<std::string>("font");
-            }
-            m_textbox = std::make_shared<TextBox>(rect.getProperty<std::string>("text"), game->fonts[font]);
+            if (rect.hasProperty("label"))
+                label = rect.getProperty<std::string>("label");
+            m_textbox = std::make_shared<TextBox>(rect.getProperty<std::string>("text"), game->fonts[font], label);
             game->ui_scene->getDefaultLayer()->add(m_textbox);
 
             textboxes.erase(it--);
@@ -215,5 +232,4 @@ void LevelState::updateMap() {
             }
         }
     }
-
 }

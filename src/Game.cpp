@@ -95,6 +95,12 @@ Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
     // setting fonts
     initBitmapFonts();
 
+    // loading music
+    m_musics["egypt"].openFromFile("assets/audio/music/egypt.ogg");
+    m_musics["egypt"].setLoop(true);
+
+    m_sound_buffers["bip"].loadFromFile("assets/audio/sfx/bip.ogg");
+
     player = std::make_shared<Player>();
     player->setPosition(184, 45);
 
@@ -186,6 +192,18 @@ void Game::update() {
         ent->update();
     }
     scene->getLayer("entities")->ySort();
+
+    if (m_music_fading_out) {
+        auto& m = m_musics[m_currently_playing];
+        if (m.getVolume() > 0) {
+            m.setVolume(m.getVolume() - 2);
+        }
+        else {
+            m.setVolume(100);
+            m.stop();
+        }
+    }
+
     m_ticks++;
 }
 
@@ -200,6 +218,31 @@ void Game::setPalette(int color) {
 bool Game::isTextboxOpened() {
     return m_state->m_textbox != nullptr;
 }
+
+void Game::musicFadeOut() {
+    m_music_fading_out = true;
+}
+
+void Game::playMusic(const std::string& name) {
+    if (m_musics.count(name) > 0)
+        ;//m_musics[name].play();
+    else
+        ns_LOG("No music named ", name, " in database");
+}
+
+void Game::playSound(const std::string& name) {
+    if (m_sound_buffers.count(name) > 0) {
+        m_sound.setBuffer(m_sound_buffers[name]);
+        m_sound.setVolume(30);
+        m_sound.play();
+    }
+    else {
+        ns_LOG("No sound named ", name, " in database");
+    }
+
+}
+
+int Game::getTick() const { return m_ticks;}
 
 void Game::initBitmapFonts() {
 

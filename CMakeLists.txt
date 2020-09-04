@@ -39,7 +39,7 @@ add_executable(GB_OLC_Jam
 
         src/entities/Player.cpp include/entities/Player.hpp
         src/entities/Enemy.cpp include/entities/Enemy.hpp
-        src/entities/Mummy.cpp include/entities/Mummy.hpp
+        src/entities/BigMummy.cpp include/entities/BigMummy.hpp
         src/entities/Wasp.cpp include/entities/Wasp.hpp
 
         src/transitions/PaletteShiftTransition.cpp include/transitions/PaletteShiftTransition.hpp
@@ -49,7 +49,7 @@ add_executable(GB_OLC_Jam
         src/states/TitleScreenState.cpp include/states/TitleScreenState.hpp
         src/states/MuseumLevelState.cpp include/states/MuseumLevelState.hpp
         src/states/WarehouseLevelState.cpp include/states/WarehouseLevelState.hpp
-)
+        src/states/GameOverState.cpp include/states/GameOverState.hpp)
 
 target_include_directories(GB_OLC_Jam PRIVATE include)
 target_link_libraries(GB_OLC_Jam sfml-graphics sfml-audio)
