@@ -35,9 +35,12 @@ add_executable(GB_OLC_Jam
         src/TextBox.cpp include/TextBox.hpp
         src/MapCollisions.cpp include/MapCollisions.hpp
         src/HUD.cpp include/HUD.hpp
-        src/Spike.cpp include/Spike.hpp src/Artifact.cpp include/Artifact.hpp src/Item.cpp include/Item.hpp
+        src/Spike.cpp include/Spike.hpp
+        src/Artifact.cpp include/Artifact.hpp
+        src/Item.cpp include/Item.hpp
 
         src/entities/Player.cpp include/entities/Player.hpp
+        src/entities/Hackerman.cpp include/entities/Hackerman.hpp
         src/entities/Enemy.cpp include/entities/Enemy.hpp
         src/entities/BigMummy.cpp include/entities/BigMummy.hpp
         src/entities/Wasp.cpp include/entities/Wasp.hpp
@@ -47,8 +50,8 @@ add_executable(GB_OLC_Jam
 
         src/states/LevelState.cpp include/states/LevelState.hpp
         src/states/TitleScreenState.cpp include/states/TitleScreenState.hpp
-        src/states/MuseumLevelState.cpp include/states/MuseumLevelState.hpp
-        src/states/WarehouseLevelState.cpp include/states/WarehouseLevelState.hpp
+        src/states/MuseumIntroState.cpp include/states/MuseumIntroState.hpp
+        src/states/WarehouseIntroState.cpp include/states/WarehouseIntroState.hpp
         src/states/GameOverState.cpp include/states/GameOverState.hpp)
 
 target_include_directories(GB_OLC_Jam PRIVATE include)

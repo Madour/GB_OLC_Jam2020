@@ -3,9 +3,11 @@
 #pragma once
 
 #include "GameState.hpp"
+#include "states/LevelState.hpp"
 
-class TitleScreenState : public GameState {
+class TitleScreenState : public LevelState {
 public:
+    using LevelState::LevelState;
 
     void init() override;
 

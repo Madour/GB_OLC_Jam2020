@@ -61,9 +61,13 @@ void HUD::close() {
     m_opened = false;
 }
 
-void HUD::setTimerMaxTime(int seconds) {
+void HUD::resetTimer(int seconds) {
     m_max_time = seconds;
     m_clk.restart();
+}
+
+int HUD::getRemainingTime() {
+    return m_max_time - (int)m_clk.getElapsedTime().asSeconds();
 }
 
 

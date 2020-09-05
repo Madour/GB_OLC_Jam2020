@@ -13,6 +13,7 @@ public:
 
 private:
     int m_cooldown = 0;
+    std::unique_ptr<ns::Spritesheet> m_spritesheet;
 
 };
 

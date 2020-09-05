@@ -43,6 +43,7 @@ spacing(xml_node.attribute("spacing").as_uint()) {
 
     m_image_source = xml_node.child("image").attribute("source").as_string();
 #ifdef NS_RESLIB
+    std::cout << path << " --" <<  m_image_source << "\n";
     m_texture = &ns::Res::getTexture(path+m_image_source);
 #else
     m_texture = new sf::Texture();

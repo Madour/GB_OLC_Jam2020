@@ -2,6 +2,7 @@
 
 #include "Game.hpp"
 #include "states/LevelState.hpp"
+#include "states/GameOverState.hpp"
 #include "MapCollisions.hpp"
 
 LevelState::LevelState() = default;
@@ -49,9 +50,10 @@ LevelState::LevelState(const std::string& map_name, bool start_pos) {
     m_spikes_sprite->setTexture(&m_spikes_texture.getTexture());
 
     // spawning enemies
-    for (auto& pt_obj : m_map->getObjectLayer("spawns")->getPoints()) {
-        Enemy::createFromName(pt_obj.getProperty<std::string>("type"))->setPosition(pt_obj.getShape().getPosition());
-    }
+    if (m_map->hasLayer("spawns"))
+        for (auto& pt_obj : m_map->getObjectLayer("spawns")->getPoints()) {
+            Enemy::createFromName(pt_obj.getProperty<std::string>("type"))->setPosition(pt_obj.getShape().getPosition());
+        }
 
     if (start_pos)
         game->player->setPosition(m_map->getProperty<float>("start_x"), m_map->getProperty<float>("start_y"));
@@ -78,7 +80,6 @@ void LevelState::init() {
     configurePalette();
 
     m_map->getObjectLayer("collisions")->setVisible(false);
-    m_map->getObjectLayer("warpzone")->setVisible(false);
 
     if(m_map->hasProperty("show_hud") && m_map->getProperty<bool>("show_hud"))
         game->hud->open();
@@ -87,6 +88,10 @@ void LevelState::init() {
 
     if (m_map->hasProperty("music")) {
         game->playMusic(m_map->getProperty<std::string>("music"));
+    }
+
+    if (m_map->hasProperty("reset_timer")) {
+        game->hud->resetTimer(m_map->getProperty<int>("reset_timer"));
     }
 
     if (m_map->hasLayer("artifact")) {
@@ -142,6 +147,15 @@ void LevelState::update() {
             if (game->player->collider()->getCollision().getShape().getGlobalBounds().intersects(spike.getGlobalBounds()))
                 game->player->damage();
     }
+
+    if (game->hud->getRemainingTime() <= 0 && ns::Transition::list.empty()) {
+        auto* tr = new PaletteShiftOutTransition();
+        tr->start();
+        tr->setOnEndCallback([](){
+            (new PaletteShiftInTransition())->start();
+            game->setState<GameOverState>();
+        });
+    }
 }
 
 void LevelState::configurePalette() {
@@ -162,74 +176,92 @@ void LevelState::updateTextbox() {
 }
 
 void LevelState::updateMap() {
-    m_map->getTileLayer("front")->update();
     m_map->getTileLayer("top")->update();
+    m_map->getTileLayer("front")->update();
+    m_map->getTileLayer("back2")->update();
+    m_map->getTileLayer("back")->update();
     if (m_map_name == "egypt_out.tmx")
         m_map->getTileLayer("back2")->move(0.05, 0);
 
     auto player_box = game->player->collider()->getCollision().getShape().getGlobalBounds();
 
-    for (auto& rect : m_map->getObjectLayer("warpzone")->getRectangles()) {
-        ns::FloatRect zone{rect.getShape().getGlobalBounds()};
-        if (zone.contains(player_box)) {
-            game->player->inputs()->setCaptureInput(false);
-            if (ns::Transition::list.empty()) {
-                if (rect.hasProperty("fade_out") && rect.getProperty<bool>("fade_out"))
-                    game->musicFadeOut();
-                auto* tr = new PaletteShiftOutTransition();
-                tr->start();
-                tr->setOnEndCallback([&]() {
-                    if (rect.hasProperty("posx")) {
-                        game->setState<LevelState>(rect.getProperty<std::string>("destination"), false);
-                        game->player->setX(rect.getProperty<float>("posx"));
-                        game->player->setY(rect.getProperty<float>("posy"));
-                    } else
-                        game->setState<LevelState>(rect.getProperty<std::string>("destination"));
-                    auto* tr = new PaletteShiftInTransition();
+    if (m_map->hasLayer("warpzone"))
+        for (auto& rect : m_map->getObjectLayer("warpzone")->getRectangles()) {
+            ns::FloatRect zone{rect.getShape().getGlobalBounds()};
+            if (zone.contains(player_box)) {
+                game->player->inputs()->setCaptureInput(false);
+                if (ns::Transition::list.empty()) {
+                    if (rect.hasProperty("fade_out") && rect.getProperty<bool>("fade_out"))
+                        game->musicFadeOut();
+                    auto* tr = new PaletteShiftOutTransition();
                     tr->start();
-                });
+                    tr->setOnEndCallback([&]() {
+                        if (rect.hasProperty("posx")) {
+                            game->setState<LevelState>(rect.getProperty<std::string>("destination"), false);
+                            game->player->setX(rect.getProperty<float>("posx"));
+                            game->player->setY(rect.getProperty<float>("posy"));
+                        } else
+                            game->setState<LevelState>(rect.getProperty<std::string>("destination"));
+                        auto* tr = new PaletteShiftInTransition();
+                        tr->start();
+                    });
+                }
+            }
+        }
+
+    if (m_map->hasLayer("textboxes") && m_textbox == nullptr) {
+        auto& textboxes = m_map->getObjectLayer("textboxes")->getRectangles();
+        for (auto it = textboxes.begin(); it != textboxes.end(); ++it) {
+            auto& rect = *it;
+            if (rect.getShape().getGlobalBounds().contains(game->player->getPosition())) {
+                std::string font = "default";
+                std::string label;
+                if (rect.hasProperty("font"))
+                    font = rect.getProperty<std::string>("font");
+                if (rect.hasProperty("label"))
+                    label = rect.getProperty<std::string>("label");
+                if (rect.hasProperty("text")) {
+                    m_textbox = std::make_shared<TextBox>(rect.getProperty<std::string>("text"), game->fonts[font], label);
+                    game->ui_scene->getDefaultLayer()->add(m_textbox);
+                }
+
+                if (rect.hasProperty("dest_x"))
+                    game->player->setDestination(rect.getProperty<int>("dest_x"), rect.getProperty<int>("dest_y"));
+
+                if (rect.hasProperty("music")) {
+                    game->playMusic(rect.getProperty<std::string>("music"));
+                }
+
+                textboxes.erase(it--);
+                break;
             }
         }
     }
 
-    auto& textboxes = m_map->getObjectLayer("textboxes")->getRectangles();
-    for (auto it = textboxes.begin(); it != textboxes.end(); ++it) {
-        auto& rect = *it;
-        if (rect.getShape().getGlobalBounds().contains(game->player->getPosition())) {
-            std::string font = "default";
-            std::string label;
-            if (rect.hasProperty("font"))
-                font = rect.getProperty<std::string>("font");
-            if (rect.hasProperty("label"))
-                label = rect.getProperty<std::string>("label");
-            m_textbox = std::make_shared<TextBox>(rect.getProperty<std::string>("text"), game->fonts[font], label);
-            game->ui_scene->getDefaultLayer()->add(m_textbox);
+    if (m_map->hasLayer("interractions")){
+        auto& interractions = m_map->getObjectLayer("interractions")->getRectangles();
+        for (auto it = interractions.begin(); it != interractions.end(); ++it) {
+            auto& rect = *it;
+            if (rect.getShape().getGlobalBounds().intersects(player_box)) {
+                if (rect.hasProperty("dir_y"))
+                    if (game->player->getFaceDirection().y != rect.getProperty<int>("dir_y"))
+                        continue;
 
-            textboxes.erase(it--);
-        }
-    }
+                if (rect.hasProperty("dir_x"))
+                    if (game->player->getFaceDirection().x != rect.getProperty<int>("dir_x"))
+                        continue;
 
-    auto& interractions = m_map->getObjectLayer("interractions")->getRectangles();
-    for (auto it = interractions.begin(); it != interractions.end(); ++it) {
-        auto& rect = *it;
-        if (rect.getShape().getGlobalBounds().intersects(player_box)) {
-            if (rect.hasProperty("dir_y"))
-                if (game->player->getFaceDirection().y != rect.getProperty<int>("dir_y"))
-                    continue;
+                if ( (rect.hasProperty("auto") && rect.getProperty<bool>("auto"))
+                     || sf::Keyboard::isKeyPressed(ns::Config::Inputs::getButtonKey("A"))) {
+                    m_textbox = std::make_shared<TextBox>(rect.getProperty<std::string>("text"), game->fonts["italic"]);
+                    game->ui_scene->getDefaultLayer()->add(m_textbox);
 
-            if (rect.hasProperty("dir_x"))
-                if (game->player->getFaceDirection().x != rect.getProperty<int>("dir_x"))
-                    continue;
-
-            if ( (rect.hasProperty("auto") && rect.getProperty<bool>("auto"))
-                || sf::Keyboard::isKeyPressed(ns::Config::Inputs::getButtonKey("A"))) {
-                m_textbox = std::make_shared<TextBox>(rect.getProperty<std::string>("text"), game->fonts["italic"]);
-                game->ui_scene->getDefaultLayer()->add(m_textbox);
-
-                if (rect.hasProperty("item"))
-                    game->player->addItem((ItemType)rect.getProperty<int>("item"));
-                interractions.erase(it--);
+                    if (rect.hasProperty("item"))
+                        game->player->addItem((ItemType)rect.getProperty<int>("item"));
+                    interractions.erase(it--);
+                }
             }
         }
     }
+
 }

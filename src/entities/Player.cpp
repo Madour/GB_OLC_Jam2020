@@ -2,6 +2,7 @@
 
 
 #include "entities/Player.hpp"
+#include "states/GameOverState.hpp"
 #include "Game.hpp"
 
 Player::Player() : ns::BaseEntity("Player") {
@@ -95,6 +96,10 @@ auto Player::getFaceDirection() -> sf::Vector2f {
 
 }
 
+void Player::setDestination(float x, float y) {
+    m_destination = {x, y};
+}
+
 void Player::addItem(ItemType item_type) {
     for (auto& m_item : m_items) {
         if (m_item.getType() == None) {
@@ -154,8 +159,23 @@ void Player::update() {
 
     physics()->setDirection(0, 0);
 
-    if (ns::Transition::list.empty()) {
-        inputs()->update<Player>();
+    if (ns::Transition::list.empty() && m_hp > 0 && !game->isTextboxOpened()) {
+        if (m_destination == sf::Vector2f(0, 0))
+            inputs()->update<Player>();
+        if (m_destination != sf::Vector2f(0, 0)) {
+            auto d = sf::Vector2i(m_destination - getPosition());
+            d = sf::Vector2i(m_destination.x - std::round(getPosition().x), m_destination.y - std::round(getPosition().y));
+            if (std::abs(d.x) > 0.5)
+                physics()->setDirection(d.x/std::abs(d.x), physics()->getDirection().y);
+            else
+                m_destination.x = getPosition().x;
+            if (std::abs(d.y) > 0.5)
+                physics()->setDirection(physics()->getDirection().x, d.y/std::abs(d.y));
+            else
+                m_destination.y = getPosition().y;
+            if ((float)std::abs(d.x) < 0.1f && (float)std::abs(d.y) < 0.1f)
+                m_destination = {0, 0};
+        }
         physics()->update();
     }
 
@@ -175,7 +195,7 @@ void Player::update() {
     // animate player
     if (physics()->getDirection() == sf::Vector2i(0, 0))
         sprite->getAnimPlayer().stop();
-    else {
+    else if (m_destination == sf::Vector2f(0, 0)) {
         if (physics()->getDirection().x == 0) {
             if (physics()->getDirection().y == -1)
                 sprite->setAnimState("walk_up");
@@ -210,6 +230,37 @@ void Player::update() {
 
         if (sprite->getAnimState() == "walk_side") {
             sprite->getDrawable().setScale(physics()->getDirection().x, 1);
+        }
+    }
+    else {
+        auto d = sf::Vector2i(m_destination - getPosition());
+        d = sf::Vector2i(m_destination.x - std::round(getPosition().x), m_destination.y - std::round(getPosition().y));
+        if (std::abs(d.y) > std::abs(d.x)) {
+            if (physics()->getDirection().y == -1)
+                sprite->setAnimState("walk_up");
+            else
+                sprite->setAnimState("walk_down");
+        }
+        else if (std::abs(d.x) > 0){
+            sprite->setAnimState("walk_side");
+            if (physics()->getDirection().x == -1)
+                sprite->getDrawable().setScale(-1, 1);
+            else
+                sprite->getDrawable().setScale(1, 1);
+        }
+    }
+
+    if (m_hp <= 0) {
+        sprite->getAnimPlayer().pause();
+        if (ns::Transition::list.empty()) {
+            game->hud->close();
+            auto* tr = new PaletteShiftOutTransition();
+            tr->start();
+            tr->setOnEndCallback([](){
+                auto* tr = new PaletteShiftInTransition();
+                tr->start();
+                game->setState<GameOverState>();
+            });
         }
     }
 

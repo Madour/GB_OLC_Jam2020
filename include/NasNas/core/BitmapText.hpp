@@ -160,6 +160,8 @@ namespace ns {
          */
         void setColor(const sf::Color& color);
 
+        auto getColor() -> const sf::Color&;
+
         /**
          * \brief Move the BitmapText
          *

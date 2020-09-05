@@ -124,6 +124,10 @@ void BitmapText::setColor(const sf::Color &color) {
     updateVertices();
 }
 
+auto BitmapText::getColor() -> const sf::Color& {
+    return m_color;
+}
+
 auto BitmapText::getPosition() -> sf::Vector2f {
     return m_transformable.getPosition();
 }

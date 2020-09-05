@@ -2,10 +2,12 @@
 
 #pragma once
 
-#include "GameState.hpp"
+#include "states/LevelState.hpp"
 
-class GameOverState : public GameState {
+class GameOverState : public LevelState {
 public:
+    using LevelState::LevelState;
+
     void init() override;
 
     void onEvent(const sf::Event& event) override;
@@ -14,8 +16,11 @@ public:
 
 private:
     std::shared_ptr<sf::RectangleShape> m_game_over_sprite;
-    std::array<sf::IntRect, 6> m_game_over_frames;
+    std::array<sf::IntRect, 7> m_game_over_frames;
     int m_anim_index=0;
+
+    std::shared_ptr<ns::BitmapText> m_press_start;
+    std::shared_ptr<ns::BitmapText> m_to_retry;
 };
 
 

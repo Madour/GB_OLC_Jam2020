@@ -4,13 +4,14 @@
 #include "Game.hpp"
 
 Wasp::Wasp() : Enemy("Wasp") {
-    auto* sprite_sheet = new ns::Spritesheet("wasp", ns::Res::getTexture("wasp.png"), {
+    auto* spritesheet = new ns::Spritesheet("wasp", ns::Res::getTexture("wasp.png"), {
         new ns::Anim("idle", {
             ns::AnimFrame({0, 0, 7, 10}, 100, {3, 9}),
             ns::AnimFrame({7, 0, 7, 10}, 100, {3, 9})
         })
     });
-    addComponent<ns::ecs::SpriteComponent>(this, sprite_sheet, "idle");
+    m_spritesheet = std::unique_ptr<ns::Spritesheet>(spritesheet);
+    addComponent<ns::ecs::SpriteComponent>(this, spritesheet, "idle");
 
     addComponent<ns::ecs::PhysicsComponent>(this, 1.f, sf::Vector2f(1.5, 1.5), sf::Vector2f(0.06, 0.06), sf::Vector2f(0.1, 0.1));
 

@@ -4,7 +4,7 @@
 
 #include "Game.hpp"
 #include "transitions/WaveTransition.hpp"
-#include "states/WarehouseLevelState.hpp"
+#include "states/WarehouseIntroState.hpp"
 
 
 Item::Item(ItemType item) :
@@ -42,10 +42,10 @@ void Item::use() {
                 game->camera->toggleShader();
             auto* tr = new WaveOutTransition();
             tr->start();
+            game->hud->close();
             tr->setOnEndCallback([&](){
-                game->hud->close();
-                game->setState<WarehouseLevelState>();
-                game->player->setPosition(271, 95);
+                game->setState<WarehouseIntroState>();
+                game->player->setPosition(271, 105);
                 auto* tr = new WaveInTransition();
                 tr->start();
                 tr->setOnEndCallback([](){

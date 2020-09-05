@@ -20,10 +20,10 @@ m_label(label) {
     m_label.setColor(Palette::Base[0]);
 
     m_bg.setTexture(ns::Res::get().in("fonts").getTexture("frame.png"));
-    m_bg.setTextureRect({0, 11, 160, 35});
+    m_bg.setTextureRect({0, 13, 160, 35});
 
     m_bg_label.setTexture(ns::Res::get().in("fonts").getTexture("frame.png"));
-    m_bg_label.setTextureRect({0, 0, 160, 10});
+    m_bg_label.setTextureRect({0, 0, 160, 13});
 
     setPosition(0, (float)ns::Config::Window::view_height+12.f);
     m_text.setPosition(5, (float)ns::Config::Window::view_height-31.f);
@@ -82,8 +82,8 @@ auto TextBox::getPosition() -> sf::Vector2f {
 
 void TextBox::setPosition(const sf::Vector2f& position) {
     m_bg.setPosition(position.x, position.y);
-    m_bg_label.setPosition(position.x, position.y-10);
-    m_label.setPosition(position.x+12, position.y-7);
+    m_bg_label.setPosition(position.x, position.y-12);
+    m_label.setPosition(position.x+12, position.y-8);
     m_text.setPosition(position + sf::Vector2f(5, 5));
 }
 

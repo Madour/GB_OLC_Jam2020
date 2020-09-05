@@ -12,6 +12,8 @@ public:
     void update() override;
 
 private:
+    std::unique_ptr<ns::Spritesheet> m_spritesheet;
+
 };
 
 

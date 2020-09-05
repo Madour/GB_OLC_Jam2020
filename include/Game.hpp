@@ -56,6 +56,8 @@ public:
 
     sf::Clock time;
 
+    std::string last_map_name;
+
 private:
     void initBitmapFonts();
 
@@ -73,7 +75,6 @@ private:
     int m_palette_index = 0;
     std::shared_ptr<sf::Shader> m_palette_shader;
     std::shared_ptr<sf::Shader> m_wave_shader;
-
 };
 
 template <typename NewState>
@@ -82,8 +83,10 @@ void Game::setState(const std::string& map_name, bool start_pos) {
     delete(m_state);
     if (map_name.empty())
         m_state = new NewState();
-    else
+    else {
         m_state = new NewState(map_name, start_pos);
+        last_map_name = map_name;
+    }
     m_state->init();
 }
 

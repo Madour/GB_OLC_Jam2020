@@ -5,7 +5,7 @@
 
 #include "GameState.hpp"
 #include "states/TitleScreenState.hpp"
-#include "states/MuseumLevelState.hpp"
+#include "states/MuseumIntroState.hpp"
 
 
 void resolveCollision(ns::BaseEntity* ent, const ns::FloatRect& rect) {
@@ -123,6 +123,7 @@ Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
     camera->lookAt(scene);
     camera->setShader(m_wave_shader.get());
     camera->toggleShader();
+    camera->setFramesDelay(5);
 
     ui_camera = createCamera("ui", 2, {0, 0, ns::Config::Window::view_width, ns::Config::Window::view_height});
     ui_camera->lookAt(ui_scene);
@@ -193,14 +194,14 @@ void Game::update() {
     }
     scene->getLayer("entities")->ySort();
 
-    if (m_music_fading_out) {
-        auto& m = m_musics[m_currently_playing];
-        if (m.getVolume() > 0) {
-            m.setVolume(m.getVolume() - 2);
-        }
-        else {
-            m.setVolume(100);
-            m.stop();
+    if (m_music_fading_out && m_musics[m_currently_playing].getStatus() == sf::Music::Playing) {
+        if (m_musics[m_currently_playing].getVolume() > 0) {
+            m_musics[m_currently_playing].setVolume(m_musics[m_currently_playing].getVolume() - 2);
+            if (m_musics[m_currently_playing].getVolume() <= 5) {
+                m_musics[m_currently_playing].setVolume(100);
+                m_musics[m_currently_playing].stop();
+                m_music_fading_out = false;
+            }
         }
     }
 
@@ -224,8 +225,10 @@ void Game::musicFadeOut() {
 }
 
 void Game::playMusic(const std::string& name) {
-    if (m_musics.count(name) > 0)
-        ;//m_musics[name].play();
+    if (m_musics.count(name) > 0) {
+        m_musics[name].play();
+        m_currently_playing = name;
+    }
     else
         ns_LOG("No music named ", name, " in database");
 }
@@ -256,7 +259,7 @@ void Game::initBitmapFonts() {
             {
                 {"@", 8},
                 {"ABCDEFGHIJKLMNOPQRSTUVWXYZ", 7},
-                {"#$123456789", 7},
+                {"#$0123456789", 7},
                 {"j", 5},
                 {"il", 4},
                 {".,!:;", 2},
@@ -270,7 +273,7 @@ void Game::initBitmapFonts() {
             {
                 {"@", 8},
                 {"ABCDEFGHIJKLMNOPQRSTUVWXYZ", 7},
-                {"#$123456789", 7},
+                {"#$0123456789", 7},
                 {"j", 5},
                 {"il", 4},
                 {".,!:;", 3},
@@ -284,7 +287,7 @@ void Game::initBitmapFonts() {
             {
                 {"@", 8},
                 {"ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8},
-                {"#$23456789", 8},
+                {"#$023456789", 8},
                 {"j", 5},
                 {"il", 5},
                 {".,", 5},

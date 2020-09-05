@@ -21,6 +21,7 @@ public:
     int getHP() const;
     auto getFaceDirection() ->sf::Vector2f;
 
+    void setDestination(float x, float y);
     void addItem(ItemType item_type);
     auto getItems() -> std::array<Item, 3>&;
 
@@ -38,6 +39,7 @@ private:
     bool visible = true;
     int m_invisibility_timer = 0;
     int m_blink_timer = 0;
+    sf::Vector2f m_destination;
     std::array<Item, 3> m_items = {Item(PresentButton), Item(None), Item(None)};
     std::unique_ptr<ns::Spritesheet> m_spritesheet;
     std::vector<int> m_inventory;

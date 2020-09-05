@@ -4,17 +4,13 @@
 #include "Game.hpp"
 
 BigMummy::BigMummy() : Enemy("BigMummy") {
-    //auto* shape_comp = new ns::ecs::ShapeComponent<sf::RectangleShape>(this, {16, 16});
-    //shape_comp->getDrawable().setOrigin(8, 16);
-    //shape_comp->getDrawable().setFillColor(sf::Color::Black);
-    //addComponent(std::shared_ptr<ns::ecs::ShapeComponent<sf::RectangleShape>>(shape_comp));
-
     auto* spritesheet = new ns::Spritesheet("mummy_big", ns::Res::getTexture("mummy_big.png"), {
         new ns::Anim("idle", {ns::AnimFrame({0, 0, 13, 23}, 1000, {6, 23})}, false),
         new ns::Anim("walk_down", {ns::AnimFrame({0, 0, 13, 23}, 500, {6, 23}), ns::AnimFrame({13, 0, 13, 23}, 500, {6, 23})}),
         new ns::Anim("walk_up", {ns::AnimFrame({0, 23, 13, 23}, 500, {6, 23}), ns::AnimFrame({13, 23, 13, 23}, 500, {6, 23})}),
         new ns::Anim("walk_side", {ns::AnimFrame({0, 46, 13, 23}, 500, {6, 23}), ns::AnimFrame({13, 46, 13, 23}, 500, {6, 23})}),
     });
+    m_spritesheet = std::unique_ptr<ns::Spritesheet>(spritesheet);
     addComponent<ns::ecs::SpriteComponent>(this, spritesheet, "idle");
 
     addComponent<ns::ecs::PhysicsComponent>(this, 1.f, sf::Vector2f(0.7, 0.7), sf::Vector2f(0.1, 0.1), sf::Vector2f(0.8, 0.8));
@@ -40,6 +36,7 @@ void BigMummy::update() {
         if (!m_target_locked) {
             if (ns::distance(getPosition(), game->player->getPosition()) < 60) {
                 m_target_locked = true;
+                game->playSound("bip");
                 physics()->setDirection(dx / std::abs(dx), physics()->getDirection().y);
                 physics()->setDirection(physics()->getDirection().x, dy / std::abs(dy));
             }

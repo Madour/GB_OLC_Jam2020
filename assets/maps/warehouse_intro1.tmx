@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="15" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="67">
+ <properties>
+  <property name="palette" type="int" value="0"/>
+ </properties>
+ <tileset firstgid="1" source="tilesets/tileset.tsx"/>
+ <tileset firstgid="91" source="tilesets/tileset_int.tsx"/>
+ <tileset firstgid="267" source="tilesets/machine.tsx"/>
+ <layer id="1" name="back" width="15" height="14">
+  <data encoding="csv">
+155,155,155,155,155,155,155,155,155,155,155,155,155,155,155,
+155,155,155,155,155,155,155,155,155,155,155,155,155,155,155,
+93,93,93,93,93,93,93,93,93,1073741926,1073741915,1073741926,1073741915,1073741926,1073741915,
+93,93,93,93,93,93,93,93,93,1073741915,1073741926,1073741915,1073741926,1073741915,1073741926,
+93,93,93,93,93,93,93,93,93,1073741926,1073741915,1073741926,1073741915,1073741926,1073741915,
+93,93,93,93,93,93,93,93,93,1073741915,1073741926,1073741915,1073741926,1073741915,1073741926,
+93,93,93,93,93,93,93,93,93,1073741926,1073741915,1073741926,1073741915,1073741926,1073741915,
+93,93,93,93,93,93,93,93,93,93,93,93,93,93,93,
+93,93,93,93,93,93,93,93,93,93,93,93,93,93,93,
+93,93,93,93,93,93,93,93,93,93,93,93,93,93,93,
+93,93,93,93,93,93,93,93,93,93,93,93,93,93,93,
+93,93,93,93,93,93,93,93,93,93,93,93,93,93,93,
+93,93,93,93,93,93,93,93,93,93,93,93,93,93,93,
+93,93,93,93,93,93,93,93,93,93,93,93,93,93,93
+</data>
+ </layer>
+ <layer id="3" name="back2" width="15" height="14">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,132,134,0,0,0,97,0,0,0,0,0,0,0,
+95,95,95,95,95,95,95,108,95,95,95,95,95,95,95,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,146,0,0,0,0,0,0,0,0,0,0,0,0,
+124,0,0,124,0,0,0,0,0,0,0,0,0,0,0,
+124,146,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,124,146,0,0,0,0,0,0,0,0,0,0,0,
+0,146,124,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,146,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="4" name="front" width="15" height="14">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,471,472,0,0,475,476,
+0,0,0,0,0,0,0,0,0,573,574,575,576,577,578,
+0,0,0,0,0,0,0,0,0,675,676,677,678,679,680,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="5" name="top" width="15" height="14">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,135,0,0,0,0,0,0,0,0,0,0,0,0,
+113,0,0,113,0,0,0,0,0,0,0,0,0,0,0,
+113,135,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,113,135,0,0,0,0,0,0,0,0,0,0,0,
+0,135,113,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,135,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="7" name="machine_top" width="15" height="14">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,267,268,269,270,271,0,
+0,0,0,0,0,0,0,0,0,369,370,371,372,373,0,
+0,0,0,0,0,0,0,0,0,0,0,473,474,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="6" name="top2" width="15" height="14">
+  <data encoding="csv">
+20,49,49,49,49,49,49,49,49,49,49,49,49,49,19,
+40,0,0,0,0,0,0,0,0,0,0,0,0,0,38,
+40,0,0,0,0,0,0,0,0,0,0,0,0,0,38,
+40,0,0,0,0,0,0,0,0,0,0,0,0,0,38,
+40,0,0,0,0,0,0,0,0,0,0,0,0,0,38,
+40,0,0,0,0,0,0,0,0,0,0,0,0,0,38,
+40,0,0,0,0,0,0,0,0,0,0,0,0,0,38,
+40,0,0,0,0,0,0,0,0,0,0,0,0,0,38,
+40,0,0,0,0,0,0,0,0,0,0,0,0,0,38,
+40,0,0,0,0,0,0,0,0,0,0,0,0,0,38,
+40,0,0,0,0,0,0,0,0,0,0,0,0,0,38,
+40,0,0,0,0,0,0,0,0,0,0,0,0,0,38,
+40,0,0,0,0,0,0,0,0,0,0,0,0,0,38,
+10,29,29,29,29,29,29,29,29,29,29,29,29,29,9
+</data>
+ </layer>
+ <objectgroup color="#ff0000" id="2" name="collisions">
+  <object id="2" x="-2" y="30" width="243" height="6"/>
+  <object id="3" x="234" y="36" width="6" height="194"/>
+  <object id="4" x="1" y="218" width="233" height="8"/>
+  <object id="5" x="0" y="32" width="6" height="186"/>
+  <object id="6" x="33" y="112" width="14" height="13"/>
+  <object id="7" x="49" y="128" width="14" height="13"/>
+  <object id="8" x="17" y="144" width="14" height="13"/>
+  <object id="9" x="5" y="128" width="10" height="29"/>
+  <object id="10" x="17" y="176" width="14" height="13"/>
+  <object id="11" x="33" y="160" width="14" height="29"/>
+  <object id="12" x="49" y="192" width="14" height="14"/>
+  <object id="13" x="49" y="160" width="14" height="13"/>
+  <object id="42" x="147" y="64" width="28" height="33"/>
+  <object id="43" x="175" y="64" width="32" height="10"/>
+  <object id="44" x="207" y="64" width="16" height="33"/>
+  <object id="45" x="175" y="71" width="1" height="27"/>
+  <object id="46" x="176" y="71" width="1" height="26"/>
+  <object id="47" x="177" y="71" width="1" height="25"/>
+  <object id="48" x="178" y="71" width="1" height="24"/>
+  <object id="49" x="179" y="71" width="1" height="23"/>
+  <object id="50" x="180" y="71" width="1" height="22"/>
+  <object id="51" x="181" y="71" width="1" height="21"/>
+  <object id="52" x="182" y="71" width="1" height="20"/>
+  <object id="53" x="206" y="97" width="1" height="26" rotation="180"/>
+  <object id="54" x="205" y="96" width="1" height="25" rotation="180"/>
+  <object id="55" x="204" y="95" width="1" height="24" rotation="180"/>
+  <object id="56" x="203" y="94" width="1" height="23" rotation="180"/>
+  <object id="57" x="202" y="93" width="1" height="22" rotation="180"/>
+  <object id="58" x="201" y="92" width="1" height="21" rotation="180"/>
+  <object id="59" x="200" y="91" width="1" height="20" rotation="180"/>
+  <object id="60" x="206" y="71" width="1" height="27"/>
+  <object id="61" x="223" y="80" width="16" height="19"/>
+ </objectgroup>
+ <objectgroup color="#0011ff" id="8" name="textboxes">
+  <object id="15" x="64" y="105" width="3" height="3">
+   <properties>
+    <property name="text" value="My request is the following : hack the time."/>
+   </properties>
+  </object>
+  <object id="16" x="64" y="105" width="3" height="3">
+   <properties>
+    <property name="dest_x" type="int" value="69"/>
+    <property name="dest_y" type="int" value="106"/>
+    <property name="label" value="Hackerman"/>
+    <property name="text" value="That's it ?"/>
+   </properties>
+  </object>
+  <object id="17" x="68" y="105" width="3" height="3">
+   <properties>
+    <property name="text" value="Yes, I want to travel through time and collect some interesting artefacts from the past to add them to my collection."/>
+   </properties>
+  </object>
+  <object id="18" x="68" y="105" width="3" height="3">
+   <properties>
+    <property name="label" value="Hackerman"/>
+    <property name="text">But ... that's like stealing ....... 
+
+Okay, let's do this.</property>
+   </properties>
+  </object>
+  <object id="19" x="68" y="105" width="3" height="3">
+   <properties>
+    <property name="text" value="Fine, you'll find everything you need here. There are lot of materials."/>
+   </properties>
+  </object>
+  <object id="20" x="68" y="105" width="3" height="3">
+   <properties>
+    <property name="dest_x" type="int" value="167"/>
+    <property name="dest_y" type="int" value="110"/>
+    <property name="label" value="Hackerman"/>
+    <property name="text">Good, just give me a computer and a 3D printer. 
+Behold, it's &quot;Hackerman&quot; time !</property>
+   </properties>
+  </object>
+  <object id="21" x="68" y="105" width="3" height="3">
+   <properties>
+    <property name="music" value="egypt"/>
+   </properties>
+  </object>
+  <object id="62" x="179" y="101" width="25" height="15">
+   <properties>
+    <property name="text" value="Wow ! What is this great machine ?"/>
+   </properties>
+  </object>
+  <object id="63" x="179" y="102" width="25" height="14">
+   <properties>
+    <property name="label" value="Hackerman"/>
+    <property name="text">I will call this, the great space time machine. I'll read the documentation for you : 
+ 
+ 
+==The Great Machine== 
+- Think of a place and a time before entering. 
+- When time travel is achieved, you have 5 minutes to return to present. 
+- If you die in the past, you will disappear from the present 
+- Use at your own risks 
+=============</property>
+   </properties>
+  </object>
+  <object id="64" x="179" y="101" width="25" height="15">
+   <properties>
+    <property name="label" value="Hackerman"/>
+    <property name="text" value="Take this button, press it when you want to come back to the present."/>
+   </properties>
+  </object>
+  <object id="65" x="179" y="102" width="25" height="14">
+   <properties>
+    <property name="label" value="Hackerman"/>
+    <property name="text" value="My job is done, I wil now hack space and teleport to my home. Farewell my friend and good luck !"/>
+   </properties>
+  </object>
+  <object id="66" x="180" y="101" width="24" height="15">
+   <properties>
+    <property name="text">Well well, that was strange ... 
+Anyways, let's try the machine. I remember my history lessons about Egypt very well, let's try that.</property>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

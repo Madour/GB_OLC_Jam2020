@@ -17,7 +17,8 @@ public:
     void open();
     void close();
 
-    void setTimerMaxTime(int seconds);
+    void resetTimer(int seconds);
+    int getRemainingTime();
 
     void update();
 
@@ -36,7 +37,7 @@ private:
     ns::BitmapText m_timer;
     ns::BitmapText m_timer_shadow;
     sf::Clock m_clk;
-    int m_max_time = 300;
+    int m_max_time = 60;
 
     sf::Sprite m_panel_left;
     sf::Sprite m_panel_right;

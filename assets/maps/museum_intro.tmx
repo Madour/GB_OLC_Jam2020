@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="23" height="21" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="57">
+ <properties>
+  <property name="palette" type="int" value="1"/>
+ </properties>
+ <tileset firstgid="1" source="tilesets/tileset_int.tsx"/>
+ <tileset firstgid="177" source="tilesets/tileset.tsx"/>
+ <tileset firstgid="267" source="tilesets/computer.tsx"/>
+ <layer id="1" name="back" width="23" height="21">
+  <data encoding="csv">
+65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,
+65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,
+65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,65,
+3221225484,3221225473,3221225484,3221225473,3221225484,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+3221225473,3221225484,13,3221225484,3221225473,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+3221225484,3221225473,3221225484,3221225473,3221225484,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
+</data>
+ </layer>
+ <layer id="2" name="back2" width="23" height="21">
+  <data encoding="csv">
+0,0,0,0,0,9,10,11,0,0,0,0,0,0,0,0,9,10,11,0,0,0,0,
+0,0,0,0,0,20,21,22,0,0,0,0,0,0,0,0,20,21,22,0,0,0,0,
+0,0,0,0,0,31,32,33,0,0,0,7,0,0,0,0,31,32,33,0,0,0,0,
+5,5,5,5,5,5,5,5,5,5,5,18,5,5,5,5,5,5,5,5,5,5,5,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,268,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,271,272,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="3" name="front" width="23" height="21">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,29,0,0,0,0,25,26,29,27,28,28,2147483676,2147483675,0,
+0,41,41,41,0,0,0,50,51,40,0,0,0,0,36,37,40,38,39,39,2147483687,2147483686,0,
+0,41,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,41,41,41,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,64,65,66,0,0,0,64,65,66,0,0,0,0,0,0,0,
+0,0,64,66,0,0,0,75,76,77,0,0,0,75,76,77,0,0,0,64,66,0,0,
+0,0,64,66,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,64,66,0,0,
+0,0,64,66,0,0,0,64,65,66,0,0,0,64,65,66,0,0,0,64,66,0,0,
+0,0,64,66,0,0,0,75,76,77,0,0,0,75,76,77,0,0,0,64,66,0,0,
+0,0,64,66,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,64,66,0,0,
+0,0,75,77,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,75,77,0,0,
+0,0,0,0,0,0,0,0,2147483714,65,65,65,65,65,66,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,2147483714,65,65,65,65,65,66,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,2147483714,65,65,65,65,65,66,0,0,0,0,0,0,63,0,
+0,0,0,0,0,0,0,0,75,76,76,76,76,76,2147483723,0,0,0,0,0,0,0,0,
+0,0,40,40,61,62,0,0,0,0,0,0,0,0,0,0,0,61,62,40,40,0,0,
+0,0,0,0,0,0,0,40,0,0,0,0,0,0,0,40,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="4" name="top" width="23" height="21">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,30,30,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,53,54,55,0,0,0,53,54,55,0,0,0,0,0,0,0,
+0,0,53,55,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,53,55,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,53,54,55,0,0,0,53,54,55,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,2147483703,54,54,54,54,54,55,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,267,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,29,29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,29,29,0,0,
+0,0,0,0,0,0,0,29,0,0,0,0,0,0,0,29,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="5" name="top2" width="23" height="21">
+  <data encoding="csv">
+196,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,225,195,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,30,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+191,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,214,
+201,205,205,205,205,205,205,205,205,205,205,205,205,205,205,205,205,205,205,205,205,205,185
+</data>
+ </layer>
+ <objectgroup color="#ff0000" id="7" name="collisions">
+  <object id="1" x="-3" y="32" width="369" height="20"/>
+  <object id="2" x="225" y="53" width="31" height="6"/>
+  <object id="3" x="259" y="54" width="10" height="4"/>
+  <object id="4" x="272" y="53" width="79" height="6"/>
+  <object id="5" x="34" y="144" width="28" height="86"/>
+  <object id="6" x="114" y="176" width="44" height="22"/>
+  <object id="7" x="210" y="176" width="44" height="22"/>
+  <object id="8" x="210" y="128" width="44" height="22"/>
+  <object id="9" x="114" y="128" width="43" height="22"/>
+  <object id="10" x="130" y="240" width="108" height="54"/>
+  <object id="11" x="306" y="144" width="28" height="86"/>
+  <object id="12" x="34" y="268" width="21" height="18"/>
+  <object id="13" x="18" y="82" width="12" height="12"/>
+  <object id="14" x="34" y="82" width="12" height="12"/>
+  <object id="15" x="50" y="82" width="12" height="12"/>
+  <object id="16" x="18" y="66" width="12" height="12"/>
+  <object id="17" x="18" y="52" width="12" height="10"/>
+  <object id="18" x="34" y="52" width="12" height="10"/>
+  <object id="19" x="50" y="52" width="12" height="10"/>
+  <object id="20" x="0" y="53" width="6" height="283"/>
+  <object id="21" x="6" y="332" width="369" height="7"/>
+  <object id="23" x="362" y="51" width="20" height="281"/>
+  <object id="24" x="113" y="52" width="30" height="9"/>
+  <object id="27" x="65" y="306" width="30" height="11"/>
+  <object id="28" x="273" y="306" width="30" height="11"/>
+  <object id="29" x="243" y="320" width="10" height="9"/>
+  <object id="30" x="307" y="304" width="10" height="9"/>
+  <object id="31" x="323" y="304" width="10" height="9"/>
+  <object id="32" x="115" y="320" width="10" height="9"/>
+  <object id="33" x="51" y="304" width="10" height="9"/>
+  <object id="34" x="35" y="304" width="10" height="9"/>
+  <object id="35" x="341" y="273" width="7" height="12"/>
+  <object id="36" x="147" y="53" width="10" height="4"/>
+ </objectgroup>
+ <objectgroup color="#0019ff" id="8" name="textboxes">
+  <object id="37" x="168" y="60" width="31" height="24">
+   <properties>
+    <property name="dest_x" type="int" value="184"/>
+    <property name="dest_y" type="int" value="128"/>
+    <property name="text" value="..."/>
+   </properties>
+  </object>
+  <object id="41" x="180" y="126" width="8" height="6">
+   <properties>
+    <property name="dest_x" type="int" value="182"/>
+    <property name="dest_y" type="int" value="164"/>
+    <property name="text" value="Just like yesterday, no one came today."/>
+   </properties>
+  </object>
+  <object id="42" x="178" y="161" width="7" height="5">
+   <properties>
+    <property name="dest_x" type="int" value="158"/>
+    <property name="dest_y" type="int" value="165"/>
+    <property name="text">Two monthes, and only 5 visitors... 
+I really have to do something.</property>
+   </properties>
+  </object>
+  <object id="43" x="156" y="163" width="4" height="4">
+   <properties>
+    <property name="dest_x" type="int" value="85"/>
+    <property name="dest_y" type="int" value="163"/>
+    <property name="text" value="I need to find a way to add valuable artifacts to my collection, the museum is a bit empty right now ... isn't it ? "/>
+   </properties>
+  </object>
+  <object id="44" x="82" y="160" width="6" height="6">
+   <properties>
+    <property name="dest_x" type="int" value="72"/>
+    <property name="dest_y" type="int" value="238"/>
+    <property name="text">I am ready to do anything! 
+Really, anything !</property>
+   </properties>
+  </object>
+  <object id="45" x="67" y="235" width="6" height="5">
+   <properties>
+    <property name="text" value="Hey you ! What are you doing here ? The museum is closed !"/>
+   </properties>
+  </object>
+  <object id="46" x="67" y="235" width="6" height="5">
+   <properties>
+    <property name="label" value="???"/>
+    <property name="text" value="Ehm, well, I was hacking your bank account, but it seems it is empty. What a pity."/>
+   </properties>
+  </object>
+  <object id="47" x="67" y="235" width="6" height="5">
+   <properties>
+    <property name="text" value="What ?!!"/>
+   </properties>
+  </object>
+  <object id="48" x="67" y="235" width="6" height="5">
+   <properties>
+    <property name="label" value="???"/>
+    <property name="text" value="You heard me well. Look, leaving your passwords in a text file is like opening an empty museum, it is not a good idea."/>
+   </properties>
+  </object>
+  <object id="49" x="67" y="235" width="6" height="5">
+   <properties>
+    <property name="text">Stop there, what are you trying to say !
+... 
+Who are you anyway ?</property>
+   </properties>
+  </object>
+  <object id="50" x="67" y="235" width="6" height="5">
+   <properties>
+    <property name="label" value="Hackerman"/>
+    <property name="text" value="They call me Hackerman, the best hacker in the world, my skills are inequaled."/>
+   </properties>
+  </object>
+  <object id="51" x="67" y="235" width="6" height="5">
+   <properties>
+    <property name="text">... 
+...
+...
+Okay, enough, I am calling the police now.</property>
+   </properties>
+  </object>
+  <object id="52" x="67" y="235" width="6" height="5">
+   <properties>
+    <property name="label" value="Hackerman"/>
+    <property name="text" value="No ! No ! Wait, I can help you. I can hack anything for you, you can obtain anything, trust me."/>
+   </properties>
+  </object>
+  <object id="53" x="67" y="235" width="6" height="5">
+   <properties>
+    <property name="text" value="Why would I trust you ha ?"/>
+   </properties>
+  </object>
+  <object id="54" x="67" y="235" width="6" height="5">
+   <properties>
+    <property name="label" value="Hackerman"/>
+    <property name="text">Because I am &quot;Hackerman&quot; ! ... 
+I am like a super hero ... that can hack ... things ... I guess ?</property>
+   </properties>
+  </object>
+  <object id="55" x="67" y="235" width="6" height="5">
+   <properties>
+    <property name="dest_x" type="int" value="64"/>
+    <property name="dest_y" type="int" value="105"/>
+    <property name="text">...
+...
+I will give you a chance.
+You better not deceive me.
+Follow me.</property>
+   </properties>
+  </object>
+  <object id="56" x="63" y="104" width="8" height="7">
+   <properties>
+    <property name="label" value="Hackerman"/>
+    <property name="text" value="Nice ! Things are getting interesting."/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

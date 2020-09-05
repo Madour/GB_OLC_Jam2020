@@ -2,7 +2,9 @@
 
 #include "Game.hpp"
 #include "states/TitleScreenState.hpp"
-#include "states/MuseumLevelState.hpp"
+#include "states/MuseumIntroState.hpp"
+#include "states/GameOverState.hpp"
+#include "states/WarehouseIntroState.hpp"
 
 
 void TitleScreenState::init() {
@@ -47,9 +49,16 @@ void TitleScreenState::onEvent(const sf::Event& event) {
                     auto* tr = new ns::transition::CircleClose();
                     tr->start();
                     tr->setOnEndCallback([](){
-                        auto* tr = new ns::transition::CircleOpen();
-                        tr->start();
-                        game->setState<MuseumLevelState>();
+                        (new ns::transition::CircleOpen())->start();
+                        game->setState<MuseumIntroState>();
+                    });
+                }
+                else if (m_index == 1) {
+                    auto* tr = new ns::transition::CircleClose();
+                    tr->start();
+                    tr->setOnEndCallback([](){
+                        (new ns::transition::CircleOpen())->start();
+                        game->setState<GameOverState>();
                     });
                 }
             }

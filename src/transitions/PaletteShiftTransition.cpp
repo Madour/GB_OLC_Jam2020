@@ -30,8 +30,10 @@ m_treshold(0.)
 
 void PaletteShiftOutTransition::onUpdate() {
     m_treshold += 0.025f;
-    if (m_treshold >= 1.5)
-        end();
     if (m_shader)
         m_shader->setUniform(m_uniform_name, m_treshold);
+    if (m_treshold >= 1.5) {
+        m_shader->setUniform(m_uniform_name, 0.f);
+        end();
+    }
 }
