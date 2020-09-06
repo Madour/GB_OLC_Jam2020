@@ -11,6 +11,18 @@ m_type(type) {
             m_frames[0] = {0, 0, 32, 32};
             m_frames[1] = {32, 0, 32, 32};
             break;
+        case ArtifactType::Skull:
+            m_frames[0] = {64, 32, 32, 32};
+            m_frames[1] = {96, 32, 32, 32};
+            break;
+        case ArtifactType::Vase:
+            m_frames[0] = {0, 32, 32, 32};
+            m_frames[1] = {32, 32, 32, 32};
+            break;
+        case ArtifactType::Ball:
+            m_frames[0] = {64, 0, 32, 32};
+            m_frames[1] = {96, 0, 32, 32};
+            break;
         default:
             m_frames[0] = {128, 0, 32, 32};
             m_frames[1] = {128, 0, 32, 32};
@@ -18,6 +30,10 @@ m_type(type) {
     }
     m_sprite.setTextureRect(m_frames[0]);
     m_sprite.setOrigin(16, 16);
+}
+
+auto Artifact::getSprite() -> sf::Sprite& {
+    return m_sprite;
 }
 
 void Artifact::setPosition(float x, float y) {
@@ -41,6 +57,7 @@ void Artifact::update() {
 
     if (sf::Keyboard::isKeyPressed(ns::Config::Inputs::getButtonKey("A"))) {
         if (game->player->getGlobalBounds().intersects(m_sprite.getGlobalBounds())) {
+            game->level_cleared = true;
             m_sprite.setColor(sf::Color::Transparent);
         }
     }

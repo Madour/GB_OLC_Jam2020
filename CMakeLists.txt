@@ -52,7 +52,8 @@ add_executable(GB_OLC_Jam
         src/states/TitleScreenState.cpp include/states/TitleScreenState.hpp
         src/states/MuseumIntroState.cpp include/states/MuseumIntroState.hpp
         src/states/WarehouseIntroState.cpp include/states/WarehouseIntroState.hpp
-        src/states/GameOverState.cpp include/states/GameOverState.hpp)
+        src/states/WarehouseState.cpp include/states/WarehouseState.hpp
+        src/states/GameOverState.cpp include/states/GameOverState.hpp src/states/EndGameState.cpp include/states/EndGameState.hpp)
 
 target_include_directories(GB_OLC_Jam PRIVATE include)
 target_link_libraries(GB_OLC_Jam sfml-graphics sfml-audio)

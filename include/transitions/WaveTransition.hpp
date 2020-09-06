@@ -3,8 +3,9 @@
 #pragma once
 
 #include "../../NasNas.h"
+#include "GameAccess.hpp"
 
-class WaveInTransition : public ns::Transition {
+class WaveInTransition : public ns::Transition, GameAccess {
 public:
     WaveInTransition();
     void onUpdate() override;
@@ -14,7 +15,7 @@ private:
     sf::Shader* m_shader;
 };
 
-class WaveOutTransition : public ns::Transition {
+class WaveOutTransition : public ns::Transition, GameAccess {
 public:
     WaveOutTransition();
     void onUpdate() override;

@@ -4,8 +4,6 @@
 #include "states/MuseumIntroState.hpp"
 #include "states/WarehouseIntroState.hpp"
 
-bool MuseumIntroState::first = true;
-
 void MuseumIntroState::init() {
 
     game->scene->clearAllLayers();
@@ -13,10 +11,8 @@ void MuseumIntroState::init() {
 
     game->player->setPosition(184, 66);
     m_hackerman = std::make_shared<Hackerman>();
-    if (first) {
-        m_hackerman->graphics<ns::ecs::SpriteComponent>(0)->setAnimState("sit");
-        m_hackerman->setPosition(58, 284);
-    }
+    m_hackerman->graphics<ns::ecs::SpriteComponent>(0)->setAnimState("sit");
+    m_hackerman->setPosition(58, 284);
 
     m_map = std::make_shared<ns::tm::TiledMap>();
     m_map->loadFromFile("assets/maps/museum_intro.tmx");

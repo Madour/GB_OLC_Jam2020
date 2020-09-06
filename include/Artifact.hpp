@@ -8,14 +8,16 @@
 enum class ArtifactType {
     None,
     Scarab,
-    Ball,
     Skull,
-    Vase
+    Vase,
+    Ball
 };
 
 class Artifact : public ns::Drawable, GameAccess {
 public:
     explicit Artifact(ArtifactType type);
+
+    auto getSprite() -> sf::Sprite&;
 
     void setPosition(float x, float y);
     auto getPosition() -> sf::Vector2f override;

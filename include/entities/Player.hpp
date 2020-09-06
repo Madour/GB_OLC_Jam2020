@@ -6,6 +6,7 @@
 #include "MapCollisions.hpp"
 #include "GameAccess.hpp"
 #include "Item.hpp"
+#include <array>
 
 class Player : public ns::BaseEntity, GameAccess {
 public:
@@ -18,6 +19,7 @@ public:
     void moveLeft();
 
     auto getName() -> const std::string&;
+    void setHP(int);
     int getHP() const;
     auto getFaceDirection() ->sf::Vector2f;
 

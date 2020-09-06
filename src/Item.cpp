@@ -5,6 +5,8 @@
 #include "Game.hpp"
 #include "transitions/WaveTransition.hpp"
 #include "states/WarehouseIntroState.hpp"
+#include "states/WarehouseState.hpp"
+#include "states/GameOverState.hpp"
 
 
 Item::Item(ItemType item) :
@@ -12,7 +14,7 @@ m_type(item) {
     m_sprite.setTexture(ns::Res::getTexture("gui.png"));
     switch (m_type) {
         case None:
-            m_sprite.setTextureRect({80, 24, 8, 8});
+            m_sprite.setTextureRect({37, 23, 8, 8});
             break;
         case Vulnerary:
             m_sprite.setTextureRect({56, 24, 8, 8});
@@ -44,8 +46,13 @@ void Item::use() {
             tr->start();
             game->hud->close();
             tr->setOnEndCallback([&](){
-                game->setState<WarehouseIntroState>();
-                game->player->setPosition(271, 105);
+                if (game->level_cleared) {
+                    game->setState<WarehouseState>();
+                    game->musicFadeOut();
+                }
+                else
+                    game->setState<GameOverState>();
+                Enemy::list.clear();
                 auto* tr = new WaveInTransition();
                 tr->start();
                 tr->setOnEndCallback([](){

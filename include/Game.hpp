@@ -19,6 +19,7 @@ void resolveCollision(ns::BaseEntity* ent, const ns::FloatRect& rect);
 
 class Game : public ns::App {
 public:
+    static std::list<std::string> travels;
     Game();
     ~Game() override;
 
@@ -57,6 +58,8 @@ public:
     sf::Clock time;
 
     std::string last_map_name;
+
+    bool level_cleared = false;
 
 private:
     void initBitmapFonts();

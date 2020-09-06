@@ -7,6 +7,11 @@
 void GameOverState::init() {
     game->scene->clearAllLayers();
     game->ui_scene->getDefaultLayer()->clear();
+    Enemy::list.clear();
+    game->player->getItems()[0] = Item(ItemType::PresentButton);
+    game->player->getItems()[1] = Item(ItemType::None);
+    game->player->getItems()[2] = Item(ItemType::None);
+    game->hud->resetTimer(5*60);
 
     for (int i = 0; i < m_game_over_frames.size(); ++i)
         m_game_over_frames[i] = {0, i*49-49, 112, 49};
@@ -39,7 +44,9 @@ void GameOverState::onEvent(const sf::Event& event) {
             tr->setOnEndCallback([](){
                 (new ns::transition::CircleOpen())->start();
                 game->setState<LevelState>(game->last_map_name);
-                game->player->restoreHp(10);
+                game->player->setHP(1);
+                game->player->restoreHp(9);
+                game->hud->resetTimer(5*60);
             });
         }
 }

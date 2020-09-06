@@ -3,8 +3,7 @@
 #include "Game.hpp"
 #include "states/WarehouseIntroState.hpp"
 #include "states/MuseumIntroState.hpp"
-
-std::list<std::string> WarehouseIntroState::travels = {"egypt_out.tmx", ""};
+#include "states/EndGameState.hpp"
 
 void WarehouseIntroState::init() {
 
@@ -144,7 +143,7 @@ void WarehouseIntroState::update() {
     }
 
     // checking for warp zone
-    if (ns::FloatRect(180, 70, 24, 23).contains(game->player->collider()->getCollision().getShape().getGlobalBounds())) {
+    if (ns::FloatRect(180, 70, 24, 21).contains(game->player->collider()->getCollision().getShape().getGlobalBounds())) {
         game->player->inputs()->setCaptureInput(false);
         game->player->graphics<ns::ecs::SpriteComponent>(0)->setAnimState("idle");
         if (game->camera->getTop() > 0)
@@ -162,10 +161,12 @@ void WarehouseIntroState::update() {
                 auto* tr = new WaveOutTransition();
                 tr->start();
                 tr->setOnEndCallback([&](){
-                    auto level = WarehouseIntroState::travels.front();
-                    WarehouseIntroState::travels.pop_front();
+                    auto level = Game::travels.front();
+                    Game::travels.pop_front();
                     if (!level.empty())
                         game->setState<LevelState>(level);
+                    else
+                        game->setState<EndGameState>();
                     auto* tr = new WaveInTransition();
                     tr->start();
                     tr->setOnEndCallback([&](){

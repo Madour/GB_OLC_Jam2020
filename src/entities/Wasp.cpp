@@ -36,20 +36,21 @@ void Wasp::update() {
         if (!m_target_locked) {
             if (ns::distance(getPosition(), game->player->getPosition()) < 50) {
                 m_target_locked = true;
-                physics()->setDirection(dx / std::abs(dx), physics()->getDirection().y);
-                physics()->setDirection(physics()->getDirection().x, dy / std::abs(dy));
+                if (dx != 0) physics()->setDirection(dx / std::abs(dx), physics()->getDirection().y);
+                if (dy != 0) physics()->setDirection(physics()->getDirection().x, dy / std::abs(dy));
             }
         }
         else {
             if (ns::distance(getPosition(), game->player->getPosition()) < 150 ) {
-                physics()->setDirection(dx/std::abs(dx), physics()->getDirection().y);
-                physics()->setDirection(physics()->getDirection().x, dy/std::abs(dy));
+                if (dx != 0) physics()->setDirection(dx/std::abs(dx), physics()->getDirection().y);
+                if (dy != 0) physics()->setDirection(physics()->getDirection().x, dy/std::abs(dy));
+
                 if(std::abs(dx) < 32 && std::abs(dy) < 32) {
                     physics()->setMaxVelocity(2.5, 2.5);
                 }
                 else {
                     physics()->setMaxVelocity(1.5 , 1.5);
-                };
+                }
             }
             else {
                 m_target_locked = false;
@@ -58,8 +59,8 @@ void Wasp::update() {
         }
     }
     else {
-        physics()->setDirection(dx / std::abs(dx), physics()->getDirection().y);
-        physics()->setDirection(physics()->getDirection().x, dy / std::abs(dy));
+        if (dx != 0) physics()->setDirection(dx / std::abs(dx), physics()->getDirection().y);
+        if (dy != 0) physics()->setDirection(physics()->getDirection().x, dy / std::abs(dy));
         m_target_locked = false;
     }
 

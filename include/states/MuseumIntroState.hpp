@@ -7,8 +7,6 @@
 
 class MuseumIntroState : public LevelState {
 public:
-    static bool first;
-
     using LevelState::LevelState;
     void init() override;
     void onEvent(const sf::Event& event) override;

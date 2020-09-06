@@ -185,18 +185,19 @@ Okay, let's do this.</property>
     <property name="dest_x" type="int" value="167"/>
     <property name="dest_y" type="int" value="110"/>
     <property name="label" value="Hackerman"/>
-    <property name="text">Good, just give me a computer and a 3D printer. 
-Behold, it's &quot;Hackerman&quot; time !</property>
+    <property name="text" value="Good, just give me a computer and a 3D printer. "/>
    </properties>
   </object>
   <object id="21" x="68" y="105" width="3" height="3">
    <properties>
-    <property name="music" value="egypt"/>
+    <property name="label" value="Hackerman"/>
+    <property name="music" value="hack"/>
+    <property name="text" value="Behold, it's &quot;Hackerman&quot; time !"/>
    </properties>
   </object>
   <object id="62" x="179" y="101" width="25" height="15">
    <properties>
-    <property name="text" value="Wow ! What is this great machine ?"/>
+    <property name="text" value="Wow ! What is this machine ?"/>
    </properties>
   </object>
   <object id="63" x="179" y="102" width="25" height="14">
@@ -222,7 +223,7 @@ Behold, it's &quot;Hackerman&quot; time !</property>
   <object id="65" x="179" y="102" width="25" height="14">
    <properties>
     <property name="label" value="Hackerman"/>
-    <property name="text" value="My job is done, I wil now hack space and teleport to my home. Farewell my friend and good luck !"/>
+    <property name="text" value="My job is done, I will now hack space and teleport to my home. Farewell my friend and good luck !"/>
    </properties>
   </object>
   <object id="66" x="180" y="101" width="24" height="15">

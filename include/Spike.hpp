@@ -3,6 +3,7 @@
 #pragma once
 
 #include "../NasNas.h"
+#include <array>
 
 class Spike {
 public:

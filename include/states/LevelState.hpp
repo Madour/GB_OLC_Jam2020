@@ -30,6 +30,8 @@ private:
     sf::VertexArray m_spikes_vertices;
     sf::RenderTexture m_spikes_texture;
     std::shared_ptr<sf::RectangleShape> m_spikes_sprite;
+
+    sf::Texture* tileset_texture = nullptr;
 };
 
 

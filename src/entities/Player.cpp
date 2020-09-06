@@ -76,6 +76,10 @@ void Player::moveRight() {
     }
 }
 
+void Player::setHP(int hp) {
+    m_hp = std::min(10, hp);
+}
+
 auto Player::getHP() const  -> int{
     return m_hp;
 }

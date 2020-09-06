@@ -13,7 +13,7 @@ BigMummy::BigMummy() : Enemy("BigMummy") {
     m_spritesheet = std::unique_ptr<ns::Spritesheet>(spritesheet);
     addComponent<ns::ecs::SpriteComponent>(this, spritesheet, "idle");
 
-    addComponent<ns::ecs::PhysicsComponent>(this, 1.f, sf::Vector2f(0.7, 0.7), sf::Vector2f(0.1, 0.1), sf::Vector2f(0.8, 0.8));
+    addComponent<ns::ecs::PhysicsComponent>(this, 1.f, sf::Vector2f(1, 1), sf::Vector2f(0.1, 0.1), sf::Vector2f(0.8, 0.8));
 
     addComponent<ns::ecs::ColliderComponent>(this, new ns::ecs::RectangleCollision(14, 8), sf::Vector2f(0, -4));
 
@@ -36,9 +36,9 @@ void BigMummy::update() {
         if (!m_target_locked) {
             if (ns::distance(getPosition(), game->player->getPosition()) < 60) {
                 m_target_locked = true;
-                game->playSound("bip");
-                physics()->setDirection(dx / std::abs(dx), physics()->getDirection().y);
-                physics()->setDirection(physics()->getDirection().x, dy / std::abs(dy));
+                game->playSound("grr");
+                if (dx != 0) physics()->setDirection(dx / std::abs(dx), physics()->getDirection().y);
+                if (dy != 0) physics()->setDirection(physics()->getDirection().x, dy / std::abs(dy));
             }
             else {
                 physics()->setDirection(0, 0);
@@ -46,8 +46,8 @@ void BigMummy::update() {
         }
         else {
             if (std::abs(dx) < 100 && std::abs(dy) < 100) {
-                physics()->setDirection(dx/std::abs(dx), physics()->getDirection().y);
-                physics()->setDirection(physics()->getDirection().x, dy/std::abs(dy));
+                if (dx != 0) physics()->setDirection(dx / std::abs(dx), physics()->getDirection().y);
+                if (dy != 0) physics()->setDirection(physics()->getDirection().x, dy / std::abs(dy));
                 if (std::abs(dx) < 5)
                     physics()->setDirection(0, physics()->getDirection().y);
                 if (std::abs(dy) < 5)

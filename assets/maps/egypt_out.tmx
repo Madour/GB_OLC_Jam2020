@@ -100,7 +100,7 @@
   <object id="10" x="90" y="65" width="42" height="28">
    <properties>
     <property name="destination" value="egypt_in1.tmx"/>
-    <property name="fade_out" type="bool" value="true"/>
+    <property name="fade_out" type="bool" value="false"/>
    </properties>
   </object>
  </objectgroup>

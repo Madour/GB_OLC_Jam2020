@@ -8,12 +8,7 @@
 LevelState::LevelState() = default;
 
 LevelState::~LevelState() {
-    for (auto it = Enemy::list.begin(); it != Enemy::list.end(); it++) {
-        if ((*it)->getName() == "Wasp" && (*it)->targetLocked())
-            continue;
-        else
-            Enemy::list.erase(it--);
-    }
+    Enemy::list.clear();
 }
 
 LevelState::LevelState(const std::string& map_name, bool start_pos) {
@@ -38,6 +33,7 @@ LevelState::LevelState(const std::string& map_name, bool start_pos) {
             }
         }
     }
+    tileset_texture = &ns::Res::get().in("maps").in("tilesets").getTexture("tileset.png");
     m_spikes_vertices.resize(m_spikes.size()*4);
     m_spikes_vertices.setPrimitiveType(sf::PrimitiveType::Quads);
     m_spikes_texture.clear(sf::Color::Transparent);
@@ -45,7 +41,7 @@ LevelState::LevelState(const std::string& map_name, bool start_pos) {
         for (int j = 0; j < 4; ++j)
             m_spikes_vertices[i+j] = m_spikes[i/4].getVertices()[j];
     }
-    m_spikes_texture.draw(m_spikes_vertices, sf::RenderStates(&ns::Res::getTexture("tileset.png")));
+    m_spikes_texture.draw(m_spikes_vertices, sf::RenderStates(tileset_texture));
     m_spikes_texture.display();
     m_spikes_sprite->setTexture(&m_spikes_texture.getTexture());
 
@@ -134,7 +130,7 @@ void LevelState::update() {
             m_spikes_vertices[i+j] = m_spikes[i/4].getVertices()[j];
         }
     }
-    m_spikes_texture.draw(m_spikes_vertices, sf::RenderStates(&ns::Res::getTexture("maps/tilesets/tileset.png")));
+    m_spikes_texture.draw(m_spikes_vertices, sf::RenderStates(tileset_texture));
     m_spikes_texture.display();
     m_spikes_sprite->setTexture(&m_spikes_texture.getTexture());
 
@@ -176,6 +172,8 @@ void LevelState::updateTextbox() {
 }
 
 void LevelState::updateMap() {
+    if (m_map->hasLayer("machine_top"))
+        m_map->getTileLayer("machine_top")->update();
     m_map->getTileLayer("top")->update();
     m_map->getTileLayer("front")->update();
     m_map->getTileLayer("back2")->update();
@@ -211,7 +209,7 @@ void LevelState::updateMap() {
 
     if (m_map->hasLayer("textboxes") && m_textbox == nullptr) {
         auto& textboxes = m_map->getObjectLayer("textboxes")->getRectangles();
-        for (auto it = textboxes.begin(); it != textboxes.end(); ++it) {
+        for (auto it = textboxes.begin(); it != textboxes.end(); it++) {
             auto& rect = *it;
             if (rect.getShape().getGlobalBounds().contains(game->player->getPosition())) {
                 std::string font = "default";
@@ -232,15 +230,15 @@ void LevelState::updateMap() {
                     game->playMusic(rect.getProperty<std::string>("music"));
                 }
 
-                textboxes.erase(it--);
+                it = textboxes.erase(it);
                 break;
             }
         }
     }
 
-    if (m_map->hasLayer("interractions")){
+   if (m_map->hasLayer("interractions")){
         auto& interractions = m_map->getObjectLayer("interractions")->getRectangles();
-        for (auto it = interractions.begin(); it != interractions.end(); ++it) {
+        for (auto it = interractions.begin(); it != interractions.end(); it++) {
             auto& rect = *it;
             if (rect.getShape().getGlobalBounds().intersects(player_box)) {
                 if (rect.hasProperty("dir_y"))
@@ -251,14 +249,15 @@ void LevelState::updateMap() {
                     if (game->player->getFaceDirection().x != rect.getProperty<int>("dir_x"))
                         continue;
 
-                if ( (rect.hasProperty("auto") && rect.getProperty<bool>("auto"))
-                     || sf::Keyboard::isKeyPressed(ns::Config::Inputs::getButtonKey("A"))) {
+                if ((rect.hasProperty("auto") && rect.getProperty<bool>("auto"))
+                    || sf::Keyboard::isKeyPressed(ns::Config::Inputs::getButtonKey("A"))) {
                     m_textbox = std::make_shared<TextBox>(rect.getProperty<std::string>("text"), game->fonts["italic"]);
                     game->ui_scene->getDefaultLayer()->add(m_textbox);
 
                     if (rect.hasProperty("item"))
-                        game->player->addItem((ItemType)rect.getProperty<int>("item"));
-                    interractions.erase(it--);
+                        game->player->addItem((ItemType) rect.getProperty<int>("item"));
+                    it = interractions.erase(it);
+                    break;
                 }
             }
         }

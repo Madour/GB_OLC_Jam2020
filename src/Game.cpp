@@ -7,6 +7,7 @@
 #include "states/TitleScreenState.hpp"
 #include "states/MuseumIntroState.hpp"
 
+std::list<std::string> Game::travels = {"egypt_out.tmx", ""};
 
 void resolveCollision(ns::BaseEntity* ent, const ns::FloatRect& rect) {
     ns::FloatRect intersection;
@@ -98,8 +99,12 @@ Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
     // loading music
     m_musics["egypt"].openFromFile("assets/audio/music/egypt.ogg");
     m_musics["egypt"].setLoop(true);
+    m_musics["hack"].openFromFile("assets/audio/music/hack.ogg");
 
     m_sound_buffers["bip"].loadFromFile("assets/audio/sfx/bip.ogg");
+    m_sound_buffers["tsh"].loadFromFile("assets/audio/sfx/tsh.wav");
+    m_sound_buffers["grr"].loadFromFile("assets/audio/sfx/grr.wav");
+    m_sound_buffers["wawa"].loadFromFile("assets/audio/sfx/wawa.wav");
 
     player = std::make_shared<Player>();
     player->setPosition(184, 45);
@@ -132,6 +137,7 @@ Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
 
     m_state = new TitleScreenState();
     m_state->init();
+    (new PaletteShiftInTransition())->start();
 
     ns::DebugTextInterface::color = sf::Color::Black;
     ns::DebugTextInterface::outline_color = sf::Color::White;
@@ -141,6 +147,12 @@ Game::Game() : ns::App("GB_OLC_Jam2020", {160, 144}, 5) {
     addDebugText<sf::Vector2f>([&](){return player->getPosition();}, "pos:", {0, 15});
     addDebugText<unsigned int>([&](){return ns::Transition::list.size();}, "transitions:", {0, 30});
 
+    addDebugText<std::string>([&](){
+        std::string r;
+        for (auto & tr : Game::travels)
+            r+=tr+" ";
+        return r;
+    }, "travels: ", {0, 50});
 }
 
 void Game::onEvent(const sf::Event& event) {
@@ -226,6 +238,7 @@ void Game::musicFadeOut() {
 
 void Game::playMusic(const std::string& name) {
     if (m_musics.count(name) > 0) {
+        m_musics[name].setVolume(80);
         m_musics[name].play();
         m_currently_playing = name;
     }
@@ -236,7 +249,10 @@ void Game::playMusic(const std::string& name) {
 void Game::playSound(const std::string& name) {
     if (m_sound_buffers.count(name) > 0) {
         m_sound.setBuffer(m_sound_buffers[name]);
-        m_sound.setVolume(30);
+        if (name == "bip")
+            m_sound.setVolume(30);
+        else
+            m_sound.setVolume(80);
         m_sound.play();
     }
     else {

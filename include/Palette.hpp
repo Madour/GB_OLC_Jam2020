@@ -5,6 +5,7 @@
 #pragma once
 
 #include "../NasNas.h"
+#include <array>
 
 class Palette {
 public:

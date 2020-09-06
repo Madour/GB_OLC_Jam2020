@@ -5,6 +5,7 @@
 #include "states/MuseumIntroState.hpp"
 #include "states/GameOverState.hpp"
 #include "states/WarehouseIntroState.hpp"
+#include "states/EndGameState.hpp"
 
 
 void TitleScreenState::init() {
@@ -12,27 +13,30 @@ void TitleScreenState::init() {
     game->scene->clearAllLayers();
     game->ui_scene->getDefaultLayer()->clear();
 
-    auto bg = std::make_shared<sf::RectangleShape>();
-    bg->setSize(sf::Vector2f(ns::Config::Window::view_width, ns::Config::Window::view_height));
-    game->ui_scene->getDefaultLayer()->add(bg);
+    m_titlescreen = std::make_shared<sf::RectangleShape>(sf::Vector2f(160, 144));
+    m_titlescreen->setSize(sf::Vector2f(ns::Config::Window::view_width, ns::Config::Window::view_height));
+    m_titlescreen->setTexture(&ns::Res::getTexture("titlescreen.png"));
+    for (int i = 0; i < 4; i++)
+        m_frames[i] = {0, 144*i, 160, 144};
+    m_titlescreen->setTextureRect(m_frames[0]);
+    game->ui_scene->getDefaultLayer()->add(m_titlescreen);
 
     m_cursor_left = std::make_shared<sf::CircleShape>(3);
-    m_cursor_left->setFillColor(sf::Color::Black);
+    m_cursor_left->setFillColor(sf::Color::White);
     m_cursor_left->setOrigin(3, 3);
 
     m_cursor_right = std::make_shared<sf::CircleShape>(3);
-    m_cursor_right->setFillColor(sf::Color::Black);
+    m_cursor_right->setFillColor(sf::Color::White);
     m_cursor_right->setOrigin(3, 3);
 
-    m_buttons.emplace_back(new ns::BitmapText("New Game"));
-    m_buttons.emplace_back(new ns::BitmapText("Options"));
-    m_buttons.emplace_back(new ns::BitmapText("Credits"));
+
+    m_buttons.emplace_back(new ns::BitmapText("Play"));
     m_buttons.emplace_back(new ns::BitmapText("Quit"));
 
     for (unsigned int i = 0; i < m_buttons.size(); ++i) {
         auto& btn = m_buttons[i];
         btn->setFont(game->fonts["default"]);
-        btn->setColor(Palette::Base[0]);
+        btn->setColor(sf::Color::White);
         btn->setPosition(ns::Config::Window::view_width/2.f - btn->getWidth()/2.f, i*12+50);
         game->ui_scene->getDefaultLayer()->add(btn);
     }
@@ -50,15 +54,14 @@ void TitleScreenState::onEvent(const sf::Event& event) {
                     tr->start();
                     tr->setOnEndCallback([](){
                         (new ns::transition::CircleOpen())->start();
-                        game->setState<MuseumIntroState>();
+                        game->setState<WarehouseIntroState>();
                     });
                 }
                 else if (m_index == 1) {
                     auto* tr = new ns::transition::CircleClose();
                     tr->start();
                     tr->setOnEndCallback([](){
-                        (new ns::transition::CircleOpen())->start();
-                        game->setState<GameOverState>();
+                        game->getWindow().close();
                     });
                 }
             }
@@ -74,4 +77,11 @@ void TitleScreenState::onEvent(const sf::Event& event) {
 void TitleScreenState::update() {
     m_cursor_left->setPosition((int)m_buttons[m_index]->getGlobalBounds().left - 6, m_index*12+50 + 4);
     m_cursor_right->setPosition((int)m_buttons[m_index]->getGlobalBounds().right() + 6, m_index*12+50 + 4);
+
+    anim_counter++;
+    if (anim_counter == 15) {
+        anim_index = (anim_index +1)%m_frames.size();
+        m_titlescreen->setTextureRect(m_frames[anim_index]);
+        anim_counter = 0;
+    }
 }

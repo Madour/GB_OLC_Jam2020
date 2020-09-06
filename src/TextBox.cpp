@@ -11,13 +11,13 @@ TextBox::TextBox(const std::string& string, std::shared_ptr<ns::BitmapFont>& fon
 m_text(string),
 m_label(label) {
     m_text.setFont(font);
-    m_text.setColor(Palette::Base[0]);
+    m_text.setColor(sf::Color::Black);
     m_text.setMaxWidth(150);
     m_text.setTypingDelay(2);
     m_text.setMaxLines(3);
 
     m_label.setFont(game->fonts.at("italic"));
-    m_label.setColor(Palette::Base[0]);
+    m_label.setColor(sf::Color::Black);
 
     m_bg.setTexture(ns::Res::get().in("fonts").getTexture("frame.png"));
     m_bg.setTextureRect({0, 13, 160, 35});
